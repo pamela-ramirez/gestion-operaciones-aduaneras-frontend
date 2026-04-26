@@ -1,36 +1,115 @@
+import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
-import { Card } from "primereact/card";
-import { Divider } from 'primereact/divider';
+import { Checkbox } from "primereact/checkbox";
+import { login } from "../../services/authService";
+import "./Login.css";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      const data = await login(email, password);
+      localStorage.setItem("token", data.token);
+      console.log("LOGIN OK", data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-        <div className="card">
-            <div className="flex flex-column md:flex-row">
-                <div className="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5">
-                    <div className="flex flex-wrap justify-content-center align-items-center gap-2">
-                        <label className="w-6rem">Username</label>
-                        <InputText id="username" type="text" className="w-12rem" />
-                    </div>
-                    <div className="flex flex-wrap justify-content-center align-items-center gap-2">
-                        <label className="w-6rem">Password</label>
-                        <InputText id="password" type="password" className="w-12rem" />
-                    </div>
-                    <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto"></Button>
-                </div>
-                <div className="w-full md:w-2">
-                    <Divider layout="vertical" className="hidden md:flex">
-                        <b>OR</b>
-                    </Divider>
-                    <Divider layout="horizontal" className="flex md:hidden" align="center">
-                        <b>OR</b>
-                    </Divider>
-                </div>
-                <div className="w-full md:w-5 flex align-items-center justify-content-center py-5">
-                    <Button label="Sign Up" icon="pi pi-user-plus" severity="success" className="w-10rem"></Button>
-                </div>
+    <div className="login-container">
+
+      {/* BACKGROUND FULL */}
+      <div className="login-bg">
+
+        {/* LEFT DARK OVERLAY */}
+        <div className="login-left-overlay" />
+
+        {/* CENTER CARD */}
+        <div className="login-center">
+
+          {/* Logo + Brand */}
+          <div className="login-brand">
+            <div className="login-logo">
+              <i className="pi pi-shield" />
             </div>
+            <h1 className="login-brand-name">Despachos al Cien</h1>
+          </div>
+
+          {/* Card */}
+          <div className="login-card">
+            <h2 className="login-title">Bienvenido</h2>
+            <p className="login-subtitle">Ingresa tus credenciales para acceder al portal.</p>
+
+            <div className="field">
+              <label className="field-label">CORREO ELECTRÓNICO</label>
+              <span className="p-input-icon-left login-input-wrap">
+                <i className="pi pi-envelope" />
+                <InputText
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="nombre@empresa.com"
+                  className="login-input"
+                />
+              </span>
+            </div>
+
+            <div className="field">
+              <label className="field-label">CONTRASEÑA</label>
+              <span className="p-input-icon-left login-input-wrap">
+                <i className="pi pi-lock" />
+                <Password
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  feedback={false}
+                  toggleMask
+                  inputClassName="login-input"
+                  className="login-password"
+                  placeholder="••••••••"
+                />
+              </span>
+            </div>
+
+            <div className="login-options">
+              <div className="remember">
+                <Checkbox
+                  inputId="remember"
+                  checked={remember}
+                  onChange={(e) => setRemember(e.checked)}
+                  className="login-checkbox"
+                />
+                <label htmlFor="remember" className="remember-label" style={{ color: "#00e0b0" }}>Recordarme</label>
+              </div>
+              <a href="#" className="forgot-link">Olvidé mi contraseña</a>
+            </div>
+
+            <Button
+              label="Iniciar Sesión"
+              icon="pi pi-sign-in"
+              iconPos="right"
+              className="login-btn"
+              onClick={handleLogin}
+            />
+
+            <p className="login-register">
+              ¿No tienes una cuenta?{" "}
+              <a href="#" className="register-link">Contacta al administrador</a>
+            </p>
+          </div>
         </div>
+
+        {/* RIGHT PANEL LABEL */}
+        <div className="login-right-label">
+          <span>OPERACIONES</span>
+          <span>ADUANERAS</span>
+        </div>
+
+      </div>
+    </div>
   );
 }

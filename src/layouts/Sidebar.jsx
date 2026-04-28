@@ -9,15 +9,25 @@ export default function Sidebar() {
     { label: "Operaciones", icon: "pi pi-briefcase", path: "/operaciones" },
     { label: "Documentos", icon: "pi pi-file", path: "/documentos" },
     { label: "Finanzas", icon: "pi pi-wallet", path: "/finanzas" },
-    { label: "Comunicaciones", icon: "pi pi-comments", path: "/comunicaciones" },
+    {
+      label: "Comunicaciones",
+      icon: "pi pi-comments",
+      path: "/comunicaciones",
+    },
     { label: "Auditoría", icon: "pi pi-search", path: "/auditoria" },
   ];
 
+  const handleLogout = () => {
+    const confirm = window.confirm("¿Seguro que quieres cerrar sesión?");
+    if (!confirm) return;
+
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   return (
     <div className="sidebar">
-      <div className="sidebar-logo">
-        DESPACHOS AL CIEN
-      </div>
+      <div className="sidebar-logo">DESPACHOS AL CIEN</div>
 
       <div className="sidebar-menu">
         {items.map((item) => (
@@ -33,9 +43,9 @@ export default function Sidebar() {
       </div>
 
       <div className="sidebar-footer">
-        <div className="sidebar-item">
+        <div className="sidebar-item" onClick={handleLogout}>
           <i className="pi pi-sign-out"></i>
-          <span>Cerrar Sesión</span>
+          <span>CERRAR SESIÓN</span>
         </div>
       </div>
     </div>

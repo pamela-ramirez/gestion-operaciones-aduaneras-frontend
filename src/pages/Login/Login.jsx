@@ -5,17 +5,32 @@ import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { login } from "../../services/authService";
 import "./Login.css";
+import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const handleLogin = async () => {
     try {
       const data = await login(email, password);
       localStorage.setItem("token", data.token);
       console.log("LOGIN OK", data);
+      console.log("TOKEN:", data.token);
+
+      console.log("ANTES NAVIGATE");
+      navigate("/home");
+      console.log("DESPUÉS NAVIGATE");
     } catch (error) {
       console.error(error);
     }
@@ -23,16 +38,13 @@ export default function Login() {
 
   return (
     <div className="login-container">
-
       {/* BACKGROUND FULL */}
       <div className="login-bg">
-
         {/* LEFT DARK OVERLAY */}
         <div className="login-left-overlay" />
 
         {/* CENTER CARD */}
         <div className="login-center">
-
           {/* Logo + Brand */}
           <div className="login-brand">
             <div className="login-logo">
@@ -44,7 +56,9 @@ export default function Login() {
           {/* Card */}
           <div className="login-card">
             <h2 className="login-title">Bienvenido</h2>
-            <p className="login-subtitle">Ingresa tus credenciales para acceder al portal.</p>
+            <p className="login-subtitle">
+              Ingresa tus credenciales para acceder al portal.
+            </p>
 
             <div className="field">
               <label className="field-label">CORREO ELECTRÓNICO</label>
@@ -83,9 +97,17 @@ export default function Login() {
                   onChange={(e) => setRemember(e.checked)}
                   className="login-checkbox"
                 />
-                <label htmlFor="remember" className="remember-label" style={{ color: "#00e0b0" }}>Recordarme</label>
+                <label
+                  htmlFor="remember"
+                  className="remember-label"
+                  style={{ color: "#00e0b0" }}
+                >
+                  Recordarme
+                </label>
               </div>
-              <a href="#" className="forgot-link">Olvidé mi contraseña</a>
+              <Link to="/recuperar" className="forgot-link">
+                Olvidé mi contraseña
+              </Link>
             </div>
 
             <Button
@@ -98,7 +120,9 @@ export default function Login() {
 
             <p className="login-register">
               ¿No tienes una cuenta?{" "}
-              <a href="#" className="register-link">Contacta al administrador</a>
+              <Link to="/registrar" className="register-link">
+                Contacta al administrador
+              </Link>
             </p>
           </div>
         </div>
@@ -108,7 +132,6 @@ export default function Login() {
           <span>OPERACIONES</span>
           <span>ADUANERAS</span>
         </div>
-
       </div>
     </div>
   );

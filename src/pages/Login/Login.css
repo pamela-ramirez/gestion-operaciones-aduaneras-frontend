@@ -1,0 +1,344 @@
+/* ============================================================
+   LOGIN — Despachos al Cien
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* ---------- Background ---------- */
+/* La imagen va en ::after para aislar el filter:grayscale del contenido */
+.login-bg {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center right;
+  filter: grayscale(100%);
+  z-index: 0;
+}
+
+/* Overlay oscuro — sin grayscale, encima de la imagen */
+.login-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #0d0f14 0%,
+    #0d0f14 44%,
+    rgba(13, 15, 20, 0.72) 62%,
+    rgba(13, 15, 20, 0.22) 100%
+  );
+  z-index: 1;
+}
+
+/* Todo el contenido: por encima de imagen y overlay */
+.login-bg > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- Columna izquierda (ya la hace el gradient) ---------- */
+.login-left-overlay {
+  display: none;
+}
+
+/* ---------- Bloque central ---------- */
+.login-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+  padding: 0 16px;
+  transform: translateX(0);
+}
+
+/* ---------- Brand ---------- */
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-logo {
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 224, 176, 0.10);
+  border: 1.5px solid rgba(0, 224, 176, 0.35);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-logo .pi {
+  font-size: 22px;
+  color: #00e0b0 !important;
+}
+
+.login-brand-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #00e0b0;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Card ---------- */
+.login-card {
+  width: 100%;
+  background: rgba(22, 25, 34, 0.97);
+  border: 1px solid #1f2333;
+  border-radius: 14px;
+  padding: 36px 36px 30px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(6px);
+}
+
+.login-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.login-subtitle {
+  font-size: 13px;
+  color: #6b7591;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* ---------- Fields ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.9px;
+  color: #7a8299;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.login-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.login-input-wrap > .pi {
+  position: absolute;
+  left: 14px;
+  color: #4a5270;
+  font-size: 14px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ---- Inputs (alta especificidad para ganarle a PrimeReact) ---- */
+.login-card .p-inputtext,
+.login-card .p-password .p-inputtext,
+.login-card input.p-inputtext {
+  width: 100% !important;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 14px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 11px 14px 11px 40px !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-card .p-inputtext::placeholder,
+.login-card .p-password .p-inputtext::placeholder {
+  color: #353b52 !important;
+}
+
+.login-card .p-inputtext:enabled:focus,
+.login-card .p-password .p-inputtext:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.15) !important;
+  outline: none !important;
+}
+
+.login-card .p-password {
+  width: 100%;
+  display: block;
+}
+
+/* Ícono ojo del password */
+.login-card .p-password-toggle-mask-icon,
+.login-card .p-password svg {
+  color: #4a5270 !important;
+}
+
+/* ---------- Opciones ---------- */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.remember-label {
+  font-size: 13px;
+  color: #00e0b0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.login-card .p-checkbox .p-checkbox-box {
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 4px !important;
+}
+
+.login-card .p-checkbox .p-checkbox-box.p-highlight {
+  background: #00e0b0 !important;
+  border-color: #00e0b0 !important;
+}
+
+.login-card .p-checkbox .p-checkbox-box .p-checkbox-icon {
+  color: #0d0f14 !important;
+}
+
+.forgot-link {
+  font-size: 13px;
+  color: #00e0b0;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.forgot-link:hover {
+  opacity: 0.75;
+}
+
+/* ---------- Botón — máxima especificidad ---------- */
+.login-card .p-button.login-btn,
+.login-card button.p-button.login-btn {
+  width: 100% !important;
+  background: #00e0b0 !important;
+  background-color: #00e0b0 !important;
+  border: 2px solid #00e0b0 !important;
+  border-radius: 8px !important;
+  color: #0a0d13 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.4px;
+  padding: 13px 0 !important;
+  justify-content: center !important;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease !important;
+}
+
+.login-card .p-button.login-btn:hover {
+  background: #00c9a0 !important;
+  background-color: #00c9a0 !important;
+  border-color: #00c9a0 !important;
+  box-shadow: 0 4px 24px rgba(0, 224, 176, 0.30) !important;
+}
+
+.login-card .p-button.login-btn:active {
+  transform: scale(0.985);
+}
+
+.login-card .p-button.login-btn .p-button-label,
+.login-card .p-button.login-btn .p-button-icon {
+  color: #0a0d13 !important;
+}
+
+/* ---------- Link registro ---------- */
+.login-register {
+  font-size: 13px;
+  color: #4a5270;
+  text-align: center;
+}
+
+.register-link {
+  color: #00e0b0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.register-link:hover {
+  opacity: 0.75;
+}
+
+/* ---------- OPERACIONES ADUANERAS ---------- */
+.login-right-label {
+  position: absolute;
+  bottom: 56px;
+  right: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 3;
+}
+
+.login-right-label span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: 5px;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .login-center { transform: translateX(0); }
+}
+
+@media (max-width: 600px) {
+  .login-bg::before {
+    background: rgba(13, 15, 20, 0.93);
+  }
+  .login-right-label { display: none; }
+  .login-card { padding: 28px 22px; }
+}

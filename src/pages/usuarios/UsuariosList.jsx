@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import UserForm from "../../components/UserForm";
 import { DataTable } from "primereact/datatable";
@@ -6,19 +6,32 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 import { Avatar } from "primereact/avatar";
+import { getUsuarios } from "../../services/usuarioService";
 import "./UsuariosList.css";
 
-const MOCK_USERS = [
-  { id: 1, nombre: "Carlos", apellido: "Méndez", email: "carlos@despachoscien.com", rol: "DESPACHANTE", empresa: "Despachos al Cien" },
-  { id: 2, nombre: "Ana", apellido: "Torres", email: "ana@importex.com", rol: "CLIENTE", empresa: "Importex SA" },
-];
-
 export default function UsuariosList() {
-  const [users, setUsers] = useState(MOCK_USERS); //inicialmente con datos mock, luego traer de la API
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [formVisible, setFormVisible] = useState(false); // controla visibilidad del formulario de creación
 
+  const loadUsuarios = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const usuarios = await getUsuarios();
+      console.log("USUARIOS BACKEND:", usuarios);
+      setUsers(Array.isArray(usuarios) ? usuarios : []);
+    } catch (err) {
+      setError("No se pudieron cargar los usuarios.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCreated = (newUser) => {
-    setUsers((prev) => [...prev, { ...newUser, id: Date.now() }]); // agregar nuevo usuario a la lista (en real, se debería obtener el ID del backend)
+    setUsers(prev => [...prev, newUser]); // Agregar el nuevo usuario a la lista existente de forma optimista
   };
 
   const handleDelete = (id) => {
@@ -26,6 +39,10 @@ export default function UsuariosList() {
       setUsers((prev) => prev.filter((u) => u.id !== id));
     }
   };
+
+  useEffect(() => {
+    loadUsuarios();
+  }, []);
 
   // ---- COLUMN TEMPLATES ----
 
@@ -61,8 +78,8 @@ export default function UsuariosList() {
       text
       severity="danger"
       onClick={() => handleDelete(row.id)}
-      tooltip="Eliminar usuario"
-      tooltipOptions={{ position: "left" }}
+      //tooltip="Eliminar usuario"
+      //tooltipOptions={{ position: "right" }}
     />
   );
 
@@ -79,13 +96,13 @@ export default function UsuariosList() {
     <div className="ul-empty">
       <i className="pi pi-users ul-empty-icon" />
       <p className="ul-empty-title">Sin usuarios registrados</p>
-      <p className="ul-empty-sub">Creá el primer usuario para comenzar.</p>
+      {/* <p className="ul-empty-sub">Creá el primer usuario para comenzar.</p>
       <Button
         label="Crear usuario"
         icon="pi pi-plus"
         className="ul-btn-primary"
         onClick={() => setFormVisible(true)}
-      />
+      />  */}
     </div>
   );
 
@@ -123,21 +140,23 @@ export default function UsuariosList() {
           </div>
           <div className="ul-stat-card">
             <span className="ul-stat-label">DESPACHANTES</span>
-            <span className="ul-stat-value">{users.filter((u) => u.rol === "DESPACHANTE").length}</span>
+            <span className="ul-stat-value">{users.filter((u) => u.rol === "Despachante").length}</span>
           </div>
           <div className="ul-stat-card">
             <span className="ul-stat-label">CLIENTES</span>
-            <span className="ul-stat-value">{users.filter((u) => u.rol === "CLIENTE").length}</span>
+            <span className="ul-stat-value">{users.filter((u) => u.rol === "Cliente").length}</span>
           </div>
         </div>
 
         {/* DATA TABLE */}
+        {error && <div className="ul-error">{error}</div>}
         <DataTable
-          value={users} 
+          value={users}
           header={header}
           emptyMessage={emptyMessage}
           className="ul-datatable"
           rowHover
+          loading={loading}
         >
           <Column header="USUARIO" body={usuarioTemplate} />
           <Column header="EMPRESA" body={empresaTemplate} />
@@ -151,7 +170,7 @@ export default function UsuariosList() {
         visible={formVisible}
         onHide={() => setFormVisible(false)}
         onCreated={handleCreated}
-      />
+      />  
     </MainLayout>
   );
 }

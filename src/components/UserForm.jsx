@@ -6,18 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { getRoles } from "../services/roleService";
 import "./UserForm.css";
-
-const CARGOS = [
-  { label: "Despachante Titular", value: "TITULAR" },
-  { label: "Auxiliar", value: "AUXILIAR" },
-  { label: "Administrativo", value: "ADMINISTRATIVO" },
-];
-
-const TIPOS_OPERACION = [
-  { label: "Importación", value: "IMPORTACION" },
-  { label: "Exportación", value: "EXPORTACION" },
-  { label: "Ambas", value: "AMBAS" },
-];
+import { crearCliente } from "../services/clienteService";
 
 const initialForm = {
   rol: null,
@@ -27,15 +16,13 @@ const initialForm = {
   email: "",
   password: "",
   telefono: "",
-  cargo: null,
-  nroHabilitacionDGA: "",
+  //nroHabilitacionDGA: "",
   // Cliente
-  razonSocial: "",
+  //razonSocial: "",
   rut: "",
   nombreContacto: "",
   apellidoContacto: "",
   direccionFiscal: "",
-  tipoOperacion: null,
 };
 
 const UserForm = ({ visible, onHide, onCreated }) => {
@@ -66,46 +53,88 @@ const UserForm = ({ visible, onHide, onCreated }) => {
     const e = {};
     if (!form.nombre.trim()) e.nombre = "Requerido";
     if (!form.apellido.trim()) e.apellido = "Requerido";
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "Email inválido";
-    if (!form.password || form.password.length < 6) e.password = "Mínimo 6 caracteres";
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email))
+      e.email = "Email inválido";
+    if (!form.password || form.password.length < 6)
+      e.password = "Mínimo 6 caracteres";
     if (!form.telefono.trim()) e.telefono = "Requerido";
-    if (!form.cargo) e.cargo = "Seleccioná un cargo";
-    if (form.cargo === "TITULAR" && !form.nroHabilitacionDGA.trim()) e.nroHabilitacionDGA = "Requerido para Titular";
+    //if (form.cargo === "TITULAR" && !form.nroHabilitacionDGA.trim()) e.nroHabilitacionDGA = "Requerido para Titular";
     return e;
   };
 
   const validateCliente = () => {
     const e = {};
-    if (!form.razonSocial.trim()) e.razonSocial = "Requerido";
+    // if (!form.razonSocial.trim()) e.razonSocial = "Requerido";
     if (!form.rut.trim()) e.rut = "Requerido";
     if (!form.nombreContacto.trim()) e.nombreContacto = "Requerido";
     if (!form.apellidoContacto.trim()) e.apellidoContacto = "Requerido";
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "Email inválido";
-    if (!form.password || form.password.length < 6) e.password = "Mínimo 6 caracteres";
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email))
+      e.email = "Email inválido";
+    if (!form.password || form.password.length < 6)
+      e.password = "Mínimo 6 caracteres";
     if (!form.telefono.trim()) e.telefono = "Requerido";
-    if (!form.tipoOperacion) e.tipoOperacion = "Seleccioná un tipo";
     return e;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.rol) {
       setErrors({ rol: "Seleccioná un rol" });
       return;
     }
-    const e = form.rol === "DESPACHANTE" ? validateDespachante() : validateCliente();
+    const e =
+      form.rol === "DESPACHANTE" ? validateDespachante() : validateCliente();
     if (Object.keys(e).length > 0) {
       setErrors(e);
       return;
     }
-    console.log("Usuario a crear:", form);
-    onCreated?.(form);
-    setSuccess(true);
-    setTimeout(() => {
-      setSuccess(false);
-      setForm(initialForm);
-      setErrors({});
-      onHide();
-    }, 1400);
+
+    try {
+      //llamada al backend
+      let response;
+      const clientePayload = {
+        nombre: form.nombreContacto,
+        apellido: form.apellidoContacto,
+        email: form.email,
+        password: form.password,
+        rut: form.rut,
+        telefono: form.telefono,
+        direccion: form.direccionFiscal,
+      };
+      console.log("PAYLOAD CLIENTE:", clientePayload);
+
+      if (form.rol === "CLIENTE") {
+        response = await crearCliente(clientePayload);
+      }
+
+      if (form.rol === "DESPACHANTE") {
+        //response = await crearDespachante(form); //crear en services crearDespachante y backend
+        alert("Funcionalidad de creación de despachante no implementada aún");
+        return;
+      }
+
+      console.log("Usuario creado:", response);
+
+      // callback opcional al padre
+      onCreated?.(response);
+
+      setSuccess(true);
+
+      setTimeout(() => {
+        setSuccess(false);
+        setForm(initialForm);
+        setErrors({});
+        onHide();
+      }, 1400);
+    } catch (error) {
+      console.error("Error al crear usuario:", error);
+      console.log("STATUS:", error.response?.status);
+      console.log("DATA BACKEND:", error.response?.data);
+
+      // opcional: mostrar error en UI
+      setErrors({
+        submit: "Error al crear el usuario. Intente nuevamente.",
+      });
+    }
   };
 
   const handleHide = () => {
@@ -122,7 +151,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
       </div>
       <div>
         <p className="uf-header-title">Nuevo Usuario</p>
-        <p className="uf-header-sub">Completá los datos para habilitar el acceso.</p>
+        <p className="uf-header-sub">
+          Completá los datos para habilitar el acceso.
+        </p>
       </div>
     </div>
   );
@@ -139,7 +170,6 @@ const UserForm = ({ visible, onHide, onCreated }) => {
       maskClassName="uf-mask"
     >
       <div className="uf-body">
-
         {/* SUCCESS OVERLAY */}
         {success && (
           <div className="uf-success">
@@ -160,7 +190,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                 className={`uf-rol-btn ${form.rol === r.value ? "active" : ""}`}
                 onClick={() => handleRolChange(r.value)}
               >
-                <i className={`pi ${r.value === "DESPACHANTE" ? "pi-briefcase" : "pi-building"}`} />
+                <i
+                  className={`pi ${r.value === "DESPACHANTE" ? "pi-briefcase" : "pi-building"}`}
+                />
                 {r.label}
               </button>
             ))}
@@ -187,7 +219,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className={`uf-input ${errors.nombre ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.nombre && <small className="uf-error">{errors.nombre}</small>}
+                {errors.nombre && (
+                  <small className="uf-error">{errors.nombre}</small>
+                )}
               </div>
 
               <div className="uf-field">
@@ -201,7 +235,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className={`uf-input ${errors.apellido ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.apellido && <small className="uf-error">{errors.apellido}</small>}
+                {errors.apellido && (
+                  <small className="uf-error">{errors.apellido}</small>
+                )}
               </div>
 
               <div className="uf-field uf-field-full">
@@ -215,7 +251,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className={`uf-input ${errors.email ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.email && <small className="uf-error">{errors.email}</small>}
+                {errors.email && (
+                  <small className="uf-error">{errors.email}</small>
+                )}
               </div>
 
               <div className="uf-field">
@@ -229,22 +267,12 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className={`uf-input ${errors.telefono ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.telefono && <small className="uf-error">{errors.telefono}</small>}
+                {errors.telefono && (
+                  <small className="uf-error">{errors.telefono}</small>
+                )}
               </div>
 
-              <div className="uf-field">
-                <label className="uf-label">CARGO</label>
-                <Dropdown
-                  value={form.cargo}
-                  options={CARGOS}
-                  onChange={(e) => handleChange("cargo", e.value)}
-                  placeholder="Seleccioná"
-                  className={`uf-dropdown ${errors.cargo ? "uf-input-error" : ""}`}
-                />
-                {errors.cargo && <small className="uf-error">{errors.cargo}</small>}
-              </div>
-
-              {form.cargo === "TITULAR" && (
+              {/*  {form.cargo === "TITULAR" && (
                 <div className="uf-field uf-field-full">
                   <label className="uf-label">NRO. HABILITACIÓN DGA</label>
                   <span className="p-input-icon-left">
@@ -258,7 +286,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                   </span>
                   {errors.nroHabilitacionDGA && <small className="uf-error">{errors.nroHabilitacionDGA}</small>}
                 </div>
-              )}
+              )} */}
 
               <div className="uf-field uf-field-full">
                 <label className="uf-label">CONTRASEÑA TEMPORAL</label>
@@ -274,7 +302,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className="uf-password"
                   />
                 </span>
-                {errors.password && <small className="uf-error">{errors.password}</small>}
+                {errors.password && (
+                  <small className="uf-error">{errors.password}</small>
+                )}
               </div>
             </div>
           </>
@@ -288,7 +318,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
             </div>
 
             <div className="uf-grid">
-              <div className="uf-field uf-field-full">
+              {/* <div className="uf-field uf-field-full">
                 <label className="uf-label">RAZÓN SOCIAL</label>
                 <span className="p-input-icon-left">
                   <i className="pi pi-building" />
@@ -300,7 +330,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                   />
                 </span>
                 {errors.razonSocial && <small className="uf-error">{errors.razonSocial}</small>}
-              </div>
+              </div> */}
 
               <div className="uf-field">
                 <label className="uf-label">RUT</label>
@@ -316,25 +346,15 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                 {errors.rut && <small className="uf-error">{errors.rut}</small>}
               </div>
 
-              <div className="uf-field">
-                <label className="uf-label">TIPO DE OPERACIÓN</label>
-                <Dropdown
-                  value={form.tipoOperacion}
-                  options={TIPOS_OPERACION}
-                  onChange={(e) => handleChange("tipoOperacion", e.value)}
-                  placeholder="Seleccioná"
-                  className={`uf-dropdown ${errors.tipoOperacion ? "uf-input-error" : ""}`}
-                />
-                {errors.tipoOperacion && <small className="uf-error">{errors.tipoOperacion}</small>}
-              </div>
-
               <div className="uf-field uf-field-full">
                 <label className="uf-label">DIRECCIÓN FISCAL</label>
                 <span className="p-input-icon-left">
                   <i className="pi pi-map-marker" />
                   <InputText
                     value={form.direccionFiscal}
-                    onChange={(e) => handleChange("direccionFiscal", e.target.value)}
+                    onChange={(e) =>
+                      handleChange("direccionFiscal", e.target.value)
+                    }
                     placeholder="Ej. Av. 18 de Julio 1234, Montevideo"
                     className="uf-input"
                   />
@@ -353,12 +373,16 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                   <i className="pi pi-user" />
                   <InputText
                     value={form.nombreContacto}
-                    onChange={(e) => handleChange("nombreContacto", e.target.value)}
+                    onChange={(e) =>
+                      handleChange("nombreContacto", e.target.value)
+                    }
                     placeholder="Ej. María"
                     className={`uf-input ${errors.nombreContacto ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.nombreContacto && <small className="uf-error">{errors.nombreContacto}</small>}
+                {errors.nombreContacto && (
+                  <small className="uf-error">{errors.nombreContacto}</small>
+                )}
               </div>
 
               <div className="uf-field">
@@ -367,12 +391,16 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                   <i className="pi pi-user" />
                   <InputText
                     value={form.apellidoContacto}
-                    onChange={(e) => handleChange("apellidoContacto", e.target.value)}
+                    onChange={(e) =>
+                      handleChange("apellidoContacto", e.target.value)
+                    }
                     placeholder="Ej. González"
                     className={`uf-input ${errors.apellidoContacto ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.apellidoContacto && <small className="uf-error">{errors.apellidoContacto}</small>}
+                {errors.apellidoContacto && (
+                  <small className="uf-error">{errors.apellidoContacto}</small>
+                )}
               </div>
 
               <div className="uf-field uf-field-full">
@@ -386,7 +414,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className={`uf-input ${errors.email ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.email && <small className="uf-error">{errors.email}</small>}
+                {errors.email && (
+                  <small className="uf-error">{errors.email}</small>
+                )}
               </div>
 
               <div className="uf-field">
@@ -400,7 +430,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className={`uf-input ${errors.telefono ? "uf-input-error" : ""}`}
                   />
                 </span>
-                {errors.telefono && <small className="uf-error">{errors.telefono}</small>}
+                {errors.telefono && (
+                  <small className="uf-error">{errors.telefono}</small>
+                )}
               </div>
 
               <div className="uf-field">
@@ -417,7 +449,9 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                     className="uf-password"
                   />
                 </span>
-                {errors.password && <small className="uf-error">{errors.password}</small>}
+                {errors.password && (
+                  <small className="uf-error">{errors.password}</small>
+                )}
               </div>
             </div>
           </>
@@ -427,7 +461,10 @@ const UserForm = ({ visible, onHide, onCreated }) => {
         {form.rol && (
           <div className="uf-info">
             <i className="pi pi-info-circle" />
-            <span>El usuario deberá cambiar su contraseña en el primer inicio de sesión.</span>
+            <span>
+              El usuario deberá cambiar su contraseña en el primer inicio de
+              sesión.
+            </span>
           </div>
         )}
 
@@ -446,7 +483,6 @@ const UserForm = ({ visible, onHide, onCreated }) => {
             onClick={handleSubmit}
           />
         </div>
-
       </div>
     </Dialog>
   );

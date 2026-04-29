@@ -1,0 +1,445 @@
+/* ============================================================
+   USER FORM — PrimeReact overrides dark theme
+   Consistente con Login.css | Teal #00e0b0
+   ============================================================ */
+
+/* ---- DIALOG ---- */
+.uf-dialog.p-dialog {
+  border-radius: 14px !important;
+  border: 1px solid #1f2333 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+}
+
+.uf-dialog .p-dialog-header {
+  background: #161922 !important;
+  border-bottom: 1px solid #1f2333 !important;
+  padding: 20px 24px !important;
+}
+
+.uf-dialog .p-dialog-header .p-dialog-header-icon {
+  color: #4a5270 !important;
+  border-radius: 6px !important;
+  width: 28px !important;
+  height: 28px !important;
+  transition: color 0.15s, background 0.15s !important;
+}
+
+.uf-dialog .p-dialog-header .p-dialog-header-icon:hover {
+  color: #d0d8f0 !important;
+  background: #252936 !important;
+}
+
+.uf-dialog .p-dialog-content {
+  background: #161922 !important;
+  padding: 0 !important;
+}
+
+.uf-mask.p-dialog-mask {
+  backdrop-filter: blur(3px);
+  background: rgba(0, 0, 0, 0.65) !important;
+}
+
+/* ---- DIALOG HEADER CONTENT ---- */
+.uf-header-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.uf-logo {
+  width: 38px;
+  height: 38px;
+  background: rgba(0, 224, 176, 0.10);
+  border: 1.5px solid rgba(0, 224, 176, 0.25);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.uf-logo .pi {
+  font-size: 16px;
+  color: #00e0b0;
+}
+
+.uf-header-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2px;
+}
+
+.uf-header-sub {
+  font-size: 12px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ---- BODY ---- */
+.uf-body {
+  padding: 24px;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  max-height: 78vh;
+  overflow-y: auto;
+}
+
+.uf-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.uf-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.uf-body::-webkit-scrollbar-thumb {
+  background: #252936;
+  border-radius: 4px;
+}
+
+/* ---- SUCCESS OVERLAY ---- */
+.uf-success {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 15, 20, 0.96);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  z-index: 10;
+  border-radius: 0 0 14px 14px;
+}
+
+.uf-success-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(0, 224, 176, 0.12);
+  border: 1.5px solid rgba(0, 224, 176, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uf-success-icon .pi {
+  font-size: 20px;
+  color: #00e0b0;
+}
+
+.uf-success-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00e0b0;
+  margin: 0;
+}
+
+/* ---- ROL SELECTOR ---- */
+.uf-rol-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.uf-rol-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #10131a;
+  border: 1px solid #252936;
+  border-radius: 8px;
+  color: #6b7591;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 11px 0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.uf-rol-btn:hover {
+  border-color: #3d4460;
+  color: #b8c0d8;
+}
+
+.uf-rol-btn.active {
+  background: rgba(0, 224, 176, 0.08);
+  border-color: rgba(0, 224, 176, 0.45);
+  color: #00e0b0;
+}
+
+/* ---- SECTION DIVIDER ---- */
+.uf-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 16px;
+}
+
+.uf-section-divider span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #3d4460;
+  white-space: nowrap;
+}
+
+.uf-section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #1c1f2b;
+}
+
+/* ---- GRID ---- */
+.uf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* ---- FIELDS ---- */
+.uf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.uf-field-full {
+  grid-column: 1 / -1;
+}
+
+.uf-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  color: #7a8299;
+}
+
+/* ---- INPUTTEXT OVERRIDES ---- */
+.uf-body .p-inputtext.uf-input,
+.uf-body .p-input-icon-left .p-inputtext.uf-input {
+  width: 100% !important;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 10px 13px 10px 38px !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.uf-body .p-inputtext.uf-input::placeholder {
+  color: #353b52 !important;
+}
+
+.uf-body .p-inputtext.uf-input:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+.uf-body .p-inputtext.uf-input.uf-input-error {
+  border-color: #7a2a2a !important;
+  box-shadow: 0 0 0 3px rgba(220, 80, 80, 0.08) !important;
+}
+
+.uf-body .p-input-icon-left > .pi:first-child {
+  color: #4a5270 !important;
+  font-size: 13px !important;
+  left: 13px !important;
+}
+
+/* ---- PASSWORD OVERRIDES ---- */
+.uf-body .uf-password {
+  width: 100% !important;
+  display: block !important;
+}
+
+.uf-body .uf-password-wrap {
+  width: 100%;
+}
+
+.uf-body .uf-password-wrap .p-password {
+  width: 100%;
+}
+
+.uf-body .uf-password .p-inputtext {
+  width: 100% !important;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 10px 38px 10px 38px !important;
+  box-shadow: none !important;
+}
+
+.uf-body .uf-password .p-inputtext::placeholder {
+  color: #353b52 !important;
+}
+
+.uf-body .uf-password .p-inputtext:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+.uf-body .uf-password .p-inputtext.uf-input-error {
+  border-color: #7a2a2a !important;
+}
+
+.uf-body .uf-password .p-password-toggle-mask-icon,
+.uf-body .uf-password svg {
+  color: #4a5270 !important;
+}
+
+/* ---- DROPDOWN OVERRIDES ---- */
+.uf-body .uf-dropdown.p-dropdown {
+  width: 100% !important;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.uf-body .uf-dropdown.p-dropdown:not(.p-disabled):hover {
+  border-color: #3d4460 !important;
+}
+
+.uf-body .uf-dropdown.p-dropdown.p-focus,
+.uf-body .uf-dropdown.p-dropdown.p-inputwrapper-focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+.uf-body .uf-dropdown.uf-input-error.p-dropdown {
+  border-color: #7a2a2a !important;
+}
+
+.uf-body .uf-dropdown .p-dropdown-label {
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 10px 13px !important;
+}
+
+.uf-body .uf-dropdown .p-dropdown-label.p-placeholder {
+  color: #353b52 !important;
+}
+
+.uf-body .uf-dropdown .p-dropdown-trigger {
+  color: #4a5270 !important;
+}
+
+.p-dropdown-panel {
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 10px 14px !important;
+  transition: background 0.15s !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+  background: #1a1e2a !important;
+  color: #00e0b0 !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+}
+
+/* ---- ERROR TEXT ---- */
+.uf-error {
+  font-size: 11px !important;
+  color: #e05555 !important;
+}
+
+/* ---- INFO ---- */
+.uf-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  background: rgba(0, 224, 176, 0.05);
+  border: 1px solid rgba(0, 224, 176, 0.12);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #4a6e62;
+}
+
+.uf-info .pi {
+  color: #00a87e;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* ---- ACTIONS ---- */
+.uf-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #1c1f2b;
+}
+
+.uf-body .uf-btn-ghost.p-button {
+  color: #6b7591 !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  padding: 9px 20px !important;
+  background: transparent !important;
+  transition: border-color 0.2s, color 0.2s !important;
+}
+
+.uf-body .uf-btn-ghost.p-button:hover {
+  border-color: #3d4460 !important;
+  color: #b8c0d8 !important;
+  background: transparent !important;
+}
+
+.uf-body .uf-btn-primary.p-button {
+  background: #00e0b0 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #0a0d13 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 9px 22px !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s !important;
+}
+
+.uf-body .uf-btn-primary.p-button:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.28) !important;
+}
+
+.uf-body .uf-btn-primary.p-button:active {
+  transform: scale(0.985);
+}
+
+.uf-body .uf-btn-primary .p-button-label,
+.uf-body .uf-btn-primary .p-button-icon {
+  color: #0a0d13 !important;
+}

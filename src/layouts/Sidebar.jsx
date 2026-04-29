@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "primereact/button";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -40,6 +41,14 @@ export default function Sidebar() {
             <span>{item.label}</span>
           </div>
         ))}
+      </div>
+
+      {/* gestion usuarios */}
+      <div style={{ marginTop: "100px" }}>
+        <div className="sidebar-item" onClick={() => navigate("/usuarios")}>
+          <i className="pi pi-id-card"></i>
+          <span>Usuarios</span>
+        </div>
       </div>
 
       <div className="sidebar-footer">

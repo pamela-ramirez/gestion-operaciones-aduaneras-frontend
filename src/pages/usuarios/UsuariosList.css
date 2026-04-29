@@ -1,0 +1,310 @@
+/* ============================================================
+   USUARIOS LIST — PrimeReact overrides + custom styles
+   Dark theme | Teal #00e0b0 | Inter + Montserrat
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+.ul-root {
+  padding: 28px 32px;
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---- HEADER ---- */
+.ul-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.ul-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ul-bc-dim {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #3d4460;
+  font-weight: 600;
+}
+
+.ul-bc-sep {
+  font-size: 11px;
+  color: #3d4460;
+}
+
+.ul-bc-active {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #00e0b0;
+  font-weight: 600;
+}
+
+.ul-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.ul-subtitle {
+  font-size: 13px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ---- BOTÓN PRIMARIO (override PrimeReact Button) ---- */
+.ul-root .ul-btn-primary.p-button,
+.ul-root .ul-btn-primary {
+  background: #00e0b0 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #0a0d13 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s !important;
+}
+
+.ul-root .ul-btn-primary.p-button:hover,
+.ul-root .ul-btn-primary:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.28) !important;
+}
+
+.ul-root .ul-btn-primary.p-button:active {
+  transform: scale(0.985);
+}
+
+.ul-root .ul-btn-primary .p-button-label,
+.ul-root .ul-btn-primary .p-button-icon {
+  color: #0a0d13 !important;
+}
+
+/* ---- STATS ---- */
+.ul-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ul-stat-card {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 110px;
+}
+
+.ul-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #3d4460;
+}
+
+.ul-stat-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #00e0b0;
+}
+
+/* ---- DATATABLE OVERRIDES ---- */
+.ul-root .ul-datatable.p-datatable {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header del DataTable */
+.ul-root .ul-datatable .p-datatable-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  padding: 14px 20px !important;
+}
+
+/* Thead */
+.ul-root .ul-datatable .p-datatable-thead > tr > th {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  color: #3d4460 !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  padding: 12px 20px !important;
+  text-transform: uppercase;
+}
+
+/* Tbody rows */
+.ul-root .ul-datatable .p-datatable-tbody > tr {
+  background: #10131a !important;
+  border-bottom: 1px solid #141720 !important;
+  transition: background 0.15s;
+}
+
+.ul-root .ul-datatable .p-datatable-tbody > tr:last-child {
+  border-bottom: none !important;
+}
+
+.ul-root .ul-datatable .p-datatable-tbody > tr:hover {
+  background: #12151e !important;
+}
+
+.ul-root .ul-datatable .p-datatable-tbody > tr > td {
+  border: none !important;
+  padding: 12px 20px !important;
+  color: #b8c0d8;
+  vertical-align: middle;
+}
+
+/* Empty message */
+.ul-root .ul-datatable .p-datatable-emptymessage > td {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Table header custom */
+.ul-table-header {
+  display: flex;
+  align-items: center;
+}
+
+.ul-table-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5270;
+  letter-spacing: 0.04em;
+}
+
+.ul-table-count .pi {
+  font-size: 13px;
+}
+
+/* ---- USER CELL ---- */
+.ul-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Avatar overrides */
+.ul-root .ul-avatar.p-avatar {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 12px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+  flex-shrink: 0;
+}
+
+.ul-root .ul-avatar-desp.p-avatar {
+  background: rgba(0, 224, 176, 0.12) !important;
+  color: #00e0b0 !important;
+  border: 1px solid rgba(0, 224, 176, 0.25) !important;
+}
+
+.ul-root .ul-avatar-cli.p-avatar {
+  background: rgba(99, 102, 241, 0.12) !important;
+  color: #818cf8 !important;
+  border: 1px solid rgba(99, 102, 241, 0.25) !important;
+}
+
+.ul-cell-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #d0d8f0;
+  margin: 0 0 2px;
+}
+
+.ul-cell-email {
+  font-size: 12px;
+  color: #4a5270;
+  margin: 0;
+}
+
+.ul-cell-muted {
+  font-size: 13px;
+  color: #6b7591;
+}
+
+/* ---- TAG OVERRIDES ---- */
+.ul-root .ul-tag.p-tag {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+}
+
+.ul-root .ul-tag-desp.p-tag {
+  background: rgba(0, 224, 176, 0.1) !important;
+  color: #00e0b0 !important;
+  border: 1px solid rgba(0, 224, 176, 0.2) !important;
+}
+
+.ul-root .ul-tag-cli.p-tag {
+  background: rgba(99, 102, 241, 0.1) !important;
+  color: #818cf8 !important;
+  border: 1px solid rgba(99, 102, 241, 0.2) !important;
+}
+
+/* ---- DELETE BUTTON ---- */
+.ul-root .ul-btn-delete.p-button {
+  color: #3d4460 !important;
+  border-radius: 6px !important;
+  transition: color 0.15s, background 0.15s !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+}
+
+.ul-root .ul-btn-delete.p-button:hover {
+  color: #e05555 !important;
+  background: rgba(224, 85, 85, 0.08) !important;
+}
+
+/* ---- EMPTY STATE ---- */
+.ul-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  gap: 10px;
+}
+
+.ul-empty-icon {
+  font-size: 38px !important;
+  color: #252936;
+  margin-bottom: 8px;
+}
+
+.ul-empty-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a5270;
+  margin: 0;
+}
+
+.ul-empty-sub {
+  font-size: 13px;
+  color: #2e3347;
+  margin: 0 0 10px;
+}

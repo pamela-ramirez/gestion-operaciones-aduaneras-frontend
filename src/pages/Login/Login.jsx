@@ -14,10 +14,13 @@ export default function Login() {
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
 
+        
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
     if (token) {
-      navigate("/home");
+      const redirectPath = userRole === "cliente" ? "/cliente" : "/home";
+      navigate(redirectPath);
     }
   }, [navigate]);
 
@@ -26,10 +29,18 @@ export default function Login() {
       const data = await login(email, password);// Llama a la función de login del servicio de autenticación
       
       localStorage.setItem("token", data.token);
+      
+      // Guardar el rol del usuario
+      const userRole = data.user?.rol || data.rol || "admin";
+      localStorage.setItem("userRole", userRole);
+      
       console.log("LOGIN OK", data);
       console.log("TOKEN:", data.token);
+      console.log("USER ROLE:", userRole);
 
-      navigate("/home");
+      // Redirigir según el rol
+      const redirectPath = userRole === "Cliente" ? "/cliente" : "/home";
+      navigate(redirectPath);
 
     } catch (error) {
       console.error(error);

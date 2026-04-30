@@ -75,15 +75,17 @@ export default function Users() {
     const nombreCompleto =
       row.nombre && row.apellido
         ? `${row.nombre} ${row.apellido}`
-        : "Pendiente de registro";
+        : row.rol === "Administrador"
+          ? "Administrador"
+          : "Pendiente de registro";
 
     return (
       <div className="ul-user-cell">
         <Avatar
           label={
-            row.nombre
-              ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}`
-              : "?"
+            row.nombre ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}` : row.rol === "Administrador"
+          ? "A"
+          : "[?]"
           }
           shape="circle"
           className={`ul-avatar ul-avatar-${getRolType(row.rol)}`}
@@ -104,9 +106,7 @@ export default function Users() {
   );
 
   const empresaTemplate = (row) => (
-    <span className="ul-cell-muted">
-      {row.empresa || "—"}
-    </span>
+    <span className="ul-cell-muted">{row.empresa || "—"}</span>
   );
 
   const estadoTemplate = (row) => {
@@ -114,8 +114,8 @@ export default function Users() {
       row.estado === "Activo"
         ? "success"
         : row.estado === "Pendiente"
-        ? "warning"
-        : "secondary";
+          ? "warning"
+          : "secondary";
 
     return <Tag value={row.estado} severity={severity} />;
   };
@@ -200,7 +200,11 @@ export default function Users() {
           <Column header="USUARIO" body={usuarioTemplate} />
           <Column header="EMPRESA" body={empresaTemplate} />
           <Column header="ROL" body={rolTemplate} style={{ width: "150px" }} />
-          <Column header="ESTADO" body={estadoTemplate} style={{ width: "140px" }} />
+          <Column
+            header="ESTADO"
+            body={estadoTemplate}
+            style={{ width: "140px" }}
+          />
         </DataTable>
       </div>
 
@@ -209,7 +213,12 @@ export default function Users() {
         visible={dialogVisible}
         onHide={() => setDialogVisible(false)}
         onCreated={handleUserCreated}
-        roles={roles.filter((r) => r.value !== "Administrador" && r.value !== "Admin" && r.value !== "Asistente")}
+        roles={roles.filter(
+          (r) =>
+            r.value !== "Administrador" &&
+            r.value !== "Admin" &&
+            r.value !== "Asistente",
+        )}
       />
     </MainLayout>
   );

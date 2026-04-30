@@ -1,21 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 
-export default function Sidebar() {
+export default function ClientSidebar() {
   const navigate = useNavigate();
 
   const items = [
-    { label: "Tablero", icon: "pi pi-home", path: "/home" },
-    { label: "Clientes", icon: "pi pi-users", path: "/clientes" },
-    { label: "Operaciones", icon: "pi pi-briefcase", path: "/operaciones" },
-    { label: "Documentos", icon: "pi pi-file", path: "/documentos" },
-    { label: "Finanzas", icon: "pi pi-wallet", path: "/finanzas" },
-    {
-      label: "Comunicaciones",
-      icon: "pi pi-comments",
-      path: "/comunicaciones",
-    },
-    { label: "Auditoría", icon: "pi pi-search", path: "/auditoria" },
+    { label: "Mis Operaciones", icon: "pi pi-briefcase", path: "/cliente/mis-operaciones" },
+    { label: "Documentos", icon: "pi pi-file", path: "/cliente/documentos" },
+    { label: "Estado de Cuenta", icon: "pi pi-chart-bar", path: "/cliente/estado-cuenta" },
+    { label: "Pago Online", icon: "pi pi-credit-card", path: "/cliente/pago-online" },
   ];
 
   const handleLogout = () => {
@@ -42,14 +35,6 @@ export default function Sidebar() {
             <span>{item.label}</span>
           </div>
         ))}
-      </div>
-
-      {/* gestion usuarios */}
-      <div style={{ marginTop: "100px" }}>
-        <div className="sidebar-item" onClick={() => navigate("/usuarios")}>
-          <i className="pi pi-id-card"></i>
-          <span>Usuarios</span>
-        </div>
       </div>
 
       <div className="sidebar-footer">

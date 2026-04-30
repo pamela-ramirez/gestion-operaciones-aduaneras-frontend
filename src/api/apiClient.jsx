@@ -26,6 +26,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       console.log("No autorizado - logout automático");
       localStorage.removeItem("token");
+      localStorage.removeItem("userRole");
       window.location.href = "/";
     }
 

@@ -1,0 +1,181 @@
+/* ============================================================
+   FIRST LOGIN MODAL — ONBOARDING CLIENTE
+   Estilo consistente con Login + UI dark teal (#00e0b0)
+   ============================================================ */
+
+/* ---- OVERLAY ---- */
+.fl-mask.p-dialog-mask {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* ---- DIALOG ---- */
+.fl-dialog.p-dialog {
+  border-radius: 14px !important;
+  border: 1px solid #1f2333 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+}
+
+/* HEADER */
+.fl-dialog .p-dialog-header {
+  background: #161922 !important;
+  border-bottom: 1px solid #1f2333 !important;
+  padding: 18px 22px !important;
+}
+
+.fl-dialog .p-dialog-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.fl-dialog .p-dialog-header-icon {
+  color: #4a5270 !important;
+  transition: all 0.2s;
+}
+
+.fl-dialog .p-dialog-header-icon:hover {
+  color: #00e0b0 !important;
+}
+
+/* CONTENT */
+.fl-dialog .p-dialog-content {
+  background: #161922 !important;
+  padding: 24px !important;
+}
+
+/* ---- TITULOS ---- */
+.fl-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.fl-subtitle {
+  font-size: 12px;
+  color: #6b7591;
+  margin-bottom: 18px;
+}
+
+/* ---- FIELDS ---- */
+.fl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.fl-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7a8299;
+}
+
+/* ---- INPUTS ---- */
+.fl-dialog .p-inputtext {
+  width: 100%;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  padding: 10px 12px !important;
+  transition: all 0.2s;
+}
+
+.fl-dialog .p-inputtext::placeholder {
+  color: #353b52 !important;
+}
+
+.fl-dialog .p-inputtext:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+/* ICON INPUT */
+.fl-dialog .p-input-icon-left > i {
+  color: #4a5270 !important;
+  left: 10px !important;
+}
+
+/* PASSWORD */
+.fl-dialog .p-password {
+  width: 100%;
+}
+
+.fl-dialog .p-password input {
+  width: 100%;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  padding: 10px 38px 10px 12px !important;
+}
+
+.fl-dialog .p-password input:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+.fl-dialog .p-password-toggle-mask-icon {
+  color: #4a5270 !important;
+}
+
+/* ---- STEPS INDICATOR (opcional futuro UX) ---- */
+.fl-step {
+  display: inline-block;
+  font-size: 11px;
+  color: #00e0b0;
+  margin-bottom: 10px;
+}
+
+/* ---- BOTONES ---- */
+.fl-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #1c1f2b;
+}
+
+.fl-btn-primary.p-button {
+  background: #00e0b0 !important;
+  border: none !important;
+  color: #0a0d13 !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 18px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s;
+}
+
+.fl-btn-primary.p-button:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.25);
+}
+
+.fl-btn-secondary.p-button {
+  background: transparent !important;
+  border: 1px solid #252936 !important;
+  color: #6b7591 !important;
+  border-radius: 8px !important;
+  font-size: 13px;
+}
+
+.fl-btn-secondary.p-button:hover {
+  border-color: #3d4460 !important;
+  color: #b8c0d8 !important;
+}
+
+/* ---- LOADING STATE ---- */
+.fl-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}

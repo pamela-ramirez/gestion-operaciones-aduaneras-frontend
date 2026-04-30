@@ -83,9 +83,11 @@ export default function Users() {
       <div className="ul-user-cell">
         <Avatar
           label={
-            row.nombre ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}` : row.rol === "Administrador"
-          ? "A"
-          : "[?]"
+            row.nombre
+              ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}`
+              : row.rol === "Administrador"
+                ? "A"
+                : "[?]"
           }
           shape="circle"
           className={`ul-avatar ul-avatar-${getRolType(row.rol)}`}
@@ -109,7 +111,7 @@ export default function Users() {
     <span className="ul-cell-muted">{row.empresa || "—"}</span>
   );
 
-  const estadoTemplate = (row) => {
+  /* const estadoTemplate = (row) => {
     const severity =
       row.estado === "Activo"
         ? "success"
@@ -118,6 +120,21 @@ export default function Users() {
           : "secondary";
 
     return <Tag value={row.estado} severity={severity} />;
+  }; */
+  const estadoTemplate = (row) => {
+    let label = row.estado;
+    let severity = "secondary";
+
+    if (row.rol === "Cliente" && row.perfilCompleto === false) {
+      label = "Registro incompleto";
+      severity = "danger";
+    } else if (row.estado === "Activo") {
+      severity = "success";
+    } else if (row.estado === "Pendiente") {
+      severity = "warning";
+    }
+
+    return <Tag value={label} severity={severity} />;
   };
 
   // =========================

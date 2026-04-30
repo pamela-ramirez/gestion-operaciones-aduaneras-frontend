@@ -14,34 +14,63 @@ export default function Login() {
   const [remember, setRemember] = useState(false);
   const navigate = useNavigate();
 
-        
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userRole = localStorage.getItem("userRole");
-    if (token) {
-      const redirectPath = userRole === "cliente" ? "/cliente" : "/home";
-      navigate(redirectPath);
+
+    const perfilCompleto = localStorage.getItem("perfilCompleto") === "true";
+
+    const primerLogin = localStorage.getItem("primerLogin") === "true";
+
+    if (!token || !userRole) return;
+
+    if (userRole === "cliente") {
+      if (primerLogin || !perfilCompleto) {
+        localStorage.setItem("showOnboarding", "true");
+        navigate("/cliente");
+        return;
+      }
+
+      navigate("/cliente");
+      return;
     }
+
+    navigate("/home");
   }, [navigate]);
 
   const handleLogin = async () => {
     try {
-      const data = await login(email, password);// Llama a la función de login del servicio de autenticación
-      
+      const data = await login(email, password); // Llama a la función de login del servicio de autenticación
+
       localStorage.setItem("token", data.token);
-      
+
       // Guardar el rol del usuario
-      const userRole = data.user?.rol || data.rol || "admin";
+      const userRole = (data.user?.rol || data.rol || "admin").toLowerCase();
+      const perfilCompleto = data.user?.perfilCompleto ?? false;
+      const primerLogin = data.user?.primerLogin ?? false;
+
       localStorage.setItem("userRole", userRole);
-      
-      console.log("LOGIN OK", data);
-      console.log("TOKEN:", data.token);
-      console.log("USER ROLE:", userRole);
+      localStorage.setItem(
+        "perfilCompleto",
+        data.user?.perfilCompleto ? "true" : "false",
+      );
+      localStorage.setItem(
+        "primerLogin",
+        data.user?.primerLogin ? "true" : "false",
+      );
 
-      // Redirigir según el rol
-      const redirectPath = userRole === "Cliente" ? "/cliente" : "/home";
-      navigate(redirectPath);
+      // CLIENTE
+      if (userRole === "cliente") {
+        if (primerLogin || !perfilCompleto) {
+          navigate("/cliente/completar-registro");
+          return;
+        }
+        navigate("/cliente");
+        return;
+      }
 
+      // ADMIN
+      navigate("/home");
     } catch (error) {
       console.error(error);
     }

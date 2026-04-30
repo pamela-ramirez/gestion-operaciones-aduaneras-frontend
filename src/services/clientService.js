@@ -9,3 +9,13 @@ export const crearCliente = async (cliente) => {
     throw error;
   }
 };
+
+
+export const completarPerfil = async (data) => {
+  const response = await apiClient.put(
+    import.meta.env.VITE_CLIENTE_COMPLETAR_PERFIL_ENDPOINT,
+    data
+  );
+
+  return response.data;
+};

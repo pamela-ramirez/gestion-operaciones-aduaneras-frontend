@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import InviteUserDialog from "../../components/users/InviteUserDialog";
+import UserForm from "../../components/UserForm";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -15,86 +15,82 @@ export default function Users() {
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [dialogVisible, setDialogVisible] = useState(false);
+  const [formVisible, setFormVisible] = useState(false); // controla visibilidad del formulario de creación
 
-  // =========================
-  // LOAD DATA
-  // =========================
-
+  // Carga los usuarios desde el backend
   const cargarUsuarios = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await getUsers();
-      setUsuarios(Array.isArray(data) ? data : []);
-    } catch {
+      const usuariosbackend = await getUsers();
+      console.log("USUARIOS BACKEND:", usuariosbackend);
+      setUsuarios(Array.isArray(usuariosbackend) ? usuariosbackend : []);
+    } catch (err) {
       setError("No se pudieron cargar los usuarios.");
     } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    cargarUsuarios();
+  }, []);
+
+  // Carga los roles desde el backend 
   const cargarRoles = async () => {
     try {
-      const data = await getRoles();
-      setRoles(Array.isArray(data) ? data : []);
-    } catch {
+      const rolesBackend = await getRoles();
+      console.log("ROLES BACKEND:", rolesBackend);
+      setRoles(Array.isArray(rolesBackend) ? rolesBackend : []);
+    } catch (err) {
       setError("No se pudieron cargar los roles.");
-    }
+    } 
   };
 
   useEffect(() => {
-    cargarUsuarios();
     cargarRoles();
   }, []);
 
-  // =========================
-  // HANDLERS
-  // =========================
 
-  const handleUserCreated = async () => {
-    setDialogVisible(false);
-    await cargarUsuarios(); // recargar desde backend
+  const handleNuevoUsuario = (newUser) => {
+    setUsuarios((prev) => [...prev, newUser]); // Agregar el nuevo usuario a la lista existente
   };
 
+  // Función para obtener el label del rol desde el array dinámico
   const getRolLabel = (rolValue) => {
     const rol = roles.find((r) => r.value === rolValue);
     return rol ? rol.label : rolValue;
   };
 
+  // Función para determinar la clase CSS del rol
   const getRolType = (rolValue) => {
     return rolValue === "Despachante" ? "desp" : "cli";
   };
 
-  // =========================
-  // TEMPLATES
-  // =========================
+/*   const handleDelete = (id) => {
+    if (window.confirm("¿Eliminar este usuario?")) {
+      setUsuarios((prev) => prev.filter((u) => u.id !== id));
+    }
+  }; */
 
-  const usuarioTemplate = (row) => {
-    const nombreCompleto =
-      row.nombre && row.apellido
-        ? `${row.nombre} ${row.apellido}`
-        : "Pendiente de registro";
+  // ---- COLUMN TEMPLATES ----
 
-    return (
-      <div className="ul-user-cell">
-        <Avatar
-          label={
-            row.nombre
-              ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}`
-              : "?"
-          }
-          shape="circle"
-          className={`ul-avatar ul-avatar-${getRolType(row.rol)}`}
-        />
-        <div>
-          <p className="ul-cell-name">{nombreCompleto}</p>
-          <p className="ul-cell-email">{row.email}</p>
-        </div>
+  const usuarioTemplate = (row) => (
+    <div className="ul-user-cell">
+      <Avatar
+        label={`${row.nombre?.[0] ?? ""}${row.apellido?.[0] ?? ""}`.toUpperCase()}
+        shape="circle"
+        className={`ul-avatar ul-avatar-${getRolType(row.rol)}`}
+      />
+      <div>
+        <p className="ul-cell-name">
+          {row.nombre} {row.apellido}
+        </p>
+        <p className="ul-cell-email">{row.email}</p>
       </div>
-    );
-  };
+    </div>
+  );
 
   const rolTemplate = (row) => (
     <Tag
@@ -104,25 +100,20 @@ export default function Users() {
   );
 
   const empresaTemplate = (row) => (
-    <span className="ul-cell-muted">
-      {row.empresa || "—"}
-    </span>
+    <span className="ul-cell-muted">{row.empresa || "—"}</span>
   );
 
-  const estadoTemplate = (row) => {
-    const severity =
-      row.estado === "Activo"
-        ? "success"
-        : row.estado === "Pendiente"
-        ? "warning"
-        : "secondary";
-
-    return <Tag value={row.estado} severity={severity} />;
-  };
-
-  // =========================
-  // UI
-  // =========================
+  //validar acciones según rol del usuario logueado (solo admin puede eliminar)
+  //confirmar si se elimina o se deshabilita el usuario (mejor opción para no perder datos históricos)
+/*   const accionesTemplate = (row) => (
+    <Button
+      icon="pi pi-trash"
+      className="ul-btn-delete"
+      text
+      severity="danger"
+      onClick={() => handleDelete(row.id)}
+    />
+  ); */
 
   const header = (
     <div className="ul-table-header">
@@ -143,10 +134,12 @@ export default function Users() {
   return (
     <MainLayout>
       <div className="ul-root">
-        {/* HEADER */}
+        {/* PAGE HEADER */}
         <div className="ul-header">
           <div>
             <div className="ul-breadcrumb">
+              {/*  <span className="ul-bc-dim">SISTEMA</span>
+              <span className="ul-bc-sep">›</span> */}
               <span className="ul-bc-active">USUARIOS</span>
               <span className="ul-bc-sep">›</span>
             </div>
@@ -159,8 +152,9 @@ export default function Users() {
           <Button
             label="Nuevo Usuario"
             icon="pi pi-plus"
+            iconPos="left"
             className="ul-btn-primary"
-            onClick={() => setDialogVisible(true)}
+            onClick={() => setFormVisible(true)}
           />
         </div>
 
@@ -170,14 +164,12 @@ export default function Users() {
             <span className="ul-stat-label">TOTAL</span>
             <span className="ul-stat-value">{usuarios.length}</span>
           </div>
-
           <div className="ul-stat-card">
             <span className="ul-stat-label">DESPACHANTES</span>
             <span className="ul-stat-value">
               {usuarios.filter((u) => u.rol === "Despachante").length}
             </span>
           </div>
-
           <div className="ul-stat-card">
             <span className="ul-stat-label">CLIENTES</span>
             <span className="ul-stat-value">
@@ -186,9 +178,8 @@ export default function Users() {
           </div>
         </div>
 
-        {/* TABLE */}
+        {/* DATA TABLE */}
         {error && <div className="ul-error">{error}</div>}
-
         <DataTable
           value={usuarios}
           header={header}
@@ -200,17 +191,20 @@ export default function Users() {
           <Column header="USUARIO" body={usuarioTemplate} />
           <Column header="EMPRESA" body={empresaTemplate} />
           <Column header="ROL" body={rolTemplate} style={{ width: "150px" }} />
-          <Column header="ESTADO" body={estadoTemplate} style={{ width: "140px" }} />
+          {/* <Column body={accionesTemplate} style={{ width: "60px" }} /> */}
         </DataTable>
       </div>
 
-      {/* DIALOG */}
       <InviteUserDialog
-        visible={dialogVisible}
-        onHide={() => setDialogVisible(false)}
-        onCreated={handleUserCreated}
-        roles={roles.filter((r) => r.value !== "Administrador" && r.value !== "Admin" && r.value !== "Asistente")}
+        visible={formVisible}
+        onHide={() => setFormVisible(false)}
+        onCreated={handleNuevoUsuario}
+        roles={roles.filter(r => r.label !== "Administrador" && r.label !== "Admin" && r.label !== "Asistente")} 
+        // Excluir rol Admin del dropdown y 
+        // por ahora asistente tambien porque se eliminara en el backend, 
+        // despues eliminar este filtro porque ya no estara disponible ese rol
       />
+
     </MainLayout>
   );
 }

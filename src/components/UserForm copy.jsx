@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
+//import { Password } from "primereact/password";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import "./UserForm.css";
@@ -9,15 +9,16 @@ import { crearCliente } from "../services/clientService";
 
 const initialForm = {
   rol: null,
+
   // Despachante
   nombre: "",
   apellido: "",
   email: "",
-  password: "",
   telefono: "",
-  //nroHabilitacionDGA: "",
+  nroHabilitacionDGA: "",
+
   // Cliente
-  //razonSocial: "",
+  razonSocial: "",
   rut: "",
   nombreContacto: "",
   apellidoContacto: "",
@@ -50,23 +51,19 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
     if (!form.apellido.trim()) e.apellido = "Requerido";
     if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email))
       e.email = "Email inválido";
-    if (!form.password || form.password.length < 6)
-      e.password = "Mínimo 6 caracteres";
     if (!form.telefono.trim()) e.telefono = "Requerido";
-    //if (form.cargo === "TITULAR" && !form.nroHabilitacionDGA.trim()) e.nroHabilitacionDGA = "Requerido para Titular";
+    if (!form.nroHabilitacionDGA.trim()) e.nroHabilitacionDGA = "Requerido";
     return e;
   };
 
   const validateCliente = () => {
     const e = {};
-    // if (!form.razonSocial.trim()) e.razonSocial = "Requerido";
+    if (!form.razonSocial.trim()) e.razonSocial = "Requerido";
     if (!form.rut.trim()) e.rut = "Requerido";
     if (!form.nombreContacto.trim()) e.nombreContacto = "Requerido";
     if (!form.apellidoContacto.trim()) e.apellidoContacto = "Requerido";
     if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email))
       e.email = "Email inválido";
-    if (!form.password || form.password.length < 6)
-      e.password = "Mínimo 6 caracteres";
     if (!form.telefono.trim()) e.telefono = "Requerido";
     return e;
   };
@@ -76,40 +73,57 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
       setErrors({ rol: "Seleccioná un rol" });
       return;
     }
-    const e =
-      isDespachante(form.rol) ? validateDespachante() : validateCliente();
+
+    const e = isDespachante(form.rol)
+      ? validateDespachante()
+      : validateCliente();
+
     if (Object.keys(e).length > 0) {
       setErrors(e);
       return;
     }
 
     try {
-      //llamada al backend
       let response;
-      const clientePayload = {
-        nombre: form.nombreContacto,
-        apellido: form.apellidoContacto,
-        email: form.email,
-        password: form.password,
-        rut: form.rut,
-        telefono: form.telefono,
-        direccion: form.direccionFiscal,
-      };
-      console.log("PAYLOAD CLIENTE:", clientePayload);
 
-      if (!isDespachante(form.rol)) {
+      if (isDespachante(form.rol)) {
+        const despachantePayload = {
+          email: form.email,
+          persona: {
+            nombre: form.nombre,
+            apellido: form.apellido,
+            telefono: form.telefono,
+          },
+          nroHabilitacionDGA: form.nroHabilitacionDGA,
+        };
+
+        console.log("PAYLOAD DESPACHANTE:", despachantePayload);
+
+        // 👉 cuando tengas backend listo
+        // response = await crearDespachante(despachantePayload);
+
+        alert("Pendiente endpoint de despachante");
+        return;
+      } else {
+        const clientePayload = {
+          email: form.email,
+          empresa: {
+            rut: form.rut,
+            razonSocial: form.razonSocial,
+            direccionFiscal: form.direccionFiscal,
+          },
+          contacto: {
+            nombre: form.nombreContacto,
+            apellido: form.apellidoContacto,
+            telefono: form.telefono,
+          },
+        };
+
+        console.log("PAYLOAD CLIENTE:", clientePayload);
+
         response = await crearCliente(clientePayload);
       }
 
-      if (isDespachante(form.rol)) {
-        //response = await crearDespachante(form); //crear en services crearDespachante y backend
-        alert("Funcionalidad de creación de despachante no implementada aún");
-        return;
-      }
-
-      console.log("Usuario creado:", response);
-
-      // callback opcional al padre
       onCreated?.(response);
 
       setSuccess(true);
@@ -119,15 +133,12 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
         setForm(initialForm);
         setErrors({});
         onHide();
-      }, 1400);
+      }, 2000);
     } catch (error) {
-      console.error("Error al crear usuario:", error);
-      console.log("STATUS:", error.response?.status);
-      console.log("DATA BACKEND:", error.response?.data);
+      console.error(error);
 
-      // opcional: mostrar error en UI
       setErrors({
-        submit: "Error al crear el usuario. Intente nuevamente.",
+        submit: "Error al crear el usuario",
       });
     }
   };
@@ -171,7 +182,9 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
             <div className="uf-success-icon">
               <i className="pi pi-check" />
             </div>
-            <p className="uf-success-text">Usuario creado exitosamente</p>
+            <p className="uf-success-text">
+              Usuario creado exitosamente. Se envió email para activar la cuenta.
+            </p>
           </div>
         )}
 
@@ -267,23 +280,29 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
                 )}
               </div>
 
-              {/*  {form.cargo === "TITULAR" && (
-                <div className="uf-field uf-field-full">
-                  <label className="uf-label">NRO. HABILITACIÓN DGA</label>
-                  <span className="p-input-icon-left">
-                    <i className="pi pi-id-card" />
-                    <InputText
-                      value={form.nroHabilitacionDGA}
-                      onChange={(e) => handleChange("nroHabilitacionDGA", e.target.value)}
-                      placeholder="Ej. 12345"
-                      className={`uf-input ${errors.nroHabilitacionDGA ? "uf-input-error" : ""}`}
-                    />
-                  </span>
-                  {errors.nroHabilitacionDGA && <small className="uf-error">{errors.nroHabilitacionDGA}</small>}
-                </div>
-              )} */}
-
               <div className="uf-field uf-field-full">
+                <label className="uf-label">NRO. HABILITACIÓN DGA</label>
+                <span className="p-input-icon-left">
+                  <i className="pi pi-id-card" />
+                  <InputText
+                    value={form.nroHabilitacionDGA}
+                    onChange={(e) =>
+                      handleChange("nroHabilitacionDGA", e.target.value)
+                    }
+                    placeholder="Ej. 12345"
+                    className={`uf-input ${
+                      errors.nroHabilitacionDGA ? "uf-input-error" : ""
+                    }`}
+                  />
+                </span>
+                {errors.nroHabilitacionDGA && (
+                  <small className="uf-error">
+                    {errors.nroHabilitacionDGA}
+                  </small>
+                )}
+              </div>
+
+              {/*  <div className="uf-field uf-field-full">
                 <label className="uf-label">CONTRASEÑA TEMPORAL</label>
                 <span className="p-input-icon-left uf-password-wrap">
                   <i className="pi pi-lock" />
@@ -300,7 +319,7 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
                 {errors.password && (
                   <small className="uf-error">{errors.password}</small>
                 )}
-              </div>
+              </div> */}
             </div>
           </>
         )}
@@ -313,19 +332,25 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
             </div>
 
             <div className="uf-grid">
-              {/* <div className="uf-field uf-field-full">
+              <div className="uf-field uf-field-full">
                 <label className="uf-label">RAZÓN SOCIAL</label>
                 <span className="p-input-icon-left">
                   <i className="pi pi-building" />
                   <InputText
                     value={form.razonSocial}
-                    onChange={(e) => handleChange("razonSocial", e.target.value)}
+                    onChange={(e) =>
+                      handleChange("razonSocial", e.target.value)
+                    }
                     placeholder="Ej. Importadora del Sur S.A."
-                    className={`uf-input ${errors.razonSocial ? "uf-input-error" : ""}`}
+                    className={`uf-input ${
+                      errors.razonSocial ? "uf-input-error" : ""
+                    }`}
                   />
                 </span>
-                {errors.razonSocial && <small className="uf-error">{errors.razonSocial}</small>}
-              </div> */}
+                {errors.razonSocial && (
+                  <small className="uf-error">{errors.razonSocial}</small>
+                )}
+              </div>
 
               <div className="uf-field">
                 <label className="uf-label">RUT</label>
@@ -430,7 +455,7 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
                 )}
               </div>
 
-              <div className="uf-field">
+              {/* <div className="uf-field">
                 <label className="uf-label">CONTRASEÑA TEMPORAL</label>
                 <span className="p-input-icon-left uf-password-wrap">
                   <i className="pi pi-lock" />
@@ -447,7 +472,7 @@ const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
                 {errors.password && (
                   <small className="uf-error">{errors.password}</small>
                 )}
-              </div>
+              </div> */}
             </div>
           </>
         )}

@@ -1,6 +1,6 @@
 import apiClient from "../api/apiClient";
 
-export const getUsuarios = async () => {
+export const getUsers = async () => {
   try {
     const response = await apiClient.get(import.meta.env.VITE_USUARIO_ENDPOINT);
     return response.data;

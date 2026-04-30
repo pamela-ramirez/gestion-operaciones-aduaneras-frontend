@@ -6,7 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { getRoles } from "../services/roleService";
 import "./UserForm.css";
-import { crearCliente } from "../services/clienteService";
+import { crearCliente } from "../services/clientService";
 
 const initialForm = {
   rol: null,

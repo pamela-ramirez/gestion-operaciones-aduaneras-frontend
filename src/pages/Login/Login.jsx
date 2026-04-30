@@ -23,14 +23,14 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const data = await login(email, password);
+      const data = await login(email, password);// Llama a la función de login del servicio de autenticación
+      
       localStorage.setItem("token", data.token);
       console.log("LOGIN OK", data);
       console.log("TOKEN:", data.token);
 
-      console.log("ANTES NAVIGATE");
       navigate("/home");
-      console.log("DESPUÉS NAVIGATE");
+
     } catch (error) {
       console.error(error);
     }
@@ -50,10 +50,9 @@ export default function Login() {
             <div className="login-logo">
               <i className="pi pi-shield" />
             </div>
-            <h1 className="login-brand-name">Despachos al Cien</h1>
+            <h1 className="login-brand-name">DESPACHOS AL CIEN</h1>
           </div>
 
-          {/* Card */}
           <div className="login-card">
             <h2 className="login-title">Bienvenido</h2>
             <p className="login-subtitle">

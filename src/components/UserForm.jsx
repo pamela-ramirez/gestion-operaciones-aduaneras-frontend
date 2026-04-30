@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
-import { getRoles } from "../services/roleService";
 import "./UserForm.css";
 import { crearCliente } from "../services/clientService";
 
@@ -25,19 +24,15 @@ const initialForm = {
   direccionFiscal: "",
 };
 
-const UserForm = ({ visible, onHide, onCreated }) => {
-  const [roles, setRoles] = useState([]);
+const UserForm = ({ visible, onHide, onCreated, roles = [] }) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    const loadRoles = async () => {
-      const data = await getRoles();
-      setRoles(data);
-    };
-    loadRoles();
-  }, []);
+  // Función helper para identificar si un rol es DESPACHANTE
+  const isDespachante = (rolValue) => {
+    return rolValue === "Despachante";
+  };
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -82,7 +77,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
       return;
     }
     const e =
-      form.rol === "DESPACHANTE" ? validateDespachante() : validateCliente();
+      isDespachante(form.rol) ? validateDespachante() : validateCliente();
     if (Object.keys(e).length > 0) {
       setErrors(e);
       return;
@@ -102,11 +97,11 @@ const UserForm = ({ visible, onHide, onCreated }) => {
       };
       console.log("PAYLOAD CLIENTE:", clientePayload);
 
-      if (form.rol === "CLIENTE") {
+      if (!isDespachante(form.rol)) {
         response = await crearCliente(clientePayload);
       }
 
-      if (form.rol === "DESPACHANTE") {
+      if (isDespachante(form.rol)) {
         //response = await crearDespachante(form); //crear en services crearDespachante y backend
         alert("Funcionalidad de creación de despachante no implementada aún");
         return;
@@ -191,7 +186,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
                 onClick={() => handleRolChange(r.value)}
               >
                 <i
-                  className={`pi ${r.value === "DESPACHANTE" ? "pi-briefcase" : "pi-building"}`}
+                  className={`pi ${isDespachante(r.value) ? "pi-briefcase" : "pi-building"}`}
                 />
                 {r.label}
               </button>
@@ -201,7 +196,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
         </div>
 
         {/* ===== CAMPOS DESPACHANTE ===== */}
-        {form.rol === "DESPACHANTE" && (
+        {isDespachante(form.rol) && (
           <>
             <div className="uf-section-divider">
               <span>DATOS PERSONALES</span>
@@ -311,7 +306,7 @@ const UserForm = ({ visible, onHide, onCreated }) => {
         )}
 
         {/* ===== CAMPOS CLIENTE ===== */}
-        {form.rol === "CLIENTE" && (
+        {!isDespachante(form.rol) && (
           <>
             <div className="uf-section-divider">
               <span>DATOS DE LA EMPRESA</span>

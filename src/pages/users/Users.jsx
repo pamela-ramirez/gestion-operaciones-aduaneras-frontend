@@ -7,10 +7,12 @@ import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
 import { Avatar } from "primereact/avatar";
 import { getUsers } from "../../services/userService";
+import { getRoles } from "../../services/roleService";
 import "./Users.css";
 
 export default function Users() {
   const [usuarios, setUsuarios] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formVisible, setFormVisible] = useState(false); // controla visibilidad del formulario de creación
@@ -35,8 +37,35 @@ export default function Users() {
     cargarUsuarios();
   }, []);
 
+  // Carga los roles desde el backend 
+  const cargarRoles = async () => {
+    try {
+      const rolesBackend = await getRoles();
+      console.log("ROLES BACKEND:", rolesBackend);
+      setRoles(Array.isArray(rolesBackend) ? rolesBackend : []);
+    } catch (err) {
+      setError("No se pudieron cargar los roles.");
+    } 
+  };
+
+  useEffect(() => {
+    cargarRoles();
+  }, []);
+
+
   const handleNuevoUsuario = (newUser) => {
     setUsuarios((prev) => [...prev, newUser]); // Agregar el nuevo usuario a la lista existente
+  };
+
+  // Función para obtener el label del rol desde el array dinámico
+  const getRolLabel = (rolValue) => {
+    const rol = roles.find((r) => r.value === rolValue);
+    return rol ? rol.label : rolValue;
+  };
+
+  // Función para determinar la clase CSS del rol
+  const getRolType = (rolValue) => {
+    return rolValue === "Despachante" ? "desp" : "cli";
   };
 
 /*   const handleDelete = (id) => {
@@ -52,7 +81,7 @@ export default function Users() {
       <Avatar
         label={`${row.nombre?.[0] ?? ""}${row.apellido?.[0] ?? ""}`.toUpperCase()}
         shape="circle"
-        className={`ul-avatar ul-avatar-${row.rol === "DESPACHANTE" ? "desp" : "cli"}`}
+        className={`ul-avatar ul-avatar-${getRolType(row.rol)}`}
       />
       <div>
         <p className="ul-cell-name">
@@ -65,8 +94,8 @@ export default function Users() {
 
   const rolTemplate = (row) => (
     <Tag
-      value={row.rol === "DESPACHANTE" ? "Despachante" : "Cliente"}
-      className={`ul-tag ul-tag-${row.rol === "DESPACHANTE" ? "desp" : "cli"}`}
+      value={getRolLabel(row.rol)}
+      className={`ul-tag ul-tag-${getRolType(row.rol)}`}
     />
   );
 
@@ -169,7 +198,11 @@ export default function Users() {
       <UserForm
         visible={formVisible}
         onHide={() => setFormVisible(false)}
-        onCreated={handleNuevoUsuario}// Agrega el nuevo usuario a la tabla sin recargar la página
+        onCreated={handleNuevoUsuario}
+        roles={roles.filter(r => r.label !== "Administrador" && r.label !== "Admin" && r.label !== "Asistente")} 
+        // Excluir rol Admin del dropdown y 
+        // por ahora asistente tambien porque se eliminara en el backend, 
+        // despues eliminar este filtro porque ya no estara disponible ese rol
       />
 
     </MainLayout>

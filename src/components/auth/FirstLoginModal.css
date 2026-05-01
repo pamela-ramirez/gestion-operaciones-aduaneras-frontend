@@ -1,0 +1,269 @@
+/* ============================================================
+   FIRST LOGIN MODAL — ONBOARDING CLIENTE / DESPACHANTE
+   ============================================================ */
+
+/* OVERLAY */
+.fl-mask.p-dialog-mask {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* DIALOG */
+.fl-dialog.p-dialog {
+  border-radius: 14px !important;
+  border: 1px solid #1f2333 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+}
+
+/* HEADER */
+.fl-dialog .p-dialog-header {
+  background: #161922 !important;
+  border-bottom: 1px solid #1f2333 !important;
+  padding: 18px 22px !important;
+}
+
+.fl-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fl-header-icon {
+  color: #00e0b0;
+  font-size: 16px;
+}
+
+.fl-dialog .p-dialog-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* CONTENT */
+.fl-dialog .p-dialog-content {
+  background: #161922 !important;
+  padding: 24px !important;
+}
+
+/* ── STEP INDICATOR ──────────────────────────────────────── */
+.fl-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.fl-step-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.fl-step-dot span {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #1c1f2b;
+  border: 2px solid #252936;
+  color: #4a5270;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.fl-step-dot.active span {
+  background: rgba(0, 224, 176, 0.15);
+  border-color: #00e0b0;
+  color: #00e0b0;
+}
+
+.fl-step-dot label {
+  font-size: 10px;
+  color: #4a5270;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: default;
+}
+
+.fl-step-dot.active label {
+  color: #00e0b0;
+}
+
+.fl-step-line {
+  width: 60px;
+  height: 2px;
+  background: #252936;
+  margin: 0 8px;
+  margin-bottom: 18px;
+}
+
+/* ── ERROR ───────────────────────────────────────────────── */
+.fl-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #f87171;
+}
+
+.fl-error i {
+  flex-shrink: 0;
+}
+
+/* ── TÍTULOS ─────────────────────────────────────────────── */
+.fl-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+.fl-subtitle {
+  font-size: 12px;
+  color: #6b7591;
+  margin: 0 0 20px;
+}
+
+/* ── FIELDS ──────────────────────────────────────────────── */
+.fl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.fl-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7a8299;
+}
+
+/* ── INPUTS ──────────────────────────────────────────────── */
+.fl-input.p-inputtext,
+.fl-dialog .p-inputtext.fl-input {
+  width: 100%;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  padding: 10px 12px 10px 36px !important;
+  transition: all 0.2s;
+}
+
+.fl-input.p-inputtext::placeholder {
+  color: #353b52 !important;
+}
+
+.fl-input.p-inputtext:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+  outline: none;
+}
+
+/* Icon inside input */
+.fl-dialog .p-input-icon-left > i {
+  color: #4a5270 !important;
+  left: 10px !important;
+  z-index: 1;
+}
+
+/* ── PASSWORD ────────────────────────────────────────────── */
+.fl-password.p-password {
+  width: 100%;
+}
+
+.fl-password .p-inputtext {
+  width: 100%;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  padding: 10px 38px 10px 12px !important;
+  transition: all 0.2s;
+}
+
+.fl-password .p-inputtext::placeholder {
+  color: #353b52 !important;
+}
+
+.fl-password .p-inputtext:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+.fl-password .p-password-toggle-mask-icon {
+  color: #4a5270 !important;
+}
+
+/* Password strength meter */
+.fl-dialog .p-password-panel {
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+}
+
+.fl-dialog .p-password-panel .p-password-meter {
+  background: #1c1f2b !important;
+}
+
+/* ── BOTONES ─────────────────────────────────────────────── */
+.fl-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #1c1f2b;
+}
+
+.fl-btn-primary.p-button {
+  background: #00e0b0 !important;
+  border: none !important;
+  color: #0a0d13 !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 20px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s;
+}
+
+.fl-btn-primary.p-button:hover:not(:disabled) {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.25);
+}
+
+.fl-btn-primary.p-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fl-btn-secondary.p-button {
+  background: transparent !important;
+  border: 1px solid #252936 !important;
+  color: #6b7591 !important;
+  border-radius: 8px !important;
+  font-size: 13px;
+  padding: 9px 16px !important;
+  transition: all 0.2s;
+}
+
+.fl-btn-secondary.p-button:hover:not(:disabled) {
+  border-color: #3d4460 !important;
+  color: #b8c0d8 !important;
+}

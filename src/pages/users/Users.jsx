@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import InviteUserDialog from "../../components/users/InviteUserDialog";
+import InviteUserDialog from "../../components/users/CreateUserDialog";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -77,6 +77,34 @@ export default function Users() {
         ? `${row.nombre} ${row.apellido}`
         : row.rol === "Admin"
           ? "Admin"
+          : "Pendiente";
+
+    return (
+      <div className="ul-user-cell">
+        <Avatar
+          label={
+            row.nombre
+              ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}`
+              : row.rol === "Admin"
+                ? "A"
+                : "[?]"
+          }
+          shape="circle"
+          className={`ul-avatar ul-avatar-${getRolType(row.rol)}`}
+        />
+        <div>
+          <p className="ul-cell-name">{nombreCompleto}</p>
+          <p className="ul-cell-email">{row.email}</p>
+        </div>
+      </div>
+    );
+  };
+  /*  const usuarioTemplate = (row) => {
+    const nombreCompleto =
+      row.nombre && row.apellido
+        ? `${row.nombre} ${row.apellido}`
+        : row.rol === "Admin"
+          ? "Admin"
           : "Pendiente de registro";
 
     return (
@@ -99,6 +127,11 @@ export default function Users() {
       </div>
     );
   };
+ */
+
+const usernameTemplate = (row) => (
+  <span className="ul-username">{row.username || "—"}</span>
+); 
 
   const rolTemplate = (row) => (
     <Tag
@@ -107,30 +140,42 @@ export default function Users() {
     />
   );
 
-  const empresaTemplate = (row) => (
-    <span className="ul-cell-muted">{row.empresa || "—"}</span>
+ const empresaTemplate = (row) => (
+  <span className="ul-cell-muted">
+    {row.razonSocial || "—"}
+  </span>
+); 
+
+const fechaTemplate = (row) => {
+  if (!row.fechaCreacion) return "—";
+
+  const date = new Date(row.fechaCreacion);
+
+  return (
+    <span className="ul-cell-muted">
+      {date.toLocaleDateString()}
+    </span>
   );
+};
 
-  
   const estadoTemplate = (row) => {
-    let label = row.estado;
-    let severity = "secondary";
+  let label = row.estado;
+  let severity = "secondary";
 
-    if (row.estado === "ACTIVO") {
-      severity = "success";
-    } else if (row.estado === "PENDIENTE") {
-      label = "Pendiente";
-      severity = "warning";
-    }
+  if (row.estado === "ACTIVO") {
+    severity = "success";
+  } else if (row.estado === "PENDIENTE") {
+    label = "Pendiente";
+    severity = "warning";
+  }
 
-    // opcional: mostrar que aún no cambió password
-    if (row.primerLogin === true && row.estado === "ACTIVO") {
-      label = "Debe cambiar contraseña";
-      severity = "info";
-    }
+  if (row.primerLogin === true && row.estado === "ACTIVO") {
+    label = "Debe cambiar contraseña";
+    severity = "info";
+  }
 
-    return <Tag value={label} severity={severity} />;
-  };
+  return <Tag value={label} severity={severity} />;
+};
 
   // =========================
   // UI
@@ -209,14 +254,17 @@ export default function Users() {
           rowHover
           loading={loading}
         >
-          <Column header="USUARIO" body={usuarioTemplate} />
-          <Column header="EMPRESA" body={empresaTemplate} />
-          <Column header="ROL" body={rolTemplate} style={{ width: "150px" }} />
-          <Column
-            header="ESTADO"
-            body={estadoTemplate}
-            style={{ width: "140px" }}
-          />
+         <Column header="USUARIO" body={usuarioTemplate} />
+  
+  <Column header="USERNAME" body={usernameTemplate} />
+
+  <Column header="EMPRESA" body={empresaTemplate} />
+
+  <Column header="ROL" body={rolTemplate} style={{ width: "140px" }} />
+
+  <Column header="ESTADO" body={estadoTemplate} style={{ width: "160px" }} />
+
+  <Column header="CREADO" body={fechaTemplate} style={{ width: "140px" }} />
         </DataTable>
       </div>
 

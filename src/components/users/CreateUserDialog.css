@@ -1,0 +1,257 @@
+/* ============================================================
+   OVERLAY
+   ============================================================ */
+.p-dialog-mask {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+   DIALOG
+   ============================================================ */
+.uf-dialog.p-dialog {
+  border-radius: 14px !important;
+  border: 1px solid #1f2333 !important;
+  background: #161922 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.uf-dialog .p-dialog-header {
+  background: #161922 !important;
+  border-bottom: 1px solid #1f2333 !important;
+  padding: 18px 22px !important;
+}
+
+.uf-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.uf-logo {
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 224, 176, 0.1);
+  border: 1px solid rgba(0, 224, 176, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uf-logo i {
+  color: #00e0b0;
+  font-size: 16px;
+}
+
+.uf-header-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.uf-header-sub {
+  font-size: 11px;
+  color: #6b7591;
+}
+
+/* ============================================================
+   CONTENT
+   ============================================================ */
+.uf-dialog .p-dialog-content {
+  background: #161922 !important;
+  padding: 22px !important;
+}
+
+.uf-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================================
+   FIELDS
+   ============================================================ */
+.uf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.uf-field-full {
+  margin-bottom: 18px;
+}
+
+.uf-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7a8299;
+}
+
+/* ============================================================
+   INPUTS
+   ============================================================ */
+.uf-input.p-inputtext,
+.uf-dialog .p-inputtext.uf-input {
+  width: 100%;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  padding: 10px 12px !important;
+  transition: all 0.2s;
+}
+
+.uf-input.p-inputtext::placeholder {
+  color: #353b52 !important;
+}
+
+.uf-input.p-inputtext:enabled:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+  outline: none;
+}
+
+/* ============================================================
+   ROLE BUTTONS
+   ============================================================ */
+.uf-rol-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.uf-rol-btn {
+  flex: 1;
+  background: #10131a;
+  border: 1px solid #252936;
+  border-radius: 8px;
+  padding: 10px;
+  color: #6b7591;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.uf-rol-btn:hover {
+  border-color: #3d4460;
+  color: #b8c0d8;
+}
+
+.uf-rol-btn.active {
+  background: rgba(0, 224, 176, 0.12);
+  border-color: #00e0b0;
+  color: #00e0b0;
+}
+
+/* ============================================================
+   ERROR
+   ============================================================ */
+.uf-error {
+  font-size: 11px;
+  color: #f87171;
+}
+
+/* ============================================================
+   SUCCESS
+   ============================================================ */
+.uf-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.uf-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(0, 224, 176, 0.1);
+  border: 1px solid rgba(0, 224, 176, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.uf-success-icon i {
+  font-size: 22px;
+  color: #00e0b0;
+}
+
+.uf-success-text {
+  font-size: 13px;
+  color: #b8c0d8;
+  margin-bottom: 16px;
+}
+
+/* Credenciales */
+.uf-credentials {
+  width: 100%;
+  background: #10131a;
+  border: 1px solid #252936;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.uf-credentials p {
+  font-size: 12px;
+  color: #b8c0d8;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+.uf-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* PRIMARY BUTTON */
+.uf-btn-primary.p-button {
+  background: #00e0b0 !important;
+  border: none !important;
+  color: #0a0d13 !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 20px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s;
+}
+
+.uf-btn-primary.p-button:hover:not(:disabled) {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.25);
+}
+
+/* SECONDARY BUTTON */
+.uf-btn-secondary.p-button {
+  background: transparent !important;
+  border: 1px solid #252936 !important;
+  color: #6b7591 !important;
+  border-radius: 8px !important;
+  font-size: 13px;
+  padding: 9px 16px !important;
+}
+
+.uf-btn-secondary.p-button:hover:not(:disabled) {
+  border-color: #3d4460 !important;
+  color: #b8c0d8 !important;
+}

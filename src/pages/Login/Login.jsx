@@ -1,84 +1,96 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../services/authService";
 import "./Login.css";
-import { useNavigate, Link } from "react-router-dom";
-import { useEffect } from "react";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const [error, setError]       = useState("");
+  const [loading, setLoading]   = useState(false);
   const navigate = useNavigate();
 
+  // Si ya tiene sesión activa, redirigir directo
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token    = localStorage.getItem("token");
     const userRole = localStorage.getItem("userRole");
-
-    const perfilCompleto = localStorage.getItem("perfilCompleto") === "true";
-
-    const primerLogin = localStorage.getItem("primerLogin") === "true";
-
     if (!token || !userRole) return;
 
-    if (userRole === "cliente") {
-      if (primerLogin || !perfilCompleto) {
-        localStorage.setItem("showOnboarding", "true");
-        navigate("/cliente");
-        return;
-      }
-
-      navigate("/cliente");
-      return;
-    }
-
-    navigate("/home");
+    if (userRole === "cliente") navigate("/cliente", { replace: true });
+    else navigate("/home", { replace: true });
   }, [navigate]);
 
   const handleLogin = async () => {
-    try {
-      const data = await login(email, password); // Llama a la función de login del servicio de autenticación
+    if (!email || !password) {
+      setError("Por favor ingresa tu correo y contraseña.");
+      return;
+    }
 
+    setError("");
+    setLoading(true);
+
+    try {
+      const data = await login(email, password);
+
+      // ── Persistir token ──────────────────────────────────────────────────────
       localStorage.setItem("token", data.token);
 
-      // Guardar el rol del usuario
-      const userRole = (data.user?.rol || data.rol || "admin").toLowerCase();
-      const perfilCompleto = data.user?.perfilCompleto ?? false;
-      const primerLogin = data.user?.primerLogin ?? false;
+      // ── Normalizar rol (el backend puede enviarlo en distintos campos) ────────
+      const userRole = (
+        data.user?.rol ||
+        data.user?.role ||
+        data.rol ||
+        data.role ||
+        "admin"
+      ).toLowerCase();
 
-      localStorage.setItem("userRole", userRole);
-      localStorage.setItem(
-        "perfilCompleto",
-        data.user?.perfilCompleto ? "true" : "false",
-      );
-      localStorage.setItem(
-        "primerLogin",
-        data.user?.primerLogin ? "true" : "false",
-      );
+      // ── Flags de onboarding que vienen del backend ────────────────────────────
+      // primerLogin  → true cuando el usuario nunca cambió la contraseña temporal
+      // perfilCompleto → true cuando ya completó nombre/teléfono
+      const primerLogin     = data.user?.primerLogin     ?? false;
+      const perfilCompleto  = data.user?.perfilCompleto  ?? false;
 
-      // CLIENTE
+      localStorage.setItem("userRole",       userRole);
+      localStorage.setItem("primerLogin",    primerLogin    ? "true" : "false");
+      localStorage.setItem("perfilCompleto", perfilCompleto ? "true" : "false");
+
+      // ── Routing por rol ───────────────────────────────────────────────────────
       if (userRole === "cliente") {
-        if (primerLogin || !perfilCompleto) {
-          navigate("/cliente/completar-registro");
-          return;
-        }
-        navigate("/cliente");
+        // El modal de onboarding se controla en ClientMainLayout
+        navigate("/cliente", { replace: true });
         return;
       }
 
-      // ADMIN
-      navigate("/home");
-    } catch (error) {
-      console.error(error);
+      if (userRole === "despachante") {
+        // El despachante usa el mismo Home que el admin
+        navigate("/home", { replace: true });
+        return;
+      }
+
+      // admin (y cualquier otro rol desconocido)
+      navigate("/home", { replace: true });
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.response?.data ||
+        "Credenciales incorrectas. Verifica tu correo y contraseña.";
+      setError(typeof msg === "string" ? msg : "Error al iniciar sesión.");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") handleLogin();
   };
 
   return (
     <div className="login-container">
-      {/* BACKGROUND FULL */}
       <div className="login-bg">
         {/* LEFT DARK OVERLAY */}
         <div className="login-left-overlay" />
@@ -99,6 +111,14 @@ export default function Login() {
               Ingresa tus credenciales para acceder al portal.
             </p>
 
+            {/* Error */}
+            {error && (
+              <div className="login-error">
+                <i className="pi pi-exclamation-triangle" />
+                <span>{error}</span>
+              </div>
+            )}
+
             <div className="field">
               <label className="field-label">CORREO ELECTRÓNICO</label>
               <span className="p-input-icon-left login-input-wrap">
@@ -106,6 +126,7 @@ export default function Login() {
                 <InputText
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   placeholder="nombre@empresa.com"
                   className="login-input"
                 />
@@ -119,6 +140,7 @@ export default function Login() {
                 <Password
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onKeyDown={handleKeyDown}
                   feedback={false}
                   toggleMask
                   inputClassName="login-input"
@@ -144,24 +166,25 @@ export default function Login() {
                   Recordarme
                 </label>
               </div>
-              <Link to="/recuperar" className="forgot-link">
+              <a href="#" className="forgot-link">
                 Olvidé mi contraseña
-              </Link>
+              </a>
             </div>
 
             <Button
-              label="Iniciar Sesión"
-              icon="pi pi-sign-in"
+              label={loading ? "Ingresando..." : "Iniciar Sesión"}
+              icon={loading ? "pi pi-spin pi-spinner" : "pi pi-sign-in"}
               iconPos="right"
               className="login-btn"
               onClick={handleLogin}
+              disabled={loading}
             />
 
             <p className="login-register">
               ¿No tienes una cuenta?{" "}
-              <Link to="/registrar" className="register-link">
+              <a href="#" className="register-link">
                 Contacta al administrador
-              </Link>
+              </a>
             </p>
           </div>
         </div>

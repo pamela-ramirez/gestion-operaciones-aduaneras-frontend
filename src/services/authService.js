@@ -1,8 +1,8 @@
 import apiClient from "../api/apiClient";
 
-/**
- * Login - retorna { token, user: { rol, primerLogin, perfilCompleto, ... } }
- */
+
+//Login
+
 export const login = async (email, password) => {
   const response = await apiClient.post(import.meta.env.VITE_LOGIN_ENDPOINT, {
     email,
@@ -11,15 +11,24 @@ export const login = async (email, password) => {
   return response.data;
 };
 
-/**
- * Cambiar contraseña temporal (cliente y despachante)
- * PATCH /Auth/cambiar-password
- * Body: { nuevaPassword }
- */
-export const cambiarPassword = async (nuevaPassword) => {
-  const response = await apiClient.patch(
+
+
+//Aceptar consentimiento de cookies (solo para clientes en primer login)
+
+export const aceptarConsentimiento = async () => {
+  const response = await apiClient.post(
+    import.meta.env.VITE_CONSENTIMIENTO_ENDPOINT
+  );
+  return response.data;
+};
+
+
+//Cambiar contraseña (obligatorio en primer login)
+
+export const cambiarPassword = async (password) => {
+  const response = await apiClient.post(
     import.meta.env.VITE_CAMBIAR_PASSWORD_ENDPOINT,
-    { nuevaPassword }
+    { password }
   );
   return response.data;
 };

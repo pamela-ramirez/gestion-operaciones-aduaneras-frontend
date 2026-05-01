@@ -1,17 +1,21 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login      from "./pages/login/Login";
-import Home       from "./pages/home/Home";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import Login from "./pages/login/Login";
+import Home from "./pages/home/Home";
 import ClientHome from "./pages/home/ClientHome";
-import Users      from "./pages/users/Users";
+import Users from "./pages/users/Users";
+
 import PrivateRoute from "./routes/PrivateRoute";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* ── Pública ────────────────────────────────────────── */}
         <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
         {/* ── Admin + Despachante ────────────────────────────── */}
         <Route
@@ -22,6 +26,7 @@ export default function App() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/usuarios"
           element={
@@ -40,6 +45,10 @@ export default function App() {
             </PrivateRoute>
           }
         />
+
+        {/* ── Fallback ───────────────────────────────────────── */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
     </BrowserRouter>
   );

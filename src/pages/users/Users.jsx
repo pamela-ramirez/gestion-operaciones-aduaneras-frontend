@@ -75,8 +75,8 @@ export default function Users() {
     const nombreCompleto =
       row.nombre && row.apellido
         ? `${row.nombre} ${row.apellido}`
-        : row.rol === "Administrador"
-          ? "Administrador"
+        : row.rol === "Admin"
+          ? "Admin"
           : "Pendiente de registro";
 
     return (
@@ -85,7 +85,7 @@ export default function Users() {
           label={
             row.nombre
               ? `${row.nombre[0]}${row.apellido?.[0] ?? ""}`
-              : row.rol === "Administrador"
+              : row.rol === "Admin"
                 ? "A"
                 : "[?]"
           }
@@ -111,27 +111,22 @@ export default function Users() {
     <span className="ul-cell-muted">{row.empresa || "—"}</span>
   );
 
-  /* const estadoTemplate = (row) => {
-    const severity =
-      row.estado === "Activo"
-        ? "success"
-        : row.estado === "Pendiente"
-          ? "warning"
-          : "secondary";
-
-    return <Tag value={row.estado} severity={severity} />;
-  }; */
+  
   const estadoTemplate = (row) => {
     let label = row.estado;
     let severity = "secondary";
 
-    if (row.rol === "Cliente" && row.perfilCompleto === false) {
-      label = "Registro incompleto";
-      severity = "danger";
-    } else if (row.estado === "Activo") {
+    if (row.estado === "ACTIVO") {
       severity = "success";
-    } else if (row.estado === "Pendiente") {
+    } else if (row.estado === "PENDIENTE") {
+      label = "Pendiente";
       severity = "warning";
+    }
+
+    // opcional: mostrar que aún no cambió password
+    if (row.primerLogin === true && row.estado === "ACTIVO") {
+      label = "Debe cambiar contraseña";
+      severity = "info";
     }
 
     return <Tag value={label} severity={severity} />;
@@ -230,12 +225,7 @@ export default function Users() {
         visible={dialogVisible}
         onHide={() => setDialogVisible(false)}
         onCreated={handleUserCreated}
-        roles={roles.filter(
-          (r) =>
-            r.value !== "Administrador" &&
-            r.value !== "Admin" &&
-            r.value !== "Asistente",
-        )}
+        roles={roles.filter((r) => r.value !== "Admin")}
       />
     </MainLayout>
   );

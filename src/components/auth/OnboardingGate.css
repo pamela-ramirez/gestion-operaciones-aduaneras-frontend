@@ -1,0 +1,165 @@
+/* OVERLAY */
+.onboarding-mask.p-dialog-mask {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* DIALOG */
+.onboarding-dialog.p-dialog {
+  border-radius: 14px !important;
+  border: 1px solid #1f2333 !important;
+  background: #161922 !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+}
+
+/* HEADER */
+.onboarding-dialog .p-dialog-header {
+  background: #161922 !important;
+  border-bottom: 1px solid #1f2333 !important;
+  padding: 18px 22px !important;
+}
+
+.onboarding-dialog .p-dialog-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* CONTENT */
+.onboarding-dialog .p-dialog-content {
+  background: #161922 !important;
+  padding: 24px !important;
+}
+
+/* ── TEXTOS ───────────────────────── */
+.onboarding-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.onboarding-subtitle {
+  font-size: 12px;
+  color: #6b7591;
+  margin-bottom: 20px;
+}
+
+/* ── ERROR ───────────────────────── */
+.onboarding-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #f87171;
+}
+
+/* ── CHECKBOX ────────────────────── */
+.onboarding-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: #b8c0d8;
+  font-size: 13px;
+}
+
+/* estilo checkbox */
+.onboarding-dialog .p-checkbox .p-checkbox-box {
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+}
+
+.onboarding-dialog .p-checkbox .p-checkbox-box.p-highlight {
+  background: #00e0b0 !important;
+  border-color: #00e0b0 !important;
+}
+
+.onboarding-dialog .p-checkbox .p-checkbox-icon {
+  color: #0a0d13 !important;
+}
+
+/* ── INPUTS ──────────────────────── */
+.onboarding-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.onboarding-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7a8299;
+}
+
+/* Password */
+.onboarding-password .p-inputtext {
+  width: 100%;
+  background: #10131a !important;
+  border: 1px solid #252936 !important;
+  border-radius: 8px !important;
+  color: #b8c0d8 !important;
+  font-size: 13px !important;
+  padding: 10px 38px 10px 12px !important;
+}
+
+.onboarding-password .p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 3px rgba(0, 224, 176, 0.12) !important;
+}
+
+.onboarding-password .p-password-toggle-mask-icon {
+  color: #4a5270 !important;
+}
+
+/* ── ACTIONS ─────────────────────── */
+.onboarding-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #1c1f2b;
+}
+
+/* BOTÓN PRINCIPAL */
+.onboarding-btn.p-button {
+  background: #00e0b0 !important;
+  border: none !important;
+  color: #0a0d13 !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 20px !important;
+  border-radius: 8px !important;
+}
+
+.onboarding-btn.p-button:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.25);
+}
+
+/* BOTÓN SECUNDARIO */
+.onboarding-btn-secondary.p-button {
+  background: transparent !important;
+  border: 1px solid #252936 !important;
+  color: #6b7591 !important;
+  border-radius: 8px !important;
+  font-size: 13px;
+  padding: 9px 16px !important;
+}
+
+.onboarding-btn-secondary.p-button:hover {
+  border-color: #3d4460 !important;
+  color: #b8c0d8 !important;
+}

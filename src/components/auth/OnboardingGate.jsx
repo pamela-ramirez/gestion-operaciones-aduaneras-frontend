@@ -10,6 +10,7 @@ import {
   cambiarPassword as cambiarPasswordService,
 } from "../../services/authService";
 import "./OnboardingGate.css";
+import { obtenerUsuarioLogueado } from "../../services/userService";
 
 export default function OnboardingGate() {
   const [visibleConsent, setVisibleConsent] = useState(false);
@@ -23,14 +24,22 @@ export default function OnboardingGate() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const estado = localStorage.getItem("estado");
-    const primerLogin = localStorage.getItem("primerLogin");
+    const cargarUsuario = async () => {
+      try {
+        const user = await obtenerUsuarioLogueado();
 
-    if (estado === "PENDIENTE") {
-      setVisibleConsent(true);
-    } else if (primerLogin === "true") {
-      setVisiblePassword(true);
-    }
+        if (user.estado === "Pendiente") {
+          setVisibleConsent(true);
+        } else if (user.primerLogin === true) {
+          setVisiblePassword(true);
+        }
+      } catch (err) {
+        console.log("Error cargando usuario /logueado", err);
+        navigate("/login");
+      }
+    };
+
+    cargarUsuario();
   }, []);
 
   // ───── Consentimiento ─────
@@ -45,7 +54,7 @@ export default function OnboardingGate() {
     try {
       await aceptarConsentimientoService();
 
-      localStorage.setItem("estado", "ACTIVO");
+      //localStorage.setItem("estado", "ACTIVO");
 
       setVisibleConsent(false);
       setVisiblePassword(true);
@@ -69,7 +78,7 @@ export default function OnboardingGate() {
     try {
       await cambiarPasswordService(password);
 
-      localStorage.setItem("primerLogin", "false");
+      //localStorage.setItem("primerLogin", "false");
 
       setVisiblePassword(false);
     } catch {

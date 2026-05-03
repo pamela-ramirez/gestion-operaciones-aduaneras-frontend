@@ -19,7 +19,7 @@ const initialForm = {
   direccion: "",
 };
 
-export default function InviteUserDialog({
+export default function CreateUserDialog({
   visible,
   onHide,
   onCreated,
@@ -119,7 +119,7 @@ export default function InviteUserDialog({
       }
 
       setGeneratedUser(response);
-      onCreated?.();
+      //onCreated?.();
     } catch (err) {
       console.error(err);
       setErrors({ submit: "Error al crear el usuario" });
@@ -134,6 +134,10 @@ export default function InviteUserDialog({
 
   const handleHide = () => {
     if (loading) return;
+
+    if (generatedUser) {
+      onCreated?.(); //refresca tabla solo cuando se creó un usuario
+    }
 
     setForm(initialForm);
     setErrors({});
@@ -195,7 +199,10 @@ export default function InviteUserDialog({
             <div className="uf-actions">
               <Button
                 label="Cerrar"
-                onClick={handleHide}
+                onClick={() => {
+                  onCreated?.(); //refresca tabla
+                  handleHide(); //cierra y resetea
+                }}
                 className="uf-btn-primary"
               />
             </div>
@@ -234,10 +241,9 @@ export default function InviteUserDialog({
               {errors.rol && <small className="uf-error">{errors.rol}</small>}
             </div>
 
-                
             {!hasRol && (
               <div className="uf-empty-state">
-               {/*  <i className="pi pi-user" /> */}
+                {/*  <i className="pi pi-user" /> */}
                 <p>Seleccioná un rol para continuar</p>
               </div>
             )}

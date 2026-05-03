@@ -100,7 +100,7 @@ export default function Users() {
     );
   };
 
-/*   const usernameTemplate = (row) => (
+  /*   const usernameTemplate = (row) => (
     <span className="ul-username">{row.username || "—"}</span>
   ); */
 
@@ -214,10 +214,19 @@ export default function Users() {
           className="ul-datatable"
           rowHover
           loading={loading}
+          paginator
+            paginatorClassName="custom-paginator"
+          rows={7}
+          //rowsPerPageOptions={[5, 10, 20]}
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}"
           tableStyle={{ tableLayout: "fixed", width: "100%" }}
         >
-          <Column header="USUARIO" body={usuarioTemplate} style={{ width: "250px" }}/>
-{/* 
+          <Column
+            header="USUARIO"
+            body={usuarioTemplate}
+            style={{ width: "250px" }}
+          />
+          {/* 
           <Column header="USERNAME" body={usernameTemplate} /> */}
 
           <Column header="ROL" body={rolTemplate} style={{ width: "160px" }} />

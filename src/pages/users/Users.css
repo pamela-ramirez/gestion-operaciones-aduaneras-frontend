@@ -322,3 +322,55 @@
   color: #6b7591;
   font-size: 12px;
 } */
+
+
+/* Paginator  */
+/* Fondo del paginator */
+
+.custom-paginator {
+  background-color: #1f2937;
+}
+/* Reset general de botones del paginator */
+.custom-paginator .p-paginator-page,
+.custom-paginator .p-paginator-next,
+.custom-paginator .p-paginator-prev,
+.custom-paginator .p-paginator-first,
+.custom-paginator .p-paginator-last {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Estado activo (número seleccionado) */
+.custom-paginator .p-paginator-page.p-highlight {
+  color: #00e0b0;
+  font-weight: 600;
+}
+
+/* Hover para TODOS */
+.custom-paginator .p-paginator-page:hover,
+.custom-paginator .p-paginator-next:hover,
+.custom-paginator .p-paginator-prev:hover,
+.custom-paginator .p-paginator-first:hover,
+.custom-paginator .p-paginator-last:hover {
+  background: transparent !important;
+  color: #00e0b0;
+  font-weight: 500;
+}
+
+/* Focus (esto es clave: PrimeReact mete outline blanco) */
+.custom-paginator .p-paginator-page:focus,
+.custom-paginator .p-paginator-next:focus,
+.custom-paginator .p-paginator-prev:focus,
+.custom-paginator .p-paginator-first:focus,
+.custom-paginator .p-paginator-last:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Opcional: color base */
+.custom-paginator .p-paginator-page,
+.custom-paginator .p-paginator-next,
+.custom-paginator .p-paginator-prev {
+  color: #9ca3af;
+}

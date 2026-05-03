@@ -53,7 +53,7 @@ export default function Users() {
   // HANDLERS
   // =========================
 
-  const handleUserCreated = async () => {
+  const handleOnRefreshUsers = async () => {
     setDialogVisible(false);
     await cargarUsuarios(); // recargar desde backend
   };
@@ -240,7 +240,7 @@ export default function Users() {
       <CreateUserDialog
         visible={dialogVisible}
         onHide={() => setDialogVisible(false)}
-        onCreated={handleUserCreated}
+        onRefreshUsers={handleOnRefreshUsers}
         roles={roles.filter((r) => r.value !== "Admin")}
       />
     </MainLayout>

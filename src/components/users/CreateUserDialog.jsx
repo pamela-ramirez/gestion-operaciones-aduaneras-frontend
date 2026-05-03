@@ -22,7 +22,7 @@ const initialForm = {
 export default function CreateUserDialog({
   visible,
   onHide,
-  onCreated,
+  onRefreshUsers,
   roles = [],
 }) {
   const [form, setForm] = useState(initialForm);
@@ -119,7 +119,7 @@ export default function CreateUserDialog({
       }
 
       setGeneratedUser(response);
-      //onCreated?.();
+
     } catch (err) {
       console.error(err);
       setErrors({ submit: "Error al crear el usuario" });
@@ -136,7 +136,7 @@ export default function CreateUserDialog({
     if (loading) return;
 
     if (generatedUser) {
-      onCreated?.(); //refresca tabla solo cuando se creó un usuario
+      onRefreshUsers?.(); //refresca tabla solo cuando se creó un usuario
     }
 
     setForm(initialForm);
@@ -200,7 +200,7 @@ export default function CreateUserDialog({
               <Button
                 label="Cerrar"
                 onClick={() => {
-                  onCreated?.(); //refresca tabla
+                  onRefreshUsers?.(); //refresca tabla
                   handleHide(); //cierra y resetea
                 }}
                 className="uf-btn-primary"

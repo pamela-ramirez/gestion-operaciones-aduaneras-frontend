@@ -8,11 +8,7 @@ export const crearCliente = async (data) => {
   return respuesta.data;
 };
 
-<<<<<<< HEAD
-export const getClientes = async () => {
-=======
 export const obtenerClientes = async () => {
->>>>>>> d84ab72 (refactor: renombrar variables de entorno de Cliente para mayor claridad y actualizar referencias en clienteService)
   try {
     const response = await apiClient.get(import.meta.env.VITE_CLIENTE_ENDPOINT);  
     return response.data;
@@ -25,11 +21,7 @@ export const obtenerClientes = async () => {
 export const editarCliente = async (id, data) => {
   try {
   const respuesta = await apiClient.put(
-<<<<<<< HEAD
-    import.meta.env.VITE_EDITAR_CLIENTE_ENDPOINT.replace("{id}", id),
-=======
     import.meta.env.VITE_CLIENTE_ENDPOINT + `/${id}`,
->>>>>>> d84ab72 (refactor: renombrar variables de entorno de Cliente para mayor claridad y actualizar referencias en clienteService)
     data
   );
   return respuesta.data;

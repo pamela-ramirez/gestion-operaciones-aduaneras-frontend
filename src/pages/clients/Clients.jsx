@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
+<<<<<<< HEAD
 import CreateClientDialog from "../../components/clients/EditClientDialog";
+=======
+import EditClientDialog from "../../components/clients/EditClientDialog";
+>>>>>>> 3188957 (feat(client): implementar gestion clientes con listado , edicion y busqueda :)
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
+<<<<<<< HEAD
 import { getClientes } from "../../services/clienteService";
+=======
+import { obtenerClientes } from "../../services/clienteService";
+>>>>>>> 3188957 (feat(client): implementar gestion clientes con listado , edicion y busqueda :)
 import "./Clients.css";
 
 export default function Clients() {
@@ -27,7 +35,11 @@ export default function Clients() {
     setError(null);
 
     try {
+<<<<<<< HEAD
       const data = await getClientes();
+=======
+      const data = await obtenerClientes();
+>>>>>>> 3188957 (feat(client): implementar gestion clientes con listado , edicion y busqueda :)
       setClientes(Array.isArray(data) ? data : []);
     } catch {
       setError("No se pudieron cargar los clientes.");

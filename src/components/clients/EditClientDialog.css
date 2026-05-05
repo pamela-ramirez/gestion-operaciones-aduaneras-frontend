@@ -1,0 +1,349 @@
+/* ============================================================
+   CREATE CLIENT DIALOG — Dark theme con Teal accent
+   ============================================================ */
+
+/* ---- DIALOG OVERRIDES ---- */
+.ccd-dialog.p-dialog {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+  width: 700px !important;
+  max-width: 90vw !important;
+}
+
+.ccd-dialog .p-dialog-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  padding: 24px 28px !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.ccd-dialog .p-dialog-content {
+  background: #10131a !important;
+  padding: 0 !important;
+  color: #d0d8f0 !important;
+}
+
+.ccd-dialog .p-dialog-footer {
+  background: #10131a !important;
+  border-top: 1px solid #1c1f2b !important;
+  padding: 20px 28px !important;
+  border-radius: 0 0 16px 16px !important;
+}
+
+.ccd-dialog .p-dialog-header-close {
+  color: #6b7591 !important;
+  transition: all 0.2s !important;
+}
+
+.ccd-dialog .p-dialog-header-close:hover {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+}
+
+.ccd-dialog .p-dialog-header-close:focus {
+  box-shadow: none !important;
+}
+
+/* ---- HEADER ---- */
+.ccd-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ccd-header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(0, 224, 176, 0.1);
+  border: 1px solid rgba(0, 224, 176, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ccd-header-icon .pi {
+  font-size: 20px;
+  color: #00e0b0;
+}
+
+.ccd-header-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 2px;
+}
+
+.ccd-header-subtitle {
+  font-size: 12px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ---- CONTENT ---- */
+.ccd-content {
+  padding: 24px 28px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar */
+.ccd-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ccd-content::-webkit-scrollbar-track {
+  background: #0a0d13;
+  border-radius: 10px;
+}
+
+.ccd-content::-webkit-scrollbar-thumb {
+  background: #1c1f2b;
+  border-radius: 10px;
+}
+
+.ccd-content::-webkit-scrollbar-thumb:hover {
+  background: #252936;
+}
+
+/* ---- SECTIONS ---- */
+.ccd-section {
+  margin-bottom: 24px;
+}
+
+.ccd-section:last-child {
+  margin-bottom: 0;
+}
+
+.ccd-section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #00e0b0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1c1f2b;
+}
+
+/* ---- FIELDS ---- */
+.ccd-field {
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.ccd-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.ccd-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #6b7591;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.ccd-required {
+  color: #e05555;
+  margin-left: 2px;
+}
+
+/* ---- INPUT OVERRIDES ---- */
+.ccd-dialog .ccd-input.p-inputtext {
+  background: #0a0d13 !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 10px 12px !important;
+  width: 100% !important;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.ccd-dialog .ccd-input.p-inputtext::placeholder {
+  color: #4a5270 !important;
+}
+
+.ccd-dialog .ccd-input.p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.ccd-dialog .ccd-input.p-inputtext.p-invalid {
+  border-color: #e05555 !important;
+}
+
+.ccd-dialog .ccd-input.p-inputtext.p-invalid:focus {
+  box-shadow: 0 0 0 1px rgba(224, 85, 85, 0.2) !important;
+}
+
+/* ---- DROPDOWN OVERRIDES ---- */
+.ccd-dialog .ccd-dropdown.p-dropdown {
+  background: #0a0d13 !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+}
+
+.ccd-dialog .ccd-dropdown .p-dropdown-label {
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 10px 12px !important;
+}
+
+.ccd-dialog .ccd-dropdown .p-dropdown-label.p-placeholder {
+  color: #4a5270 !important;
+}
+
+.ccd-dialog .ccd-dropdown:not(.p-disabled):hover {
+  border-color: #252936 !important;
+}
+
+.ccd-dialog .ccd-dropdown:not(.p-disabled).p-focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.ccd-dialog .ccd-dropdown.p-invalid {
+  border-color: #e05555 !important;
+}
+
+/* Dropdown panel */
+.p-dropdown-panel {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  color: #d0d8f0 !important;
+  background: transparent !important;
+  padding: 10px 12px !important;
+  font-size: 13px !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:hover {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background: rgba(0, 224, 176, 0.12) !important;
+  color: #00e0b0 !important;
+}
+
+/* ---- ERROR MESSAGES ---- */
+.ccd-error {
+  display: block;
+  color: #e05555 !important;
+  font-size: 11px !important;
+  margin-top: 4px !important;
+}
+
+.ccd-submit-error {
+  background: rgba(224, 85, 85, 0.1);
+  border: 1px solid rgba(224, 85, 85, 0.2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #e05555;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.ccd-submit-error .pi {
+  font-size: 14px;
+}
+
+/* ---- FOOTER BUTTONS ---- */
+.ccd-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.ccd-dialog .ccd-btn-cancel.p-button {
+  background: transparent !important;
+  border: 1px solid #1c1f2b !important;
+  color: #6b7591 !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  transition: all 0.2s !important;
+}
+
+.ccd-dialog .ccd-btn-cancel.p-button:hover {
+  background: rgba(107, 117, 145, 0.08) !important;
+  border-color: #252936 !important;
+  color: #d0d8f0 !important;
+}
+
+.ccd-dialog .ccd-btn-submit.p-button {
+  background: #00e0b0 !important;
+  border: none !important;
+  color: #0a0d13 !important;
+  border-radius: 8px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  transition: all 0.2s !important;
+}
+
+.ccd-dialog .ccd-btn-submit.p-button:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 16px rgba(0, 224, 176, 0.3) !important;
+}
+
+.ccd-dialog .ccd-btn-submit.p-button:active {
+  transform: scale(0.98);
+}
+
+.ccd-dialog .ccd-btn-cancel.p-button:disabled,
+.ccd-dialog .ccd-btn-submit.p-button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.ccd-dialog .ccd-btn-cancel .p-button-icon,
+.ccd-dialog .ccd-btn-submit .p-button-icon {
+  font-size: 13px !important;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .ccd-dialog.p-dialog {
+    width: 95vw !important;
+  }
+
+  .ccd-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ccd-content {
+    padding: 20px;
+  }
+
+  .ccd-dialog .p-dialog-header {
+    padding: 20px !important;
+  }
+
+  .ccd-dialog .p-dialog-footer {
+    padding: 16px 20px !important;
+  }
+}

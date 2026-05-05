@@ -1,0 +1,428 @@
+/* ============================================================
+   GESTION DE CLIENTES — PrimeReact overrides + custom styles
+   Dark theme | Teal #00e0b0 | Inter + Montserrat
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+.cl-root {
+  padding: 28px 32px;
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---- HEADER ---- */
+.cl-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.cl-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cl-bc-dim {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #3d4460;
+  font-weight: 600;
+}
+
+.cl-bc-sep {
+  font-size: 11px;
+  color: #3d4460;
+}
+
+.cl-bc-active {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #00e0b0;
+  font-weight: 600;
+}
+
+.cl-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.cl-subtitle {
+  font-size: 13px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ---- BOTÓN PRIMARIO (override PrimeReact Button) ---- */
+.cl-root .cl-btn-primary.p-button,
+.cl-root .cl-btn-primary {
+  background: #00e0b0 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #0a0d13 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s !important;
+}
+
+.cl-root .cl-btn-primary.p-button:hover,
+.cl-root .cl-btn-primary:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.28) !important;
+}
+
+.cl-root .cl-btn-primary.p-button:active {
+  transform: scale(0.985);
+}
+
+.cl-root .cl-btn-primary .p-button-label,
+.cl-root .cl-btn-primary .p-button-icon {
+  color: #0a0d13 !important;
+}
+
+/* ---- STATS ---- */
+.cl-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.cl-stat-card {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.cl-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #3d4460;
+}
+
+.cl-stat-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #00e0b0;
+}
+
+/* ---- DATATABLE OVERRIDES ---- */
+.cl-root .cl-datatable.p-datatable {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header del DataTable */
+.cl-root .cl-datatable .p-datatable-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  padding: 14px 20px !important;
+}
+
+/* Thead */
+.cl-root .cl-datatable .p-datatable-thead > tr > th {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  color: #3d4460 !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  padding: 12px 20px !important;
+  text-transform: uppercase;
+}
+
+/* Tbody rows */
+.cl-root .cl-datatable .p-datatable-tbody > tr {
+  background: #10131a !important;
+  border-bottom: 1px solid #141720 !important;
+  transition: background 0.15s;
+}
+
+.cl-root .cl-datatable .p-datatable-tbody > tr:last-child {
+  border-bottom: none !important;
+}
+
+.cl-root .cl-datatable .p-datatable-tbody > tr:hover {
+  background: #12151e !important;
+}
+
+.cl-root .cl-datatable .p-datatable-tbody > tr > td {
+  border: none !important;
+  padding: 12px 20px !important;
+  color: #b8c0d8;
+  vertical-align: middle;
+}
+
+/* Empty message */
+.cl-root .cl-datatable .p-datatable-emptymessage > td {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Table header custom */
+.cl-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cl-table-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5270;
+  letter-spacing: 0.04em;
+}
+
+.cl-table-count .pi {
+  font-size: 13px;
+}
+
+/* Search Input */
+.cl-root .cl-search-input.p-inputtext {
+  background: #0a0d13 !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 10px 12px 10px 36px !important;
+  width: 320px;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.cl-root .cl-search-input.p-inputtext::placeholder {
+  color: #4a5270 !important;
+}
+
+.cl-root .cl-search-input.p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.cl-root .p-iconfield .p-inputicon {
+  color: #4a5270 !important;
+}
+
+/* ---- MAIN CELL (Razón Social + RUT) ---- */
+.cl-main-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cl-company-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(0, 224, 176, 0.1);
+  border: 1px solid rgba(0, 224, 176, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cl-company-icon .pi {
+  font-size: 16px;
+  color: #00e0b0;
+}
+
+.cl-cell-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #d0d8f0;
+  margin: 0 0 2px;
+}
+
+.cl-cell-rut {
+  font-size: 12px;
+  color: #4a5270;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.cl-cell-muted {
+  font-size: 13px;
+  color: #6b7591;
+}
+
+/* ---- CONTACT CELL ---- */
+.cl-contact-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cl-cell-contact-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #d0d8f0;
+  margin: 0 0 4px;
+}
+
+.cl-cell-contact-detail {
+  font-size: 12px;
+  color: #6b7591;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cl-cell-contact-detail .pi {
+  font-size: 11px;
+  color: #4a5270;
+}
+
+/* ---- ACTIONS ---- */
+.cl-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.cl-root .cl-btn-edit.p-button,
+.cl-root .cl-btn-disable.p-button {
+  color: #4a5270 !important;
+  border: none !important;
+  background: transparent !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  transition: all 0.2s !important;
+}
+
+.cl-root .cl-btn-edit.p-button:hover {
+  color: #00e0b0 !important;
+  background: rgba(0, 224, 176, 0.08) !important;
+}
+
+.cl-root .cl-btn-disable.p-button:hover {
+  color: #e05555 !important;
+  background: rgba(224, 85, 85, 0.08) !important;
+}
+
+.cl-root .cl-btn-edit.p-button:focus,
+.cl-root .cl-btn-disable.p-button:focus {
+  box-shadow: none !important;
+}
+
+/* ---- EMPTY STATE ---- */
+.cl-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  gap: 10px;
+}
+
+.cl-empty-icon {
+  font-size: 38px !important;
+  color: #252936;
+  margin-bottom: 8px;
+}
+
+.cl-empty-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a5270;
+  margin: 0;
+}
+
+.cl-empty-sub {
+  font-size: 13px;
+  color: #2e3347;
+  margin: 0;
+}
+
+/* ---- ERROR STATE ---- */
+.cl-error {
+  background: rgba(224, 85, 85, 0.1);
+  border: 1px solid rgba(224, 85, 85, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #e05555;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* ---- PAGINATOR ---- */
+.custom-paginator {
+  background-color: #10131a !important;
+  border-top: 1px solid #1c1f2b !important;
+  padding: 12px 20px !important;
+}
+
+.custom-paginator .p-paginator-page,
+.custom-paginator .p-paginator-next,
+.custom-paginator .p-paginator-prev,
+.custom-paginator .p-paginator-first,
+.custom-paginator .p-paginator-last {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #6b7591 !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  margin: 0 2px !important;
+}
+
+.custom-paginator .p-paginator-page.p-highlight {
+  color: #00e0b0 !important;
+  font-weight: 600 !important;
+  background: rgba(0, 224, 176, 0.08) !important;
+  border-radius: 6px !important;
+}
+
+.custom-paginator .p-paginator-page:hover,
+.custom-paginator .p-paginator-next:hover,
+.custom-paginator .p-paginator-prev:hover,
+.custom-paginator .p-paginator-first:hover,
+.custom-paginator .p-paginator-last:hover {
+  background: rgba(0, 224, 176, 0.05) !important;
+  color: #00e0b0 !important;
+  border-radius: 6px !important;
+}
+
+.custom-paginator .p-paginator-page:focus,
+.custom-paginator .p-paginator-next:focus,
+.custom-paginator .p-paginator-prev:focus,
+.custom-paginator .p-paginator-first:focus,
+.custom-paginator .p-paginator-last:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Sort icons */
+.cl-root .cl-datatable .p-sortable-column-icon {
+  color: #3d4460 !important;
+  margin-left: 6px !important;
+}
+
+.cl-root .cl-datatable .p-highlight .p-sortable-column-icon {
+  color: #00e0b0 !important;
+}

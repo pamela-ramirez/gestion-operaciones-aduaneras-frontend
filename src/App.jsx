@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
 import ClientHome from "./pages/home/ClientHome";
 import Users from "./pages/users/Users";
+import Clients from "./pages/clients/Clients";
 
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -42,6 +43,15 @@ export default function App() {
           element={
             <PrivateRoute roles={["cliente"]}>
               <ClientHome />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/clientes"
+          element={
+            <PrivateRoute roles={["admin", "despachante"]}>
+              <Clients />
             </PrivateRoute>
           }
         />

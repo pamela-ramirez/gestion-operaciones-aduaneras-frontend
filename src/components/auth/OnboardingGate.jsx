@@ -3,16 +3,19 @@ import { Dialog } from "primereact/dialog";
 import { Checkbox } from "primereact/checkbox";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
-import { Message } from "primereact/message";
 import { useNavigate } from "react-router-dom";
+
 import {
   aceptarConsentimiento as aceptarConsentimientoService,
   cambiarPassword as cambiarPasswordService,
 } from "../../services/authService";
-import "./OnboardingGate.css";
+
 import { obtenerUsuarioLogueado } from "../../services/userService";
+import "./OnboardingGate.css";
 
 export default function OnboardingGate() {
+  const [user, setUser] = useState(null);
+
   const [visibleConsent, setVisibleConsent] = useState(false);
   const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -23,18 +26,40 @@ export default function OnboardingGate() {
 
   const navigate = useNavigate();
 
+  // ─────────────────────────────
+  // CARGA USUARIO + DECISIÓN FLUJO
+  // ─────────────────────────────
   useEffect(() => {
     const cargarUsuario = async () => {
       try {
-        const user = await obtenerUsuarioLogueado();
+        const data = await obtenerUsuarioLogueado();
+        console.log("DEBUG USER =>", data);
+         if (!data) {
+        navigate("/login");
+        return;
+      }
 
-        if (user.estado === "Pendiente") {
+      setUser(data);
+
+        const estado = (data?.estado ?? "").toLowerCase();
+
+        // 1. Consentimiento primero (máxima prioridad)
+        if (estado === "pendiente") {
           setVisibleConsent(true);
-        } else if (user.primerLogin === true) {
-          setVisiblePassword(true);
+          setVisiblePassword(false);
+          return;
         }
+
+        // 2. Luego primer login
+       if (data?.primerLogin){
+          setVisiblePassword(true);
+          return;
+        }
+
+        // 3. Si ya pasó onboarding → ir a su portal
+         redirigirPorRol(data.rol);
       } catch (err) {
-        console.log("Error cargando usuario /logueado", err);
+        console.log("Error cargando usuario logueado", err);
         navigate("/login");
       }
     };
@@ -42,7 +67,30 @@ export default function OnboardingGate() {
     cargarUsuario();
   }, []);
 
-  // ───── Consentimiento ─────
+  const redirigirPorRol = (rol) => {
+    const role = (rol || "").toLowerCase();
+
+    switch (role) {
+      case "cliente":
+        navigate("/cliente", { replace: true });
+        break;
+
+      case "despachante":
+        navigate("/home", { replace: true });
+        break;
+
+      case "admin":
+        navigate("/home", { replace: true });
+        break;
+
+      default:
+        navigate("/home", { replace: true });
+    }
+  };
+
+  // ─────────────────────────────
+  // CONSENTIMIENTO
+  // ─────────────────────────────
   const handleAceptarConsentimiento = async () => {
     if (!checked) {
       setError("Debes aceptar el consentimiento.");
@@ -54,10 +102,17 @@ export default function OnboardingGate() {
     try {
       await aceptarConsentimientoService();
 
-      //localStorage.setItem("estado", "ACTIVO");
+      // volver a consultar estado real del backend
+      const updatedUser = await obtenerUsuarioLogueado();
+      setUser(updatedUser);
 
       setVisibleConsent(false);
-      setVisiblePassword(true);
+
+      if (updatedUser.primerLogin === true) {
+        setVisiblePassword(true);
+      } else {
+        redirigirPorRol(updatedUser.rol);
+      }
     } catch {
       setError("Error al guardar consentimiento.");
     }
@@ -68,9 +123,11 @@ export default function OnboardingGate() {
     navigate("/login");
   };
 
-  // ───── Cambio password ─────
+  // ─────────────────────────────
+  // CAMBIO DE PASSWORD
+  // ─────────────────────────────
   const handleCambiarPassword = async () => {
-    if (password !== confirm) {
+    if (!password || password !== confirm) {
       setError("Las contraseñas no coinciden.");
       return;
     }
@@ -78,17 +135,25 @@ export default function OnboardingGate() {
     try {
       await cambiarPasswordService(password);
 
-      //localStorage.setItem("primerLogin", "false");
-
       setVisiblePassword(false);
+
+      // volver a validar usuario actualizado
+      const updatedUser = await obtenerUsuarioLogueado();
+
+      setUser(updatedUser);
+
+      redirigirPorRol(updatedUser.rol);
     } catch {
       setError("Error al cambiar contraseña.");
     }
   };
 
+  // ─────────────────────────────
+  // UI
+  // ─────────────────────────────
   return (
     <>
-      {/* Consentimiento */}
+      {/* ───── CONSENTIMIENTO ───── */}
       <Dialog
         header="Consentimiento de datos personales"
         visible={visibleConsent}
@@ -129,7 +194,7 @@ export default function OnboardingGate() {
         </div>
       </Dialog>
 
-      {/* Cambio password */}
+      {/* ───── PASSWORD ───── */}
       <Dialog
         header="Cambiar contraseña"
         visible={visiblePassword}

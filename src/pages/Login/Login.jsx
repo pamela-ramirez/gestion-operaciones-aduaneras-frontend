@@ -8,11 +8,11 @@ import { login } from "../../services/authService";
 import "./Login.css";
 
 export default function Login() {
-  const [email, setEmail]       = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
-  const [error, setError]       = useState("");
-  const [loading, setLoading]   = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,29 +43,38 @@ export default function Login() {
       localStorage.setItem("token", data.token);
 
       // ── ROL ───────────────────────────────
-      const userRole = (
-        data.rol ||
-        data.role ||
-        "admin"
-      ).toLowerCase();
+      const userRole = (data.rol || data.role || "admin").toLowerCase();
 
       localStorage.setItem("userRole", userRole);
 
       // ── ESTADO Y PRIMER LOGIN ─────────────
-      //  temporal hasta backend
-      const estado = data.estado ?? "ACTIVO";
-      const primerLogin = data.primerLogin ?? false;
+
+      // ESTADO y PRIMER LOGIN (sin hardcode)
+      /* const estado = data.estado;
+      const primerLogin = data.primerLogin;
 
       localStorage.setItem("estado", estado);
       localStorage.setItem("primerLogin", primerLogin ? "true" : "false");
 
-      // 🚀 SOLO navegación base (el modal hace el resto)
-      if (userRole === "cliente") {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          token: data.token,
+          rol: data.rol,
+          estado: data.estado,
+          primerLogin: data.primerLogin,
+        }),
+      ); */
+
+
+      // SOLO navegación base (el modal hace el resto)
+      /* if (userRole === "cliente") {
         navigate("/cliente", { replace: true });
       } else {
         navigate("/home", { replace: true });
-      }
+      } */
 
+      navigate("/onboarding", { replace: true });// redirige al onboarding gate que se encarga de todo el flujo de primer login y consentimiento
     } catch (err) {
       const msg =
         err?.response?.data?.message ||

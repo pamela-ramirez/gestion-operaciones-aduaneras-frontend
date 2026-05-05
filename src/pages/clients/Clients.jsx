@@ -186,7 +186,7 @@ export default function Clients() {
             </p>
           </div>
 
-          <Button
+          {/* <Button
             label="Nuevo Cliente"
             icon="pi pi-plus"
             className="cl-btn-primary"
@@ -194,7 +194,7 @@ export default function Clients() {
               setSelectedClient(null);
               setDialogVisible(true);
             }}
-          />
+          /> */}
         </div>
 
         {/* STATS */}
@@ -289,7 +289,7 @@ export default function Clients() {
       </div>
 
       {/* DIALOG */}
-      <CreateClientDialog
+      <EditClientDialog
         visible={dialogVisible}
         onHide={() => {
           setDialogVisible(false);

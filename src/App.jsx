@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import ClientHome from "./pages/home/ClientHome";
 import Users from "./pages/users/Users";
 import Clients from "./pages/clients/Clients";
+import OnboardingGate from "./components/auth/OnboardingGate";
 
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -17,6 +18,8 @@ export default function App() {
         {/* ── Pública ────────────────────────────────────────── */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/onboarding" element={<OnboardingGate />} />
 
         {/* ── Admin + Despachante ────────────────────────────── */}
         <Route

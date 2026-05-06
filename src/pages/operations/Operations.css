@@ -1,0 +1,448 @@
+/* ============================================================
+   GESTION DE OPERACIONES — PrimeReact overrides + custom styles
+   Dark theme | Teal #00e0b0 | Inter + Montserrat
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+.op-root {
+  padding: 28px 32px;
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ---- HEADER ---- */
+.op-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.op-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.op-bc-dim {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #3d4460;
+  font-weight: 600;
+}
+
+.op-bc-sep {
+  font-size: 11px;
+  color: #3d4460;
+}
+
+.op-bc-active {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #00e0b0;
+  font-weight: 600;
+}
+
+.op-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.op-subtitle {
+  font-size: 13px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ---- BOTÓN PRIMARIO (override PrimeReact Button) ---- */
+.op-root .op-btn-primary.p-button,
+.op-root .op-btn-primary {
+  background: #00e0b0 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #0a0d13 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s !important;
+}
+
+.op-root .op-btn-primary.p-button:hover,
+.op-root .op-btn-primary:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.28) !important;
+}
+
+.op-root .op-btn-primary.p-button:active {
+  transform: scale(0.985);
+}
+
+.op-root .op-btn-primary .p-button-label,
+.op-root .op-btn-primary .p-button-icon {
+  color: #0a0d13 !important;
+}
+
+/* ---- STATS ---- */
+.op-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.op-stat-card {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+  flex: 1;
+}
+
+.op-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #3d4460;
+}
+
+.op-stat-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #00e0b0;
+}
+
+/* ---- DATATABLE OVERRIDES ---- */
+.op-root .op-datatable.p-datatable {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header del DataTable */
+.op-root .op-datatable .p-datatable-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  padding: 14px 20px !important;
+}
+
+/* Thead */
+.op-root .op-datatable .p-datatable-thead > tr > th {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  color: #3d4460 !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  padding: 12px 20px !important;
+  text-transform: uppercase;
+}
+
+/* Tbody rows */
+.op-root .op-datatable .p-datatable-tbody > tr {
+  background: #10131a !important;
+  border-bottom: 1px solid #141720 !important;
+  transition: background 0.15s;
+}
+
+.op-root .op-datatable .p-datatable-tbody > tr:last-child {
+  border-bottom: none !important;
+}
+
+.op-root .op-datatable .p-datatable-tbody > tr:hover {
+  background: #12151e !important;
+}
+
+.op-root .op-datatable .p-datatable-tbody > tr > td {
+  border: none !important;
+  padding: 12px 20px !important;
+  color: #b8c0d8;
+  vertical-align: middle;
+}
+
+/* Empty message */
+.op-root .op-datatable .p-datatable-emptymessage > td {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Table header custom */
+.op-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.op-table-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a5270;
+  letter-spacing: 0.04em;
+}
+
+.op-table-count .pi {
+  font-size: 13px;
+}
+
+/* Search Input */
+.op-root .op-search-input.p-inputtext {
+  background: #0a0d13 !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 10px 12px 10px 36px !important;
+  width: 360px;
+  transition: border-color 0.2s, box-shadow 0.2s !important;
+}
+
+.op-root .op-search-input.p-inputtext::placeholder {
+  color: #4a5270 !important;
+}
+
+.op-root .op-search-input.p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.op-root .p-iconfield .p-inputicon {
+  color: #4a5270 !important;
+}
+
+/* ---- MAIN CELL (Nro. Carpeta) ---- */
+.op-main-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.op-folder-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(0, 224, 176, 0.1);
+  border: 1px solid rgba(0, 224, 176, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.op-folder-icon .pi {
+  font-size: 16px;
+  color: #00e0b0;
+}
+
+.op-cell-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #d0d8f0;
+  margin: 0;
+}
+
+.op-cell-muted {
+  font-size: 13px;
+  color: #6b7591;
+}
+
+.op-cell-text {
+  font-size: 13px;
+  color: #d0d8f0;
+}
+
+/* ---- ESTADO BADGES ---- */
+.op-estado {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.op-estado-iniciado {
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.24);
+}
+
+.op-estado-documentacion-pendiente {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.24);
+}
+
+.op-estado-finalizada {
+  background: rgba(0, 224, 176, 0.12);
+  color: #00e0b0;
+  border: 1px solid rgba(0, 224, 176, 0.24);
+}
+
+.op-estado-default {
+  background: rgba(107, 117, 145, 0.12);
+  color: #6b7591;
+  border: 1px solid rgba(107, 117, 145, 0.24);
+}
+
+/* ---- ACTIONS ---- */
+.op-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.op-root .op-btn-edit.p-button,
+.op-root .op-btn-docs.p-button,
+.op-root .op-btn-liquidacion.p-button,
+.op-root .op-btn-finish.p-button {
+  color: #4a5270 !important;
+  border: none !important;
+  background: transparent !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  transition: all 0.2s !important;
+}
+
+.op-root .op-btn-edit.p-button:hover {
+  color: #00e0b0 !important;
+  background: rgba(0, 224, 176, 0.08) !important;
+}
+
+.op-root .op-btn-docs.p-button:hover {
+  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+.op-root .op-btn-liquidacion.p-button:hover {
+  color: #fbbf24 !important;
+  background: rgba(251, 191, 36, 0.08) !important;
+}
+
+.op-root .op-btn-finish.p-button:hover {
+  color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+
+.op-root .op-btn-edit.p-button:focus,
+.op-root .op-btn-docs.p-button:focus,
+.op-root .op-btn-liquidacion.p-button:focus,
+.op-root .op-btn-finish.p-button:focus {
+  box-shadow: none !important;
+}
+
+/* ---- EMPTY STATE ---- */
+.op-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  gap: 10px;
+}
+
+.op-empty-icon {
+  font-size: 38px !important;
+  color: #252936;
+  margin-bottom: 8px;
+}
+
+.op-empty-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a5270;
+  margin: 0;
+}
+
+.op-empty-sub {
+  font-size: 13px;
+  color: #2e3347;
+  margin: 0;
+}
+
+/* ---- ERROR STATE ---- */
+.op-error {
+  background: rgba(224, 85, 85, 0.1);
+  border: 1px solid rgba(224, 85, 85, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #e05555;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+/* ---- PAGINATOR ---- */
+.op-custom-paginator {
+  background-color: #10131a !important;
+  border-top: 1px solid #1c1f2b !important;
+  padding: 12px 20px !important;
+}
+
+.op-custom-paginator .p-paginator-page,
+.op-custom-paginator .p-paginator-next,
+.op-custom-paginator .p-paginator-prev,
+.op-custom-paginator .p-paginator-first,
+.op-custom-paginator .p-paginator-last {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #6b7591 !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  margin: 0 2px !important;
+}
+
+.op-custom-paginator .p-paginator-page.p-highlight {
+  color: #00e0b0 !important;
+  font-weight: 600 !important;
+  background: rgba(0, 224, 176, 0.08) !important;
+  border-radius: 6px !important;
+}
+
+.op-custom-paginator .p-paginator-page:hover,
+.op-custom-paginator .p-paginator-next:hover,
+.op-custom-paginator .p-paginator-prev:hover,
+.op-custom-paginator .p-paginator-first:hover,
+.op-custom-paginator .p-paginator-last:hover {
+  background: rgba(0, 224, 176, 0.05) !important;
+  color: #00e0b0 !important;
+  border-radius: 6px !important;
+}
+
+.op-custom-paginator .p-paginator-page:focus,
+.op-custom-paginator .p-paginator-next:focus,
+.op-custom-paginator .p-paginator-prev:focus,
+.op-custom-paginator .p-paginator-first:focus,
+.op-custom-paginator .p-paginator-last:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Sort icons */
+.op-root .op-datatable .p-sortable-column-icon {
+  color: #3d4460 !important;
+  margin-left: 6px !important;
+}
+
+.op-root .op-datatable .p-highlight .p-sortable-column-icon {
+  color: #00e0b0 !important;
+}

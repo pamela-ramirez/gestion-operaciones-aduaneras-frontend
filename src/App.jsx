@@ -7,6 +7,7 @@ import ClientHome from "./pages/home/ClientHome";
 import Users from "./pages/users/Users";
 import Clients from "./pages/clients/Clients";
 import OnboardingGate from "./components/auth/OnboardingGate";
+import Operations from "./pages/operations/Operations";
 
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -55,6 +56,15 @@ export default function App() {
           element={
             <PrivateRoute roles={["admin", "despachante"]}>
               <Clients />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/operaciones"
+          element={
+            <PrivateRoute roles={["admin", "despachante"]}>
+              <Operations />
             </PrivateRoute>
           }
         />

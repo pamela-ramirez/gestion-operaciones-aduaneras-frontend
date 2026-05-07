@@ -119,7 +119,6 @@ export default function CreateUserDialog({
       }
 
       setGeneratedUser(response);
-
     } catch (err) {
       console.error(err);
       setErrors({ submit: "Error al crear el usuario" });
@@ -251,29 +250,37 @@ export default function CreateUserDialog({
             {/* FORM SOLO SI HAY ROL */}
             {hasRol && (
               <>
-                {/* DATOS PERSONALES */}
-                <div className="uf-field">
-                  <label className="uf-label">NOMBRE</label>
-                  <InputText
-                    value={form.nombre}
-                    onChange={(e) => handleChange("nombre", e.target.value)}
-                    className="uf-input"
-                  />
-                  {errors.nombre && (
-                    <small className="uf-error">{errors.nombre}</small>
-                  )}
+                {/* DATOS CONTACTO */}
+                {isCliente && (
+                <div className="uf-section">
+                  <p className="uf-section-title">Datos de contacto</p>
                 </div>
+                )}
 
-                <div className="uf-field">
-                  <label className="uf-label">APELLIDO</label>
-                  <InputText
-                    value={form.apellido}
-                    onChange={(e) => handleChange("apellido", e.target.value)}
-                    className="uf-input"
-                  />
-                  {errors.apellido && (
-                    <small className="uf-error">{errors.apellido}</small>
-                  )}
+                <div className="uf-grid-2">
+                  <div className="uf-field">
+                    <label className="uf-label">NOMBRE</label>
+                    <InputText
+                      value={form.nombre}
+                      onChange={(e) => handleChange("nombre", e.target.value)}
+                      className="uf-input"
+                    />
+                    {errors.nombre && (
+                      <small className="uf-error">{errors.nombre}</small>
+                    )}
+                  </div>
+
+                  <div className="uf-field">
+                    <label className="uf-label">APELLIDO</label>
+                    <InputText
+                      value={form.apellido}
+                      onChange={(e) => handleChange("apellido", e.target.value)}
+                      className="uf-input"
+                    />
+                    {errors.apellido && (
+                      <small className="uf-error">{errors.apellido}</small>
+                    )}
+                  </div>
                 </div>
 
                 <div className="uf-field">
@@ -300,6 +307,10 @@ export default function CreateUserDialog({
                         }
                         className="uf-input"
                       />
+                    </div>
+
+                    <div className="uf-section">
+                      <p className="uf-section-title">Datos de la empresa</p>
                     </div>
 
                     <div className="uf-field">
@@ -329,7 +340,7 @@ export default function CreateUserDialog({
                     </div>
 
                     <div className="uf-field">
-                      <label className="uf-label">DIRECCIÓN</label>
+                      <label className="uf-label">DIRECCIÓN (OPCIONAL)</label>
                       <InputText
                         value={form.direccion}
                         onChange={(e) =>
@@ -337,9 +348,6 @@ export default function CreateUserDialog({
                         }
                         className="uf-input"
                       />
-                      {errors.direccion && (
-                        <small className="uf-error">{errors.direccion}</small>
-                      )}
                     </div>
                   </>
                 )}

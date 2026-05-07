@@ -16,7 +16,7 @@ export default function ClientSidebar() {
     if (!confirm) return;
 
     localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("rol");
     navigate("/");
   };
 

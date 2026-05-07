@@ -17,14 +17,39 @@ export default function Login() {
   const navigate = useNavigate();
 
   // Si ya está logueado → ir directo al home
-  useEffect(() => {
+  /* useEffect(() => {
     const token = localStorage.getItem("token");
-    const role = localStorage.getItem("userRole");
+    const role = localStorage.getItem("rol");
 
     if (token && role) {
       if (role === "cliente") navigate("/cliente", { replace: true });
       else navigate("/home", { replace: true });
     }
+  }, []); */
+  useEffect(() => {
+    //const token = localStorage.getItem("token");
+    //const role = localStorage.getItem("rol");
+
+    const validarSesion = async () => {
+      try {
+        const user = await obtenerUsuarioLogueado();
+
+        if (!user) {
+          localStorage.clear();
+          return;
+        }
+
+        if (user.rol === "cliente") {
+          navigate("/cliente", { replace: true });
+        } else {
+          navigate("/home", { replace: true });
+        }
+      } catch {
+        localStorage.clear();
+      }
+    };
+
+    validarSesion();
   }, []);
 
   const handleLogin = async () => {
@@ -43,9 +68,9 @@ export default function Login() {
       localStorage.setItem("token", data.token);
 
       // ── ROL ───────────────────────────────
-      const userRole = (data.rol || data.role || "admin").toLowerCase();
+      const rol = (data.rol || data.role || "admin").toLowerCase();
 
-      localStorage.setItem("userRole", userRole);
+      localStorage.setItem("rol", rol);
 
       // ── ESTADO Y PRIMER LOGIN ─────────────
 
@@ -66,15 +91,14 @@ export default function Login() {
         }),
       ); */
 
-
       // SOLO navegación base (el modal hace el resto)
-      /* if (userRole === "cliente") {
+      /* if (rol === "cliente") {
         navigate("/cliente", { replace: true });
       } else {
         navigate("/home", { replace: true });
       } */
 
-      navigate("/onboarding", { replace: true });// redirige al onboarding gate que se encarga de todo el flujo de primer login y consentimiento
+      navigate("/onboarding", { replace: true }); // redirige al onboarding gate que se encarga de todo el flujo de primer login y consentimiento
     } catch (err) {
       const msg =
         err?.response?.data?.message ||

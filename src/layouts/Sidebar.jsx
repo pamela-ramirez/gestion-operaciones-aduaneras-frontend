@@ -23,7 +23,7 @@ export default function Sidebar() {
     if (!confirm) return;
 
     localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("rol");
     navigate("/");
   };
 

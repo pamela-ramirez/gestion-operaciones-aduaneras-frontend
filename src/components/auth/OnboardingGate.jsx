@@ -34,12 +34,12 @@ export default function OnboardingGate() {
       try {
         const data = await obtenerUsuarioLogueado();
         console.log("DEBUG USER =>", data);
-         if (!data) {
-        navigate("/login");
-        return;
-      }
+        if (!data) {
+          navigate("/login");
+          return;
+        }
 
-      setUser(data);
+        setUser(data);
 
         const estado = (data?.estado ?? "").toLowerCase();
 
@@ -51,15 +51,16 @@ export default function OnboardingGate() {
         }
 
         // 2. Luego primer login
-       if (data?.primerLogin){
+        if (data?.primerLogin) {
           setVisiblePassword(true);
           return;
         }
 
         // 3. Si ya pasó onboarding → ir a su portal
-         redirigirPorRol(data.rol);
+        redirigirPorRol(data.rol);
       } catch (err) {
         console.log("Error cargando usuario logueado", err);
+        localStorage.clear();
         navigate("/login");
       }
     };

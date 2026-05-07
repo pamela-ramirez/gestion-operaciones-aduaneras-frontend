@@ -12,6 +12,7 @@ import {
 
 import { obtenerUsuarioLogueado } from "../../services/userService";
 import "./OnboardingGate.css";
+import { guardarUsuarioLogueado } from "../../utils/auth";
 
 export default function OnboardingGate() {
   const [user, setUser] = useState(null);
@@ -39,8 +40,18 @@ export default function OnboardingGate() {
           return;
         }
 
-        setUser(data);
+        const usuarioLogueado = {
+          token: data.token,
+          id: data.id,
+          email: data.email,
+          //username: data.username,
+          rol: (data.rol || data.role || "").toLowerCase(),
+          primerLogin: data.primerLogin,
+          estado: data.estado,
+        };
+        guardarUsuarioLogueado(usuarioLogueado);
 
+        setUser(data);
         const estado = (data?.estado ?? "").toLowerCase();
 
         // 1. Consentimiento primero (máxima prioridad)

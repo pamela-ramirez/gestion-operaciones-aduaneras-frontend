@@ -2,7 +2,7 @@ import apiClient from "../api/apiClient";
 
 export const crearOperacion = async (operacionData) => {
   try {
-    const response = await apiClient.post(VITE_OPERACION_ENDPOINT, operacionData);
+    const response = await apiClient.post(import.meta.env.VITE_OPERACION_ENDPOINT, operacionData);
     return response.data;
   } catch (error) {
     console.error("Error al crear la operación:", error);
@@ -12,7 +12,7 @@ export const crearOperacion = async (operacionData) => {
 
 export const obtenerOperaciones = async () => {
   try {
-    const response = await apiClient.get(VITE_OPERACION_ENDPOINT);
+    const response = await apiClient.get(import.meta.env.VITE_OPERACION_ENDPOINT);
     return response.data;
   } catch (error) {
     console.error("Error al obtener las operaciones:", error);
@@ -22,7 +22,7 @@ export const obtenerOperaciones = async () => {
 
 export const obtenerOperacionPorId = async (id) => {
   try {
-    const response = await apiClient.get(`${VITE_OPERACION_ENDPOINT}/${id}`);
+    const response = await apiClient.get(`${import.meta.env.VITE_OPERACION_ENDPOINT}/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error al obtener la operación con ID ${id}:`, error);
@@ -32,7 +32,7 @@ export const obtenerOperacionPorId = async (id) => {
 
 export const actualizarOperacion = async (id, operacionData) => {
   try {
-    const response = await apiClient.put(`${VITE_OPERACION_ENDPOINT}/${id}`, operacionData);    
+    const response = await apiClient.put(`${import.meta.env.VITE_OPERACION_ENDPOINT}/${id}`, operacionData);    
     return response.data;
   } catch (error) {
     console.error(`Error al actualizar la operación con ID ${id}:`, error);

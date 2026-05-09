@@ -59,6 +59,15 @@ export default function App() {
             </PrivateRoute>
           }
         />
+        
+        <Route
+          path="/operaciones"
+          element={
+            <PrivateRoute roles={["admin", "despachante"]}>
+              <Operations />
+            </PrivateRoute>
+          }
+        />
 
         {/* ── Fallback ───────────────────────────────────────── */}
         <Route path="*" element={<Navigate to="/" replace />} />

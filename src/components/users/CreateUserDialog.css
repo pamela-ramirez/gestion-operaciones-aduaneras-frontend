@@ -255,3 +255,42 @@
   border-color: #3d4460 !important;
   color: #b8c0d8 !important;
 }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.uf-section {
+  margin-top: 20px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #252936;
+}
+
+.uf-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #00e0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ============================================================
+   GRID
+   ============================================================ */
+.uf-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.uf-section {
+  margin: 18px 0 10px;
+}
+
+.uf-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #00e0b0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}

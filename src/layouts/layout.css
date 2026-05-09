@@ -101,6 +101,7 @@
 /* CONTENT */
 .layout-content {
   padding: 20px;
+  overflow-y: auto; /*Permite scroll vertical si el contenido excede la altura disponible */
 }
 
 /* USUARIOS */

@@ -12,6 +12,7 @@ import {
 
 import { obtenerUsuarioLogueado } from "../../services/userService";
 import "./OnboardingGate.css";
+import { guardarUsuarioLogueado } from "../../utils/auth";
 
 export default function OnboardingGate() {
   const [user, setUser] = useState(null);
@@ -34,13 +35,23 @@ export default function OnboardingGate() {
       try {
         const data = await obtenerUsuarioLogueado();
         console.log("DEBUG USER =>", data);
-         if (!data) {
-        navigate("/login");
-        return;
-      }
+        if (!data) {
+          navigate("/login");
+          return;
+        }
 
-      setUser(data);
+        const usuarioLogueado = {
+          token: data.token,
+          id: data.id,
+          email: data.email,
+          //username: data.username,
+          rol: (data.rol || data.role || "").toLowerCase(),
+          primerLogin: data.primerLogin,
+          estado: data.estado,
+        };
+        guardarUsuarioLogueado(usuarioLogueado);
 
+        setUser(data);
         const estado = (data?.estado ?? "").toLowerCase();
 
         // 1. Consentimiento primero (máxima prioridad)
@@ -51,15 +62,16 @@ export default function OnboardingGate() {
         }
 
         // 2. Luego primer login
-       if (data?.primerLogin){
+        if (data?.primerLogin) {
           setVisiblePassword(true);
           return;
         }
 
         // 3. Si ya pasó onboarding → ir a su portal
-         redirigirPorRol(data.rol);
+        redirigirPorRol(data.rol);
       } catch (err) {
         console.log("Error cargando usuario logueado", err);
+        localStorage.clear();
         navigate("/login");
       }
     };

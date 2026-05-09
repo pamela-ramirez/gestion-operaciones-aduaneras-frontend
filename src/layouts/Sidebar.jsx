@@ -3,7 +3,9 @@ import { Button } from "primereact/button";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const rol = localStorage.getItem("rol");
 
+  //menu base
   const items = [
     { label: "Tablero", icon: "pi pi-home", path: "/home" },
     { label: "Clientes", icon: "pi pi-users", path: "/clientes" },
@@ -18,12 +20,21 @@ export default function Sidebar() {
     { label: "Auditoría", icon: "pi pi-search", path: "/auditoria" },
   ];
 
+  // Solo admin ve Usuarios
+  if (rol === "admin") {
+    items.push({
+      label: "Usuarios",
+      icon: "pi pi-id-card",
+      path: "/usuarios",
+    });
+  }
+
   const handleLogout = () => {
     const confirm = window.confirm("¿Seguro que quieres cerrar sesión?");
     if (!confirm) return;
 
     localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("rol");
     navigate("/");
   };
 
@@ -45,12 +56,12 @@ export default function Sidebar() {
       </div>
 
       {/* gestion usuarios */}
-      <div style={{ marginTop: "100px" }}>
+{/*       <div style={{ marginTop: "100px" }}>
         <div className="sidebar-item" onClick={() => navigate("/usuarios")}>
           <i className="pi pi-id-card"></i>
           <span>Usuarios</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="sidebar-footer">
         <div className="sidebar-item" onClick={handleLogout}>

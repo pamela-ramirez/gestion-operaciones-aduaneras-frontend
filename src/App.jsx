@@ -15,7 +15,6 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* ── Pública ────────────────────────────────────────── */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
@@ -33,9 +32,19 @@ export default function App() {
         />
 
         <Route
-          path="/usuarios"
+          path="/clientes"
           element={
             <PrivateRoute roles={["admin", "despachante"]}>
+              <Clients />
+            </PrivateRoute>
+          }
+        />
+
+        {/* ── Admin ────────────────────────────── */}
+        <Route
+          path="/usuarios"
+          element={
+            <PrivateRoute roles={["admin"]}>
               <Users />
             </PrivateRoute>
           }
@@ -51,27 +60,8 @@ export default function App() {
           }
         />
 
-        <Route
-          path="/clientes"
-          element={
-            <PrivateRoute roles={["admin", "despachante"]}>
-              <Clients />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/operaciones"
-          element={
-            <PrivateRoute roles={["admin", "despachante"]}>
-              <Operations />
-            </PrivateRoute>
-          }
-        />
-
         {/* ── Fallback ───────────────────────────────────────── */}
         <Route path="*" element={<Navigate to="/" replace />} />
-
       </Routes>
     </BrowserRouter>
   );

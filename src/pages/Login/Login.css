@@ -32,11 +32,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  /* CAMBIAR IMAGEN POR UNA DEL PUERTO DE MONTEVIDEO */
-  background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1600&q=80');
   background-size: cover;
   background-position: center right;
-  filter: grayscale(100%);
+  filter: grayscale(80%) brightness(0.55); /* Efecto de filtro para atenuar la imagen y que el contenido resalte más */
   z-index: 0;
 }
 

@@ -7,7 +7,7 @@ import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { obtenerClientes } from "../../services/clienteService";
 import { crearOperacion } from "../../services/operationService";
-//import { obtenerTiposOperacion } from "../../services/tipoOperacionService";
+import { obtenerTiposOperacion } from "../../services/tipoOperacionService";
 import "./OperationDialogs.css";
 
 export default function CreateOperationDialog({ visible, onHide, onRefreshOperations }) {
@@ -57,18 +57,18 @@ export default function CreateOperationDialog({ visible, onHide, onRefreshOperat
       // Intentar cargar desde el servicio real
       const data = await obtenerTiposOperacion();
       setTiposOperacion(data.map(t => ({
-        label: t.nombre,
+        label: t.descripcion,
         value: t.id
       })));
     } catch (error) {
       console.warn("Servicio de tipos de operación no disponible, usando datos de ejemplo");
       // Fallback a datos de ejemplo si el servicio no está disponible
-      setTiposOperacion([
+      /* setTiposOperacion([
         { label: "Importación", value: 1 },
         { label: "Exportación", value: 2 },
         { label: "Tránsito", value: 3 },
         { label: "Reimportación", value: 4 },
-      ]);
+      ]); */
     }
   };
 

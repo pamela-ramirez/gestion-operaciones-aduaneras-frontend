@@ -99,11 +99,11 @@ export default function Operations() {
   );
 
   const clienteTemplate = (row) => (
-    <span className="op-cell-text">{row.cliente?.razonSocial || "—"}</span>
+    <span className="op-cell-text">{row.razonSocialCliente || "—"}</span>
   );
 
   const tipoOperacionTemplate = (row) => (
-    <span className="op-cell-text">{row.tipoOperacion?.nombre || "—"}</span>
+    <span className="op-cell-text">{row.tipoOperacion || "—"}</span>
   );
 
   const estadoTemplate = (row) => {
@@ -114,8 +114,8 @@ export default function Operations() {
   };
 
   const fechaTemplate = (row) => {
-    if (!row.fechaInicio) return <span className="op-cell-muted">—</span>;
-    const fecha = new Date(row.fechaInicio);
+    if (!row.fechaRegistro) return <span className="op-cell-muted">—</span>;
+    const fecha = new Date(row.fechaRegistro);
     return (
       <span className="op-cell-muted">
         {fecha.toLocaleDateString('es-UY', {
@@ -280,7 +280,7 @@ export default function Operations() {
           ]}
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}"
           tableStyle={{ tableLayout: "fixed", width: "100%" }}
-          sortField="fechaInicio"
+          sortField="fechaRegistro"
           sortOrder={-1}
         >
           <Column
@@ -321,10 +321,10 @@ export default function Operations() {
           />
 
           <Column
-            header="FECHA INICIO"
+            header="FECHA REGISTRO"
             body={fechaTemplate}
             sortable
-            field="fechaInicio"
+            field="fechaRegistro"
             style={{ width: "140px" }}
           />
 

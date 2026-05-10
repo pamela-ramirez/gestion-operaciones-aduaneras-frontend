@@ -32,7 +32,7 @@ export const obtenerOperacionPorId = async (id) => {
 
 export const actualizarOperacion = async (id, operacionData) => {
   try {
-    const response = await apiClient.put(`${import.meta.env.VITE_OPERACION_ENDPOINT}/${id}`, operacionData);    
+    const response = await apiClient.patch(`${import.meta.env.VITE_OPERACION_ENDPOINT}/${id}/datos-aduaneros`, operacionData);    
     return response.data;
   } catch (error) {
     console.error(`Error al actualizar la operación con ID ${id}:`, error);

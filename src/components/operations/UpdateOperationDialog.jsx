@@ -8,21 +8,30 @@ import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { actualizarOperacion } from "../../services/operationService";
 import "./OperationDialogs.css";
 
-export default function UpdateOperationDialog({ 
-  visible, 
-  onHide, 
+export default function UpdateOperationDialog({
+  visible,
+  onHide,
   onRefreshOperations,
-  operationData 
+  operationData,
 }) {
   const toast = useRef(null);
   const [loading, setLoading] = useState(false);
   const [tiposConocimiento, setTiposConocimiento] = useState([]);
-  
+
   const [formData, setFormData] = useState({
-    nroDUA: "",
+    nroDua: "",
     tipoConocimientoId: null,
-    nroConocimiento: "",
+    nroConocimiento: null,
   });
+
+  // =========================
+  // VALIDACIÓN
+  // =========================
+
+  const estanTodosLosCamposCompletos =
+    formData.nroDua.trim() !== "" &&
+    formData.tipoConocimientoId !== null &&
+    formData.nroConocimiento !== null;
 
   // =========================
   // LOAD DATA
@@ -32,9 +41,9 @@ export default function UpdateOperationDialog({
     if (visible && operationData) {
       cargarTiposConocimiento();
       setFormData({
-        nroDUA: operationData.nroDUA || "",
+        nroDua: operationData.nroDua || "",
         tipoConocimientoId: operationData.tipoConocimientoId || null,
-        nroConocimiento: operationData.nroConocimiento || "",
+        nroConocimiento: operationData.nroConocimiento || null,
       });
     }
   }, [visible, operationData]);
@@ -53,9 +62,9 @@ export default function UpdateOperationDialog({
 
   const resetForm = () => {
     setFormData({
-      nroDUA: "",
+      nroDua: "",
       tipoConocimientoId: null,
-      nroConocimiento: "",
+      nroConocimiento: null,
     });
   };
 
@@ -65,13 +74,19 @@ export default function UpdateOperationDialog({
 
   const handleGuardar = async () => {
     // Validar que al menos un campo tenga datos
-    if (!formData.nroDUA.trim() && !formData.tipoConocimientoId && !formData.nroConocimiento.trim()) {
+
+    if (
+      !formData.nroDua.trim() &&
+      !formData.tipoConocimientoId &&
+      !formData.nroConocimiento
+    ) {
       toast.current?.show({
         severity: "warn",
         summary: "Validación",
         detail: "Debe completar al menos un campo para guardar",
         life: 3000,
       });
+
       return;
     }
 
@@ -80,10 +95,18 @@ export default function UpdateOperationDialog({
     try {
       const updateData = {
         ...operationData,
-        nroDUA: formData.nroDUA || operationData.nroDUA,
-        tipoConocimientoId: formData.tipoConocimientoId || operationData.tipoConocimientoId,
-        nroConocimiento: formData.nroConocimiento || operationData.nroConocimiento,
-        estado: "Documentacion Pendiente",
+
+        nroDua: formData.nroDua || operationData.nroDua,
+
+        tipoConocimientoId:
+          formData.tipoConocimientoId || operationData.tipoConocimientoId,
+
+        nroConocimiento:
+          formData.nroConocimiento || operationData.nroConocimiento,
+
+        /* estado: estanTodosLosCamposCompletos
+          ? "En Proceso"
+          : operationData.estado, */
       };
 
       await actualizarOperacion(operationData.id, updateData);
@@ -100,6 +123,7 @@ export default function UpdateOperationDialog({
       }, 1000);
     } catch (error) {
       console.error("Error actualizando operación:", error);
+
       toast.current?.show({
         severity: "error",
         summary: "Error",
@@ -112,14 +136,17 @@ export default function UpdateOperationDialog({
   };
 
   const handleGuardarYEnviarCorreo = async () => {
-    // Validar que al menos un campo tenga datos
-    if (!formData.nroDUA.trim() && !formData.tipoConocimientoId && !formData.nroConocimiento.trim()) {
+    // Validar que estén completos los 3 campos
+
+    if (!estanTodosLosCamposCompletos) {
       toast.current?.show({
         severity: "warn",
         summary: "Validación",
-        detail: "Debe completar al menos un campo para guardar",
+        detail:
+          "Debe completar Nro. DUA, Tipo de Conocimiento y Nro. de Conocimiento",
         life: 3000,
       });
+
       return;
     }
 
@@ -128,43 +155,66 @@ export default function UpdateOperationDialog({
     try {
       const updateData = {
         ...operationData,
-        nroDUA: formData.nroDUA || operationData.nroDUA,
-        tipoConocimientoId: formData.tipoConocimientoId || operationData.tipoConocimientoId,
-        nroConocimiento: formData.nroConocimiento || operationData.nroConocimiento,
-        estado: "Documentacion Pendiente",
+
+        nroDua: formData.nroDua || operationData.nroDua,
+
+        tipoConocimientoId:
+          formData.tipoConocimientoId || operationData.tipoConocimientoId,
+
+        nroConocimiento:
+          formData.nroConocimiento || operationData.nroConocimiento,
+
+        //estado: operationData.estado || "En Proceso",
       };
 
       await actualizarOperacion(operationData.id, updateData);
 
-      // Mostrar confirmación de envío de correo
       setLoading(false);
-      
+
       confirmDialog({
         message: (
           <div className="opd-confirm-message">
-            <i className="pi pi-check-circle" style={{ fontSize: '3rem', color: '#00e0b0' }} />
+            <i
+              className="pi pi-check-circle"
+              style={{
+                fontSize: "3rem",
+                color: "#00e0b0",
+              }}
+            />
+
             <h3>Operación Guardada con Éxito</h3>
-            <p>¿Desea enviar el correo de notificación de tipo Liquidación al cliente ahora?</p>
+
+            <p>
+              ¿Desea enviar el correo de notificación de tipo Liquidación al
+              cliente ahora?
+            </p>
           </div>
         ),
+
         header: " ",
         icon: " ",
+
         acceptLabel: "Enviar Correo",
         rejectLabel: "Omitir por ahora",
+
         acceptClassName: "opd-btn-submit",
         rejectClassName: "opd-btn-cancel",
+
         accept: () => {
           // TODO: Implementar lógica de envío de correo
+
           toast.current?.show({
             severity: "info",
             summary: "Correo enviado",
             detail: "El correo de notificación ha sido enviado al cliente",
             life: 3000,
           });
+
           setTimeout(() => {
             onRefreshOperations();
           }, 1000);
         },
+
         reject: () => {
           toast.current?.show({
             severity: "info",
@@ -172,6 +222,7 @@ export default function UpdateOperationDialog({
             detail: "La operación se guardó sin enviar notificación",
             life: 3000,
           });
+
           setTimeout(() => {
             onRefreshOperations();
           }, 1000);
@@ -179,12 +230,14 @@ export default function UpdateOperationDialog({
       });
     } catch (error) {
       console.error("Error actualizando operación:", error);
+
       toast.current?.show({
         severity: "error",
         summary: "Error",
         detail: "No se pudo actualizar la operación",
         life: 3000,
       });
+
       setLoading(false);
     }
   };
@@ -206,7 +259,7 @@ export default function UpdateOperationDialog({
       <div>
         <h2 className="opd-header-title">Actualizar Datos</h2>
         <p className="opd-header-subtitle">
-          Operación: {operationData?.nroCarpeta || "—"} | Cliente: {operationData?.cliente?.razonSocial || "—"}
+          Complete los campos que desea actualizar para esta operación
         </p>
       </div>
     </div>
@@ -233,6 +286,7 @@ export default function UpdateOperationDialog({
         className="opd-btn-submit"
         onClick={handleGuardarYEnviarCorreo}
         loading={loading}
+        disabled={!estanTodosLosCamposCompletos}
       />
     </div>
   );
@@ -257,15 +311,21 @@ export default function UpdateOperationDialog({
             <div className="opd-info-grid">
               <div className="opd-info-item">
                 <span className="opd-info-label">CLIENTE</span>
-                <span className="opd-info-value">{operationData?.cliente?.razonSocial || "—"}</span>
+                <span className="opd-info-value">
+                  {operationData?.razonSocialCliente || "—"}
+                </span>
               </div>
               <div className="opd-info-item">
                 <span className="opd-info-label">NRO. CARPETA</span>
-                <span className="opd-info-value">{operationData?.nroCarpeta || "—"}</span>
+                <span className="opd-info-value">
+                  {operationData?.nroCarpeta || "—"}
+                </span>
               </div>
               <div className="opd-info-item">
                 <span className="opd-info-label">TIPO OPERACIÓN</span>
-                <span className="opd-info-value">{operationData?.tipoOperacion?.nombre || "—"}</span>
+                <span className="opd-info-value">
+                  {operationData?.tipoOperacion || "—"}
+                </span>
               </div>
             </div>
           </div>
@@ -273,18 +333,20 @@ export default function UpdateOperationDialog({
           {/* Estado Badge */}
           <div className="opd-estado-badge opd-estado-badge-warning">
             <i className="pi pi-circle-fill" />
-            <span>ESTADO: DOCUMENTACIÓN PENDIENTE</span>
+            <span>ESTADO: {operationData?.estado || "—"}</span>
           </div>
 
           {/* Número DUA */}
           <div className="opd-field">
-            <label htmlFor="nroDUA" className="opd-label">
+            <label htmlFor="nroDua" className="opd-label">
               Nro. DUA
             </label>
             <InputText
-              id="nroDUA"
-              value={formData.nroDUA}
-              onChange={(e) => setFormData({ ...formData, nroDUA: e.target.value })}
+              id="nroDua"
+              value={formData.nroDua}
+              onChange={(e) =>
+                setFormData({ ...formData, nroDua: e.target.value })
+              }
               placeholder="Ej: TN-2024-D-054461"
               className="opd-input"
             />
@@ -302,7 +364,9 @@ export default function UpdateOperationDialog({
               id="tipoConocimiento"
               value={formData.tipoConocimientoId}
               options={tiposConocimiento}
-              onChange={(e) => setFormData({ ...formData, tipoConocimientoId: e.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, tipoConocimientoId: e.value })
+              }
               placeholder="Seleccionar Tipo..."
               className="opd-dropdown"
             />
@@ -316,7 +380,17 @@ export default function UpdateOperationDialog({
             <InputText
               id="nroConocimiento"
               value={formData.nroConocimiento}
-              onChange={(e) => setFormData({ ...formData, nroConocimiento: e.target.value })}
+              /*  onChange={(e) =>
+                setFormData({ ...formData, nroConocimiento: e.target.value })
+              } */
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  nroConocimiento:
+                    e.target.value === "" ? null : parseInt(e.target.value, 10),
+                })
+              }
+              keyfilter="int" // Permite solo números enteros
               placeholder="Ej: Número de factura de cargamento"
               className="opd-input"
             />

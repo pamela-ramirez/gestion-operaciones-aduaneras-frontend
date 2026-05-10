@@ -95,7 +95,7 @@ export default function Operations() {
   };
 
   const duaTemplate = (row) => (
-    <span className="op-cell-muted">{row.nroDUA || "—"}</span>
+    <span className="op-cell-muted">{row.nroDua || "—"}</span>
   );
 
   const clienteTemplate = (row) => (
@@ -104,6 +104,14 @@ export default function Operations() {
 
   const tipoOperacionTemplate = (row) => (
     <span className="op-cell-text">{row.tipoOperacion || "—"}</span>
+  );
+  
+  const tipoConocimientoTemplate = (row) => (
+    <span className="op-cell-text">{row.tipoConocimiento || "—"}</span>
+  );
+
+  const nroConocimientoTemplate = (row) => (
+    <span className="op-cell-text">{row.nroConocimiento || "—"}</span>
   );
 
   const estadoTemplate = (row) => {
@@ -247,14 +255,21 @@ export default function Operations() {
           <div className="op-stat-card">
             <span className="op-stat-label">DOCUMENTACIÓN PENDIENTE</span>
             <span className="op-stat-value">
-              {operaciones.filter((o) => o.estado === "Documentacion Pendiente").length}
+              {operaciones.filter((o) => o.estado === "Documentación pendiente").length}
+            </span>
+          </div>
+
+           <div className="op-stat-card">
+            <span className="op-stat-label">EN PROCESO</span>
+            <span className="op-stat-value">
+              {operaciones.filter((o) => o.estado === "En proceso").length}
             </span>
           </div>
 
           <div className="op-stat-card">
             <span className="op-stat-label">FINALIZADAS</span>
             <span className="op-stat-value">
-              {operaciones.filter((o) => o.estado === "Finalizada").length}
+              {operaciones.filter((o) => o.estado === "Finalizado").length}
             </span>
           </div>
         </div>
@@ -275,7 +290,7 @@ export default function Operations() {
           globalFilter={globalFilterValue}
           globalFilterFields={[
             "nroCarpeta",
-            "nroDUA",
+            "nroDua",
             "cliente.razonSocial"
           ]}
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}"
@@ -288,15 +303,15 @@ export default function Operations() {
             body={carpetaTemplate}
             sortable
             field="nroCarpeta"
-            style={{ width: "200px" }}
+            style={{ width: "100px" }}
           />
 
           <Column
             header="NRO. DUA"
             body={duaTemplate}
             sortable
-            field="nroDUA"
-            style={{ width: "150px" }}
+            field="nroDua"
+            style={{ width: "100px" }}
           />
 
           <Column
@@ -304,20 +319,32 @@ export default function Operations() {
             body={clienteTemplate}
             sortable
             field="cliente.razonSocial"
-            style={{ width: "220px" }}
+            style={{ width: "150px" }}
           />
 
           <Column
             header="TIPO OPERACIÓN"
             body={tipoOperacionTemplate}
-            style={{ width: "180px" }}
+            style={{ width: "100px" }}
+          />
+
+           <Column
+            header="TIPO CONOCIMIENTO"
+            body={tipoConocimientoTemplate}
+            style={{ width: "100px" }}
+          />
+
+           <Column
+            header="NRO. CONOCIMIENTO"
+            body={nroConocimientoTemplate}
+            style={{ width: "100px" }}
           />
 
           <Column
             header="ESTADO"
             body={estadoTemplate}
             field="estado"
-            style={{ width: "200px" }}
+            style={{ width: "100px" }}
           />
 
           <Column
@@ -325,13 +352,13 @@ export default function Operations() {
             body={fechaTemplate}
             sortable
             field="fechaRegistro"
-            style={{ width: "140px" }}
+            style={{ width: "100px" }}
           />
 
           <Column
             header="ACCIONES"
             body={accionesTemplate}
-            style={{ width: "200px", textAlign: "center" }}
+            style={{ width: "150px", textAlign: "center" }}
           />
         </DataTable>
       </div>

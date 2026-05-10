@@ -123,7 +123,7 @@ export default function CreateOperationDialog({ visible, onHide, onRefreshOperat
         clienteId: formData.clienteId,
         nroCarpeta: formData.nroCarpeta,
         tipoOperacionId: formData.tipoOperacionId,
-        estado: "Iniciado",
+        estado: formData.estado || "-",
         fechaInicio: new Date().toISOString(),
       };
 

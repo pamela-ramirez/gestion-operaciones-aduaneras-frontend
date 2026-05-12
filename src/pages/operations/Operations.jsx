@@ -10,6 +10,7 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { obtenerOperaciones } from "../../services/operationService";
 import "./Operations.css";
+import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -17,6 +18,7 @@ export default function Operations() {
   const [error, setError] = useState(null);
   const [createDialogVisible, setCreateDialogVisible] = useState(false);
   const [updateDialogVisible, setUpdateDialogVisible] = useState(false);
+  const [finalizarDialogVisible, setFinalizarDialogVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
@@ -49,6 +51,7 @@ export default function Operations() {
   const handleOnRefreshOperations = async () => {
     setCreateDialogVisible(false);
     setUpdateDialogVisible(false);
+    setFinalizarDialogVisible(false);
     setSelectedOperation(null);
     await cargarOperaciones();
   };
@@ -69,8 +72,8 @@ export default function Operations() {
   };
 
   const handleFinalizarOperacion = (operation) => {
-    // Implementar lógica de finalizar operación
-    console.log("Finalizar operación:", operation);
+    setSelectedOperation(operation);
+    setFinalizarDialogVisible(true);
   };
 
   const onGlobalFilterChange = (e) => {
@@ -173,6 +176,7 @@ export default function Operations() {
           onClick={() => handleFinalizarOperacion(row)}
           tooltip="Finalizar Operación"
           tooltipOptions={{ position: "top" }}
+          disabled={row.estado !== "En proceso"}
         />
       </div>
     );
@@ -286,7 +290,7 @@ export default function Operations() {
           loading={loading}
           paginator
           paginatorClassName="op-custom-paginator"
-          rows={10}
+          rows={5}
           globalFilter={globalFilterValue}
           globalFilterFields={[
             "nroCarpeta",
@@ -377,6 +381,16 @@ export default function Operations() {
         visible={updateDialogVisible}
         onHide={() => {
           setUpdateDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        onRefreshOperations={handleOnRefreshOperations}
+        operationData={selectedOperation}
+      />
+
+       <FinalizarOperacionDialog
+        visible={finalizarDialogVisible}
+        onHide={() => {
+          setFinalizarDialogVisible(false);
           setSelectedOperation(null);
         }}
         onRefreshOperations={handleOnRefreshOperations}

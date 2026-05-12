@@ -40,5 +40,16 @@ export const actualizarOperacion = async (id, operacionData) => {
   }
 };
 
-
+export const finalizarOperacion = async (id) => {
+  try {
+    const response = await apiClient.patch(
+      `${import.meta.env.VITE_OPERACION_ENDPOINT}/${id}/finalizar`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error al finalizar la operación con ID ${id}:`, error);
+    throw error;
+  }
+};
+ 
 

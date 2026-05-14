@@ -21,6 +21,7 @@ export default function Operations() {
   const [finalizarDialogVisible, setFinalizarDialogVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
+  //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -76,6 +77,11 @@ export default function Operations() {
     setFinalizarDialogVisible(true);
   };
 
+/*   const handleViewDetailOperation = (operation) => {
+    setSelectedOperation(operation);
+    setViewDetailDialogVisible(true);
+  }; */
+
   const onGlobalFilterChange = (e) => {
     setGlobalFilterValue(e.target.value);
   };
@@ -108,7 +114,7 @@ export default function Operations() {
   const tipoOperacionTemplate = (row) => (
     <span className="op-cell-text">{row.tipoOperacion || "—"}</span>
   );
-  
+
   const tipoConocimientoTemplate = (row) => (
     <span className="op-cell-text">{row.tipoConocimiento || "—"}</span>
   );
@@ -118,10 +124,8 @@ export default function Operations() {
   );
 
   const estadoTemplate = (row) => {
-    const estadoClass = `op-estado op-estado-${row.estado?.toLowerCase().replace(/\s+/g, '-') || 'default'}`;
-    return (
-      <span className={estadoClass}>{row.estado || "—"}</span>
-    );
+    const estadoClass = `op-estado op-estado-${row.estado?.toLowerCase().replace(/\s+/g, "-") || "default"}`;
+    return <span className={estadoClass}>{row.estado || "—"}</span>;
   };
 
   const fechaTemplate = (row) => {
@@ -129,10 +133,10 @@ export default function Operations() {
     const fecha = new Date(row.fechaRegistro);
     return (
       <span className="op-cell-muted">
-        {fecha.toLocaleDateString('es-UY', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric'
+        {fecha.toLocaleDateString("es-UY", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
         })}
       </span>
     );
@@ -141,6 +145,15 @@ export default function Operations() {
   const accionesTemplate = (row) => {
     return (
       <div className="op-actions">
+        {/* <Button
+          icon="pi pi-eye"
+          rounded
+          text
+          className="op-btn-view"
+         // onClick={() => handleViewDetailOperation(row)}
+          tooltip="Ver Detalle"
+          tooltipOptions={{ position: "top" }}
+        /> */}
         <Button
           icon="pi pi-pencil"
           rounded
@@ -259,11 +272,15 @@ export default function Operations() {
           <div className="op-stat-card">
             <span className="op-stat-label">DOCUMENTACIÓN PENDIENTE</span>
             <span className="op-stat-value">
-              {operaciones.filter((o) => o.estado === "Documentación pendiente").length}
+              {
+                operaciones.filter(
+                  (o) => o.estado === "Documentación pendiente",
+                ).length
+              }
             </span>
           </div>
 
-           <div className="op-stat-card">
+          <div className="op-stat-card">
             <span className="op-stat-label">EN PROCESO</span>
             <span className="op-stat-value">
               {operaciones.filter((o) => o.estado === "En proceso").length}
@@ -292,11 +309,7 @@ export default function Operations() {
           paginatorClassName="op-custom-paginator"
           rows={5}
           globalFilter={globalFilterValue}
-          globalFilterFields={[
-            "nroCarpeta",
-            "nroDua",
-            "cliente.razonSocial"
-          ]}
+          globalFilterFields={["nroCarpeta", "nroDua", "cliente.razonSocial"]}
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}"
           tableStyle={{ tableLayout: "fixed", width: "100%" }}
           sortField="fechaRegistro"
@@ -332,13 +345,13 @@ export default function Operations() {
             style={{ width: "100px" }}
           />
 
-           <Column
+          <Column
             header="TIPO CONOCIMIENTO"
             body={tipoConocimientoTemplate}
             style={{ width: "100px" }}
           />
 
-           <Column
+          <Column
             header="NRO. CONOCIMIENTO"
             body={nroConocimientoTemplate}
             style={{ width: "100px" }}
@@ -387,7 +400,7 @@ export default function Operations() {
         operationData={selectedOperation}
       />
 
-       <FinalizarOperacionDialog
+      <FinalizarOperacionDialog
         visible={finalizarDialogVisible}
         onHide={() => {
           setFinalizarDialogVisible(false);

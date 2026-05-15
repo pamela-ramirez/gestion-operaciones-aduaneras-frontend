@@ -1,10 +1,7 @@
 /* ============================================================
    SubirDocumentoDialog.css
-   Reutiliza los estilos de OperationDialogs.css y agrega
-   los específicos para el área de carga de archivos.
    ============================================================ */
 
-/* Color de acento para documentos: naranja dorado */
 .opd-header-icon-doc {
   background: rgba(251, 146, 60, 0.12);
   border: 1px solid rgba(251, 146, 60, 0.24);
@@ -14,7 +11,6 @@
   color: #fb923c;
 }
 
-/* Badge naranja para el ID de operación */
 .opd-badge-doc {
   background: rgba(251, 146, 60, 0.08);
   border: 1px solid rgba(251, 146, 60, 0.2);
@@ -25,19 +21,83 @@
   color: #fb923c;
 }
 
-/* ---- ÁREA DE CARGA DE ARCHIVO ---- */
+/* ══════════════════════════════════════════════
+   SECCIONES
+══════════════════════════════════════════════ */
 
-/* Estado vacío: esperando que el usuario elija un archivo */
+.doc-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+}
+
+.doc-seccion-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc-seccion-titulo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: #6b7591;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.doc-seccion-icon {
+  font-size: 14px;
+  color: #fb923c;
+}
+
+.doc-seccion-icon--lista {
+  color: #00e0b0;
+}
+
+.doc-seccion-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: rgba(0, 224, 176, 0.15);
+  color: #00e0b0;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ══════════════════════════════════════════════
+   BOTÓN SUBIR — dentro de la sección
+══════════════════════════════════════════════ */
+
+/* Lo alineamos a la derecha dentro de la sección */
+.doc-btn-subir {
+  align-self: flex-end;
+}
+
+/* ══════════════════════════════════════════════
+   ÁREA DE CARGA DE ARCHIVO
+══════════════════════════════════════════════ */
+
 .doc-upload-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 28px 20px;
+  padding: 24px 20px;
   border: 2px dashed #1c1f2b;
   border-radius: 10px;
-  background: #10131a;
+  background: #0a0d13;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
 }
@@ -47,7 +107,6 @@
   background: rgba(251, 146, 60, 0.04);
 }
 
-/* Estado con archivo seleccionado */
 .doc-upload-area--selected {
   border-style: solid;
   border-color: rgba(0, 224, 176, 0.4);
@@ -59,9 +118,8 @@
   background: rgba(0, 224, 176, 0.08);
 }
 
-/* Ícono principal del área */
 .doc-upload-icon {
-  font-size: 28px;
+  font-size: 26px;
   color: #3d4460;
   transition: color 0.2s;
 }
@@ -70,40 +128,184 @@
   color: #fb923c;
 }
 
-/* Ícono cuando hay archivo seleccionado */
 .doc-upload-icon--ok {
   color: #00e0b0;
 }
 
-.doc-upload-area--selected:hover .doc-upload-icon--ok {
-  color: #00e0b0;
-}
-
-/* Nombre del archivo elegido */
 .doc-upload-filename {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #d0d8f0;
   word-break: break-all;
   text-align: center;
 }
 
-/* Texto "Clic para cambiar" */
 .doc-upload-change {
   font-size: 11px;
   color: #6b7591;
 }
 
-/* Texto cuando no hay archivo */
 .doc-upload-placeholder {
   font-size: 13px;
   font-weight: 500;
   color: #6b7591;
 }
 
-/* Formatos aceptados */
 .doc-upload-hint {
   font-size: 11px;
   color: #3d4460;
   letter-spacing: 0.04em;
+}
+
+/* ══════════════════════════════════════════════
+   LISTA DE DOCUMENTOS
+══════════════════════════════════════════════ */
+
+.doc-lista-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  color: #6b7591;
+  font-size: 13px;
+}
+
+.doc-lista-loading .pi-spinner {
+  color: #00e0b0;
+}
+
+.doc-lista-vacia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  color: #3d4460;
+  font-size: 13px;
+}
+
+.doc-lista-vacia .pi {
+  font-size: 28px;
+  color: #1c1f2b;
+}
+
+.doc-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.doc-lista::-webkit-scrollbar {
+  width: 4px;
+}
+.doc-lista::-webkit-scrollbar-track {
+  background: #10131a;
+}
+.doc-lista::-webkit-scrollbar-thumb {
+  background: #1c1f2b;
+  border-radius: 4px;
+}
+
+.doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #0a0d13;
+  border: 1px solid #1c1f2b;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+.doc-item:hover {
+  border-color: #2a2d3e;
+}
+
+.doc-item-icono {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(0, 224, 176, 0.08);
+  border: 1px solid rgba(0, 224, 176, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.doc-item-icono .pi {
+  font-size: 16px;
+  color: #00e0b0;
+}
+
+.doc-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-item-nombre {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d0d8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-item-meta {
+  font-size: 11px;
+  color: #3d4460;
+  letter-spacing: 0.03em;
+}
+
+.doc-item-badge {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #3b82f6;
+}
+
+.doc-item-btn-eliminar {
+  color: #3d4460 !important;
+  flex-shrink: 0;
+  transition: color 0.2s !important;
+}
+
+.doc-item-btn-eliminar:hover {
+  color: #e05555 !important;
+  background: rgba(224, 85, 85, 0.08) !important;
+}
+
+.doc-item-btn-ver {
+  color: #3d4460 !important;
+  flex-shrink: 0;
+  transition: color 0.2s !important;
+}
+
+.doc-item-btn-ver:hover {
+  color: #00e0b0 !important;
+  background: rgba(0, 224, 176, 0.08) !important;
+}
+
+/*Boton de descargar documento*/
+.doc-item-btn-descargar {
+  color: #3d4460 !important;
+  flex-shrink: 0;
+  transition: color 0.2s !important;
+}
+
+.doc-item-btn-descargar:hover {
+  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.08) !important;
 }

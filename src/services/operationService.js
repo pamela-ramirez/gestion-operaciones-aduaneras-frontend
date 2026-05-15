@@ -51,5 +51,14 @@ export const finalizarOperacion = async (id) => {
     throw error;
   }
 };
- 
+
+export const obtenerDocumentosPorOperacion = async (id) => {
+  try {
+    const response = await apiClient.get(`${import.meta.env.VITE_OPERACION_ENDPOINT}/${id}/documentos`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al obtener los documentos de la operación con ID ${id}:`, error);
+    throw error;
+  }
+};
 

@@ -1,0 +1,109 @@
+/* ============================================================
+   SubirDocumentoDialog.css
+   Reutiliza los estilos de OperationDialogs.css y agrega
+   los específicos para el área de carga de archivos.
+   ============================================================ */
+
+/* Color de acento para documentos: naranja dorado */
+.opd-header-icon-doc {
+  background: rgba(251, 146, 60, 0.12);
+  border: 1px solid rgba(251, 146, 60, 0.24);
+}
+
+.opd-header-icon-doc .pi {
+  color: #fb923c;
+}
+
+/* Badge naranja para el ID de operación */
+.opd-badge-doc {
+  background: rgba(251, 146, 60, 0.08);
+  border: 1px solid rgba(251, 146, 60, 0.2);
+}
+
+.opd-badge-doc .pi,
+.opd-badge-doc span {
+  color: #fb923c;
+}
+
+/* ---- ÁREA DE CARGA DE ARCHIVO ---- */
+
+/* Estado vacío: esperando que el usuario elija un archivo */
+.doc-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 28px 20px;
+  border: 2px dashed #1c1f2b;
+  border-radius: 10px;
+  background: #10131a;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.doc-upload-area:hover {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.04);
+}
+
+/* Estado con archivo seleccionado */
+.doc-upload-area--selected {
+  border-style: solid;
+  border-color: rgba(0, 224, 176, 0.4);
+  background: rgba(0, 224, 176, 0.04);
+}
+
+.doc-upload-area--selected:hover {
+  border-color: rgba(0, 224, 176, 0.6);
+  background: rgba(0, 224, 176, 0.08);
+}
+
+/* Ícono principal del área */
+.doc-upload-icon {
+  font-size: 28px;
+  color: #3d4460;
+  transition: color 0.2s;
+}
+
+.doc-upload-area:hover .doc-upload-icon {
+  color: #fb923c;
+}
+
+/* Ícono cuando hay archivo seleccionado */
+.doc-upload-icon--ok {
+  color: #00e0b0;
+}
+
+.doc-upload-area--selected:hover .doc-upload-icon--ok {
+  color: #00e0b0;
+}
+
+/* Nombre del archivo elegido */
+.doc-upload-filename {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d0d8f0;
+  word-break: break-all;
+  text-align: center;
+}
+
+/* Texto "Clic para cambiar" */
+.doc-upload-change {
+  font-size: 11px;
+  color: #6b7591;
+}
+
+/* Texto cuando no hay archivo */
+.doc-upload-placeholder {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7591;
+}
+
+/* Formatos aceptados */
+.doc-upload-hint {
+  font-size: 11px;
+  color: #3d4460;
+  letter-spacing: 0.04em;
+}

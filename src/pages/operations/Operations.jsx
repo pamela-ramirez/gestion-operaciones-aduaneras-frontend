@@ -11,6 +11,7 @@ import { InputIcon } from "primereact/inputicon";
 import { obtenerOperaciones } from "../../services/operationService";
 import "./Operations.css";
 import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
+import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -19,6 +20,7 @@ export default function Operations() {
   const [createDialogVisible, setCreateDialogVisible] = useState(false);
   const [updateDialogVisible, setUpdateDialogVisible] = useState(false);
   const [finalizarDialogVisible, setFinalizarDialogVisible] = useState(false);
+  const [subirDocDialogVisible, setSubirDocDialogVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
@@ -62,9 +64,9 @@ export default function Operations() {
     setUpdateDialogVisible(true);
   };
 
-  const handleDocumentation = (operation) => {
-    // Implementar lógica de documentación
-    console.log("Documentación:", operation);
+  const handleDocumentacion = (operation) => {
+    setSelectedOperation(operation);
+    setSubirDocDialogVisible(true);
   };
 
   const handleLiquidacion = (operation) => {
@@ -77,7 +79,7 @@ export default function Operations() {
     setFinalizarDialogVisible(true);
   };
 
-/*   const handleViewDetailOperation = (operation) => {
+  /*   const handleViewDetailOperation = (operation) => {
     setSelectedOperation(operation);
     setViewDetailDialogVisible(true);
   }; */
@@ -168,10 +170,11 @@ export default function Operations() {
           rounded
           text
           className="op-btn-docs"
-          onClick={() => handleDocumentation(row)}
+          onClick={() => handleDocumentacion(row)}
           tooltip="Documentación"
           tooltipOptions={{ position: "top" }}
         />
+
         <Button
           icon="pi pi-dollar"
           rounded
@@ -409,6 +412,21 @@ export default function Operations() {
         onRefreshOperations={handleOnRefreshOperations}
         operationData={selectedOperation}
       />
+
+      <SubirDocumentoDialog
+        visible={subirDocDialogVisible}
+        onHide={() => {
+          setSubirDocDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        onDocumentoSubido={() => {
+          // Por ahora solo cerramos; más adelante puede refrescar una lista de docs
+          setSubirDocDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+      />
+
     </MainLayout>
   );
 }

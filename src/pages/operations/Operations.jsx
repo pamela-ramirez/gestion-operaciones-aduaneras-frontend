@@ -420,11 +420,7 @@ export default function Operations() {
           setSelectedOperation(null);
         }}
         operacionId={selectedOperation?.id}
-        onDocumentoSubido={() => {
-          // Por ahora solo cerramos; más adelante puede refrescar una lista de docs
-          setSubirDocDialogVisible(false);
-          setSelectedOperation(null);
-        }}
+        nroCarpeta={selectedOperation?.nroCarpeta} 
       />
 
     </MainLayout>

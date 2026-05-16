@@ -216,7 +216,7 @@ export default function Users() {
           loading={loading}
           paginator
             paginatorClassName="custom-paginator"
-          rows={7}
+          rows={5}
           //rowsPerPageOptions={[5, 10, 20]}
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}"
           tableStyle={{ tableLayout: "fixed", width: "100%" }}

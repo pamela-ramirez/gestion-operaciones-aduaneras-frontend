@@ -7,17 +7,18 @@ export default function Sidebar() {
 
   //menu base
   const items = [
+    //descomentar segun modulos implementados
     { label: "Tablero", icon: "pi pi-home", path: "/home" },
     { label: "Clientes", icon: "pi pi-users", path: "/clientes" },
     { label: "Operaciones", icon: "pi pi-briefcase", path: "/operaciones" },
-    { label: "Documentos", icon: "pi pi-file", path: "/documentos" },
+    /* { label: "Documentos", icon: "pi pi-file", path: "/documentos" },
     { label: "Finanzas", icon: "pi pi-wallet", path: "/finanzas" },
     {
       label: "Comunicaciones",
       icon: "pi pi-comments",
       path: "/comunicaciones",
     },
-    { label: "Auditoría", icon: "pi pi-search", path: "/auditoria" },
+    { label: "Auditoría", icon: "pi pi-search", path: "/auditoria" }, */
   ];
 
   // Solo admin ve Usuarios

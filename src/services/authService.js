@@ -13,7 +13,7 @@ export const login = async (email, password) => {
 //Aceptar consentimiento de uso de datos personales(solo para clientes en primer login)
 export const aceptarConsentimiento = async () => {
   try {
-    const response = await apiClient.post(
+    const response = await apiClient.patch(
       import.meta.env.VITE_ACEPTAR_CONSENTIMIENTO_ENDPOINT,
     );
     return response.data;
@@ -26,10 +26,10 @@ export const aceptarConsentimiento = async () => {
 //Cambiar contraseña (obligatorio en primer login)
 export const cambiarPassword = async (password) => {
   try {
-    const response = await apiClient.post(
-      "/Auth/cambiar-password",
+    const response = await apiClient.patch(
+     import.meta.env.VITE_CAMBIAR_PASSWORD_ENDPOINT,
       {
-        NuevaPassword: password
+        nuevaPassword: password
       }
     );
 

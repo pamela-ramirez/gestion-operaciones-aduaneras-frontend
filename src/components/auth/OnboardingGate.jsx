@@ -155,8 +155,11 @@ export default function OnboardingGate() {
       setUser(updatedUser);
 
       redirigirPorRol(updatedUser.rol);
-    } catch {
-      setError("Error al cambiar contraseña.");
+    } catch (error) {
+      const mensajeError =
+        error?.response?.data?.mensaje || "Error al cambiar contraseña.";
+
+      setError(mensajeError);
     }
   };
 

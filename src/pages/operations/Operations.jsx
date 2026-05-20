@@ -12,6 +12,7 @@ import { obtenerOperaciones } from "../../services/operationService";
 import "./Operations.css";
 import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
 import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
+import RegistrarLiquidacionDialog from "../../components/operations/RegistrarLiquidacionDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -24,6 +25,7 @@ export default function Operations() {
   const [selectedOperation, setSelectedOperation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
+  const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -55,6 +57,7 @@ export default function Operations() {
     setCreateDialogVisible(false);
     setUpdateDialogVisible(false);
     setFinalizarDialogVisible(false);
+    setLiquidacionDialogVisible(false);
     setSelectedOperation(null);
     await cargarOperaciones();
   };
@@ -70,8 +73,8 @@ export default function Operations() {
   };
 
   const handleLiquidacion = (operation) => {
-    // Implementar lógica de liquidación
-    console.log("Liquidación:", operation);
+    setSelectedOperation(operation);
+    setLiquidacionDialogVisible(true);
   };
 
   const handleFinalizarOperacion = (operation) => {
@@ -420,7 +423,15 @@ export default function Operations() {
           setSelectedOperation(null);
         }}
         operacionId={selectedOperation?.id}
-        nroCarpeta={selectedOperation?.nroCarpeta} 
+        nroCarpeta={selectedOperation?.nroCarpeta}
+      />
+
+      <RegistrarLiquidacionDialog
+        visible={liquidacionDialogVisible}
+        onHide={() => setLiquidacionDialogVisible(false)}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+        onSuccess={handleOnRefreshOperations}
       />
 
     </MainLayout>

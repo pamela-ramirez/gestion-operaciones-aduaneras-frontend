@@ -283,15 +283,21 @@
   border: 1px solid rgba(59, 130, 246, 0.24);
 }
 
-.op-estado-documentacion-pendiente {
-  background: rgba(251, 191, 36, 0.12);
-  color: #fbbf24;
+.op-estado-documentación-pendiente {
+  background: rgba(250, 196, 59, 0.121);
+  color: #f0d446;
   border: 1px solid rgba(251, 191, 36, 0.24);
 }
 
-.op-estado-finalizada {
+.op-estado-en-proceso {
+  background: rgba(198, 146, 74, 0.185);
+  color: #f8913d;
+  border: 1px solid rgba(185, 131, 16, 0.24);
+}
+
+.op-estado-finalizado {
   background: rgba(0, 224, 176, 0.12);
-  color: #00e0b0;
+  color: #00e092;
   border: 1px solid rgba(0, 224, 176, 0.24);
 }
 

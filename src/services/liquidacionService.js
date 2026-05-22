@@ -12,14 +12,14 @@ export const crearLiquidacion = async (liquidacionData) => {
   }
 };
 
-export const obtenerLiquidacionesPorOperacion = async (operacionId) => {
+export const obtenerLiquidacionPorOperacion = async (operacionId) => {
   try {
     const response = await apiClient.get(
         `${import.meta.env.VITE_LIQUIDACION_ENDPOINT}/operacion/${operacionId}`
     );
     return response.data;
   } catch (error) {
-    console.error("Error al obtener las liquidaciones:", error);
+    console.error("Error al obtener la liquidación:", error);
     throw error;
   }
 };

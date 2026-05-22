@@ -192,8 +192,9 @@ export default function Operations() {
           text
           className="op-btn-liquidacion"
           onClick={() => handleLiquidacion(row)}
-          tooltip="Liquidación"
+          tooltip={row.tieneLiquidacion ? "Ya tiene liquidación registrada" : "Registrar Liquidación"}
           tooltipOptions={{ position: "top" }}
+          disabled={row.tieneLiquidacion}  // ← deshabilitar si ya tiene una liquidación
         />
 
         <Button

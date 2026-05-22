@@ -8,6 +8,7 @@ import Users from "./pages/users/Users";
 import Clients from "./pages/clients/Clients";
 import OnboardingGate from "./components/auth/OnboardingGate";
 import Operations from "./pages/operations/Operations";
+import OperacionPage from "./modules/cliente/operaciones/pages/OperacionPage";
 
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -39,7 +40,7 @@ export default function App() {
             </PrivateRoute>
           }
         />
-        
+
         <Route
           path="/operaciones"
           element={
@@ -68,7 +69,15 @@ export default function App() {
             </PrivateRoute>
           }
         />
-      
+
+        <Route
+          path="/cliente/mis-operaciones"
+          element={
+            <PrivateRoute roles={["cliente"]}>
+              <OperacionPage />
+            </PrivateRoute>
+          }
+        />
 
         {/* ── Fallback ───────────────────────────────────────── */}
         <Route path="*" element={<Navigate to="/" replace />} />

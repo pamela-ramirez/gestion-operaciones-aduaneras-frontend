@@ -1,0 +1,219 @@
+
+/* ── Ancho del dialog ─────────────────────────────────────────── */
+.det-dialog.p-dialog {
+  width: 600px !important;
+}
+
+/* ── Estado de carga ──────────────────────────────────────────── */
+.det-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6b7591;
+  font-size: 14px;
+  padding: 20px 0;
+  justify-content: center;
+}
+
+/* ── Sin liquidación ──────────────────────────────────────────── */
+.det-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 0;
+  color: #6b7591;
+}
+
+.det-empty-icon {
+  font-size: 36px;
+  color: #252936;
+  margin-bottom: 4px;
+}
+
+.det-empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a5270;
+  margin: 0;
+}
+
+.det-empty-sub {
+  font-size: 13px;
+  color: #3d4460;
+  margin: 0;
+}
+
+/* ── Montos destacados ────────────────────────────────────────── */
+.det-monto-total {
+  color: #fbbf24 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 16px !important;
+}
+
+.det-monto-saldo {
+  color: #d0d8f0 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+/* ── Badge de estado ──────────────────────────────────────────── */
+.det-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.det-badge-pendiente {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  color: #fbbf24;
+}
+
+.det-badge-parcial {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #3b82f6;
+}
+
+.det-badge-pagado {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #22c55e;
+}
+
+/* ── Ítems del detalle (solo lectura) ─────────────────────────── */
+.det-item-desc {
+  font-size: 13px;
+  color: #d0d8f0;
+}
+
+.det-item-monto {
+  width: 130px;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fbbf24;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Sección de factura ───────────────────────────────────────── */
+.det-factura-section {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.det-factura-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.det-factura-icon {
+  font-size: 15px;
+  color: #fbbf24;
+}
+
+/* Sin factura */
+.det-factura-vacia {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.det-factura-vacia-text {
+  font-size: 13px;
+  color: #4a5270;
+  margin: 0;
+}
+
+.det-btn-subir.p-button {
+  background: rgba(251, 191, 36, 0.08) !important;
+  border: 1px solid rgba(251, 191, 36, 0.22) !important;
+  border-radius: 8px !important;
+  color: #fbbf24 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 9px 18px !important;
+  transition: all 0.2s !important;
+}
+
+.det-btn-subir.p-button:not(:disabled):hover {
+  background: rgba(251, 191, 36, 0.14) !important;
+  border-color: rgba(251, 191, 36, 0.38) !important;
+}
+
+.det-btn-subir.p-button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Con factura */
+.det-factura-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.det-factura-dato {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.det-factura-dato .pi {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.det-factura-check {
+  color: #22c55e !important;
+}
+
+.det-factura-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: #4a5270;
+  margin-bottom: 2px;
+}
+
+.det-factura-nombre {
+  display: block;
+  font-size: 13px;
+  color: #d0d8f0;
+  word-break: break-all;
+}
+
+.det-factura-valor {
+  display: block;
+  font-size: 13px;
+  color: #d0d8f0;
+}
+
+/* Botón eliminar factura */
+.det-btn-eliminar-factura.p-button {
+  color: #3d4460 !important;
+  font-size: 12px !important;
+  padding: 6px 0 !important;
+  align-self: flex-start;
+  transition: color 0.2s !important;
+}
+
+.det-btn-eliminar-factura.p-button:not(:disabled):hover {
+  color: #e05555 !important;
+  background: transparent !important;
+}

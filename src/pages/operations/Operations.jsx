@@ -13,6 +13,7 @@ import "./Operations.css";
 import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
 import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
 import RegistrarLiquidacionDialog from "../../components/operations/RegistrarLiquidacionDialog";
+import DetalleLiquidacionDialog from "../../components/operations/DetalleLiquidacionDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -26,6 +27,7 @@ export default function Operations() {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
   const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
+  const [detalleLiqDialogVisible, setDetalleLiqDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -75,6 +77,11 @@ export default function Operations() {
   const handleLiquidacion = (operation) => {
     setSelectedOperation(operation);
     setLiquidacionDialogVisible(true);
+  };
+
+  const handleDetalleLiquidacion = (operation) => {
+    setSelectedOperation(operation);
+    setDetalleLiqDialogVisible(true);
   };
 
   const handleFinalizarOperacion = (operation) => {
@@ -168,6 +175,7 @@ export default function Operations() {
           tooltip="Actualizar Datos"
           tooltipOptions={{ position: "top" }}
         />
+
         <Button
           icon="pi pi-file"
           rounded
@@ -187,6 +195,17 @@ export default function Operations() {
           tooltip="Liquidación"
           tooltipOptions={{ position: "top" }}
         />
+
+        <Button
+          icon="pi pi-list"
+          rounded
+          text
+          className="op-btn-liquidacion"
+          onClick={() => handleDetalleLiquidacion(row)}
+          tooltip="Ver liquidación"
+          tooltipOptions={{ position: "top" }}
+        />
+
         <Button
           icon="pi pi-check-circle"
           rounded
@@ -434,6 +453,15 @@ export default function Operations() {
         onSuccess={handleOnRefreshOperations}
       />
 
+      <DetalleLiquidacionDialog
+        visible={detalleLiqDialogVisible}
+        onHide={() => {
+          setDetalleLiqDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+      />
     </MainLayout>
   );
 }

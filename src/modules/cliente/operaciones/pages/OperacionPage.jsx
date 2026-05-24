@@ -9,6 +9,8 @@ import { InputIcon } from "primereact/inputicon";
 import { obtenerMisOperaciones } from "../services/operacionService";
 import "./operacionPage.css";
 import VerDocumentosDialog from "../components/VerDocumentosDialog";
+import VerLiquidacionDialog from "../components/VerLiquidacionDialog";
+
 
 export default function OperacionPage() {
   const [operaciones, setOperaciones] = useState([]);
@@ -52,6 +54,11 @@ export default function OperacionPage() {
   const handleDocumentacion = (operacion) => {
     setSelectedOperation(operacion);
     setVerDocumentosDialogVisible(true);
+  };
+
+  const handleLiquidacion = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerLiquidacionDialogVisible(true);
   };
 
   const onGlobalFilterChange = (e) => {
@@ -139,7 +146,7 @@ export default function OperacionPage() {
           text
           className="op-btn-liquidacion"
           onClick={() => handleLiquidacion(row)}
-          tooltip="Liquidación"
+          tooltip="Ver Liquidación"
           tooltipOptions={{ position: "top" }}
         />
       </div>
@@ -319,6 +326,17 @@ export default function OperacionPage() {
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
         nroDua={selectedOperation?.nroDua}
+      />
+
+      <VerLiquidacionDialog
+        visible={verLiquidacionDialogVisible}
+        onHide={() => {
+          setVerLiquidacionDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+        //nroDua={selectedOperation?.nroDua}
       />
     </ClientMainLayout>
   );

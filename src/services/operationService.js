@@ -62,3 +62,14 @@ export const obtenerDocumentosPorOperacion = async (id) => {
   }
 };
 
+export const obtenerLiquidacionPorOperacion = async (operacionId) => {
+  try {
+    const response = await apiClient.get(
+        `${import.meta.env.VITE_OPERACION_ENDPOINT}/${operacionId}/ver-liquidacion`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener la liquidación:", error);
+    throw error;
+  }
+};

@@ -3,7 +3,8 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { subirFactura, eliminarFactura } from "../../services/facturaService";
-import { obtenerLiquidacionPorOperacion } from "../../services/liquidacionService";
+//import { obtenerLiquidacionPorOperacion } from "../../services/operacionService";
+import { obtenerLiquidacionPorOperacion } from "../../services/operationService";
 import "../../components/operations/OperationDialogs.css";
 import "./DetalleLiquidacionDialog.css";
 

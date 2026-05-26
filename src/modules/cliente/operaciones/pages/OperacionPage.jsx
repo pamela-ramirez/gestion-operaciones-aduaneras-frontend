@@ -10,6 +10,7 @@ import { obtenerMisOperaciones } from "../services/operacionService";
 import "./operacionPage.css";
 import VerDocumentosDialog from "../components/VerDocumentosDialog";
 import VerLiquidacionDialog from "../components/VerLiquidacionDialog";
+import VerFacturasDialog from "../components/VerFacturasDialog";
 
 
 export default function OperacionPage() {
@@ -23,6 +24,7 @@ export default function OperacionPage() {
     useState(false);
   const [verLiquidacionDialogVisible, setVerLiquidacionDialogVisible] =
     useState(false);
+  const [verFacturasDialogVisible, setVerFacturasDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -59,6 +61,11 @@ export default function OperacionPage() {
   const handleLiquidacion = (operacion) => {
     setSelectedOperation(operacion);
     setVerLiquidacionDialogVisible(true);
+  };
+
+  const handleFacturas = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerFacturasDialogVisible(true);
   };
 
   const onGlobalFilterChange = (e) => {
@@ -147,6 +154,17 @@ export default function OperacionPage() {
           className="op-btn-liquidacion"
           onClick={() => handleLiquidacion(row)}
           tooltip="Ver Liquidación"
+          tooltipOptions={{ position: "top" }}
+        />
+
+        <Button
+          //icon="pi pi-book"
+          icon="pi pi-receipt"
+          rounded
+          text
+          className="op-btn-facturas"
+          onClick={() => handleFacturas(row)}
+          tooltip="Ver Facturación"
           tooltipOptions={{ position: "top" }}
         />
       </div>
@@ -332,6 +350,17 @@ export default function OperacionPage() {
         visible={verLiquidacionDialogVisible}
         onHide={() => {
           setVerLiquidacionDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+        //nroDua={selectedOperation?.nroDua}
+      />
+
+      <VerFacturasDialog
+        visible={verFacturasDialogVisible}
+        onHide={() => {
+          setVerFacturasDialogVisible(false);
           setSelectedOperation(null);
         }}
         operacionId={selectedOperation?.id}

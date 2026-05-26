@@ -318,6 +318,7 @@
 .op-root .op-btn-edit.p-button,
 .op-root .op-btn-docs.p-button,
 .op-root .op-btn-liquidacion.p-button,
+.op-root .op-btn-facturas.p-button,
 .op-root .op-btn-finish.p-button {
   color: #4a5270 !important;
   border: none !important;
@@ -341,6 +342,11 @@
 .op-root .op-btn-liquidacion.p-button:hover {
   color: #fbbf24 !important;
   background: rgba(251, 191, 36, 0.08) !important;
+}
+
+.op-root .op-btn-facturas.p-button:hover {
+  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.08) !important;
 }
 
 .op-root .op-btn-finish.p-button:hover {

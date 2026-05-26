@@ -8,6 +8,9 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { obtenerMisOperaciones } from "../services/operacionService";
 import "./operacionPage.css";
+import VerDocumentosDialog from "../components/VerDocumentosDialog";
+import VerLiquidacionDialog from "../components/VerLiquidacionDialog";
+
 
 export default function OperacionPage() {
   const [operaciones, setOperaciones] = useState([]);
@@ -16,6 +19,10 @@ export default function OperacionPage() {
   const [selectedOperation, setSelectedOperation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
+  const [verDocumentosDialogVisible, setVerDocumentosDialogVisible] =
+    useState(false);
+  const [verLiquidacionDialogVisible, setVerLiquidacionDialogVisible] =
+    useState(false);
 
   // =========================
   // LOAD DATA
@@ -42,6 +49,16 @@ export default function OperacionPage() {
   const handleOnRefreshOperations = async () => {
     setSelectedOperation(null);
     await cargarOperaciones();
+  };
+
+  const handleDocumentacion = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerDocumentosDialogVisible(true);
+  };
+
+  const handleLiquidacion = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerLiquidacionDialogVisible(true);
   };
 
   const onGlobalFilterChange = (e) => {
@@ -119,7 +136,7 @@ export default function OperacionPage() {
           text
           className="op-btn-docs"
           onClick={() => handleDocumentacion(row)}
-          tooltip="Documentación"
+          tooltip="Ver documentos"
           tooltipOptions={{ position: "top" }}
         />
 
@@ -129,7 +146,7 @@ export default function OperacionPage() {
           text
           className="op-btn-liquidacion"
           onClick={() => handleLiquidacion(row)}
-          tooltip="Liquidación"
+          tooltip="Ver Liquidación"
           tooltipOptions={{ position: "top" }}
         />
       </div>
@@ -299,6 +316,28 @@ export default function OperacionPage() {
           />
         </DataTable>
       </div>
+
+      <VerDocumentosDialog
+        visible={verDocumentosDialogVisible}
+        onHide={() => {
+          setVerDocumentosDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+        nroDua={selectedOperation?.nroDua}
+      />
+
+      <VerLiquidacionDialog
+        visible={verLiquidacionDialogVisible}
+        onHide={() => {
+          setVerLiquidacionDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+        //nroDua={selectedOperation?.nroDua}
+      />
     </ClientMainLayout>
   );
 }

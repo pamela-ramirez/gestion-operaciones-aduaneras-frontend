@@ -24,6 +24,7 @@ export default function Operations() {
   const [finalizarDialogVisible, setFinalizarDialogVisible] = useState(false);
   const [subirDocDialogVisible, setSubirDocDialogVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(null);
+  const [selectedLiquidation, setSelectedLiquidation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
   //const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
@@ -63,6 +64,7 @@ export default function Operations() {
     //setLiquidacionDialogVisible(false);
     setGestionLiqDialogVisible(false);
     setSelectedOperation(null);
+    setSelectedLiquidation(null);
     await cargarOperaciones();
   };
 
@@ -450,9 +452,11 @@ export default function Operations() {
         onHide={() => {
           setFinalizarDialogVisible(false);
           setSelectedOperation(null);
+          setSelectedLiquidation(null);
         }}
         onRefreshOperations={handleOnRefreshOperations}
         operationData={selectedOperation}
+        liquidationData={selectedLiquidation}
       />
 
       <SubirDocumentoDialog
@@ -488,6 +492,7 @@ export default function Operations() {
         onHide={() => setGestionLiqDialogVisible(false)}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
+        onLiquidacionDefinitiva={setSelectedLiquidation}
       />
     </MainLayout>
   );

@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { subirDocumento } from "../../services/documentoService";
 import { obtenerDocumentosPorOperacion } from "../../services/operationService";
+import { eliminarDocumento } from "../../services/documentoService";
 import "./SubirDocumentoDialog.css";
 
 const FORMATOS_PERMITIDOS = ["application/pdf", "image/jpeg", "image/png"];
@@ -158,7 +159,7 @@ export default function SubirDocumentoDialog({
   };
 
   const handleEliminar = async (docId) => {
-    /* try {
+     try {
       await eliminarDocumento(docId);
       toast.current?.show({
         severity: "success",
@@ -174,7 +175,7 @@ export default function SubirDocumentoDialog({
         detail: "No se pudo eliminar el documento",
         life: 4000,
       });
-    } */
+    } 
     console.log("Doc eliminado")
   };
 

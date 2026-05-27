@@ -1,0 +1,318 @@
+/* ============================================================
+   REGISTRAR LIQUIDACION DIALOG
+   Dark theme | Gold #fbbf24 | mismo sistema que OperationDialogs
+   ============================================================ */
+
+/* ── Icono del header en dorado (color del botón de liquidación) ── */
+.liq-header-icon {
+  background: rgba(251, 191, 36, 0.12) !important;
+  border: 1px solid rgba(251, 191, 36, 0.24) !important;
+}
+
+.liq-header-icon .pi {
+  color: #fbbf24 !important;
+}
+
+/* ── Ancho del dialog ─────────────────────────────────────────── */
+.liq-dialog.p-dialog {
+  width: 580px !important;
+}
+
+/* ── Calendar ─────────────────────────────────────────────────── */
+.liq-calendar {
+  width: 100%;
+}
+
+.liq-calendar .p-inputtext {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 12px 14px !important;
+}
+
+.liq-calendar .p-inputtext:focus {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.2) !important;
+}
+
+.liq-calendar .p-inputtext::placeholder {
+  color: #4a5270 !important;
+}
+
+.liq-calendar .p-button {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-left: none !important;
+  color: #6b7591 !important;
+}
+
+.liq-calendar-panel {
+  background: #0a0d13 !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 10px !important;
+}
+
+.liq-calendar-panel .p-datepicker-header {
+  background: transparent !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+}
+
+.liq-calendar-panel .p-datepicker-calendar td span {
+  color: #d0d8f0 !important;
+}
+
+.liq-calendar-panel .p-datepicker-calendar td span:hover {
+  background: rgba(251, 191, 36, 0.12) !important;
+  color: #fbbf24 !important;
+}
+
+.liq-calendar-panel .p-datepicker-calendar td.p-datepicker-today span {
+  background: rgba(251, 191, 36, 0.08) !important;
+  border: 1px solid rgba(251, 191, 36, 0.3) !important;
+  color: #fbbf24 !important;
+}
+
+.liq-calendar-panel .p-highlight span {
+  background: rgba(251, 191, 36, 0.2) !important;
+  color: #fbbf24 !important;
+}
+
+/* ── Sección de detalles ──────────────────────────────────────── */
+.liq-detalle-section {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.liq-detalle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.liq-detalle-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Fila de cada ítem ────────────────────────────────────────── */
+.liq-detalle-fila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.liq-item-numero {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.24);
+  color: #fbbf24;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.liq-detalle-descripcion {
+  flex: 1;
+}
+
+.liq-detalle-monto {
+  width: 130px;
+  flex-shrink: 0;
+}
+
+/* Inputs dentro del detalle */
+.liq-input.p-inputtext {
+  width: 100%;
+  background: #0a0d13 !important;
+  border: 1px solid #252936 !important;
+  border-radius: 6px !important;
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 9px 12px !important;
+}
+
+.liq-input.p-inputtext:focus {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.15) !important;
+}
+
+.liq-input-number {
+  width: 100%;
+}
+
+.liq-input-number .p-inputtext {
+  width: 100%;
+  background: #0a0d13 !important;
+  border: 1px solid #252936 !important;
+  border-radius: 6px !important;
+  color: #d0d8f0 !important;
+  font-size: 13px !important;
+  padding: 9px 12px !important;
+  text-align: right;
+}
+
+.liq-input-number .p-inputtext:focus {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.15) !important;
+}
+
+/* Botón eliminar fila */
+.liq-btn-eliminar-fila.p-button {
+  color: #3d4460 !important;
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  flex-shrink: 0;
+}
+
+.liq-btn-eliminar-fila.p-button:not(:disabled):hover {
+  color: #e05555 !important;
+  background: rgba(224, 85, 85, 0.08) !important;
+}
+
+/* ── Subtotal dentro del listado ──────────────────────────────── */
+.liq-subtotal-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid #1c1f2b;
+}
+
+.liq-subtotal-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #4a5270;
+}
+
+.liq-subtotal-valor {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Footer: total + botones ──────────────────────────────────── */
+.liq-total-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.liq-total-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #4a5270;
+}
+
+.liq-total-valor {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fbbf24;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Botones ──────────────────────────────────────────────────── */
+.liq-btn-agregar.p-button {
+  background: rgba(251, 191, 36, 0.08) !important;
+  border: 1px solid rgba(251, 191, 36, 0.2) !important;
+  border-radius: 6px !important;
+  color: #fbbf24 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 6px 12px !important;
+  transition: all 0.2s !important;
+}
+
+.liq-btn-agregar.p-button:hover {
+  background: rgba(251, 191, 36, 0.14) !important;
+  border-color: rgba(251, 191, 36, 0.35) !important;
+}
+
+.liq-btn-guardar.p-button {
+  background: rgba(251, 191, 36, 0.12) !important;
+  border: 1px solid rgba(251, 191, 36, 0.28) !important;
+  border-radius: 8px !important;
+  color: #fbbf24 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  transition: all 0.2s !important;
+}
+
+.liq-btn-guardar.p-button:not(:disabled):hover {
+  background: rgba(251, 191, 36, 0.2) !important;
+  border-color: rgba(251, 191, 36, 0.45) !important;
+}
+
+.liq-btn-guardar.p-button:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.p-inputnumber-input {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 8px !important;
+}
+
+.p-inputnumber-input:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.liq-badge-moneda {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 20px;
+  padding: 2px 10px;
+  letter-spacing: 0.05em;
+}
+
+/* Input del Calendar oscuro */
+.p-calendar .p-inputtext {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 8px !important;
+}
+
+.p-calendar .p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+  outline: none !important;
+}
+
+.p-calendar .p-button {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-left: none !important;
+  color: #6b7591 !important;
+}
+
+.p-calendar .p-button:hover {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+}

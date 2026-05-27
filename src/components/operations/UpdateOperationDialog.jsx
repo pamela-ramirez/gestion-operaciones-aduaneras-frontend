@@ -6,6 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { actualizarOperacion } from "../../services/operationService";
+import { obtenerTiposConocimiento } from "../../services/tipoConocimientoService";
 import "./OperationDialogs.css";
 
 export default function UpdateOperationDialog({
@@ -49,15 +50,23 @@ export default function UpdateOperationDialog({
   }, [visible, operationData]);
 
   const cargarTiposConocimiento = async () => {
-    // TODO: Implementar servicio real cuando esté disponible
-    // Por ahora usamos datos de ejemplo
-    setTiposConocimiento([
-      { label: "Bill of Lading (Master)", value: 1 },
-      { label: "Bill of Lading (House)", value: 2 },
-      { label: "Air Waybill (AWB)", value: 3 },
-      { label: "Conocimiento de Embarque Marítimo", value: 4 },
-      { label: "Carta de Porte", value: 5 },
-    ]);
+    try {
+      const data = await obtenerTiposConocimiento();
+      setTiposConocimiento(
+        data.map((t) => ({
+          label: t.descripcion,
+          value: t.id,
+        }))
+      );
+    }catch (error) {
+      console.error("Error cargando tipos de conocimiento:", error);
+      toast.current?.show({
+        severity: "error",
+        summary: "Error",
+        detail: "No se pudieron cargar los tipos de conocimiento",
+        life: 3000,
+      });
+    }
   };
 
   const resetForm = () => {

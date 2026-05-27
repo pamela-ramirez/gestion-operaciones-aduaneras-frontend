@@ -29,5 +29,14 @@ export const subirDocumento = async (nombre, archivo, operacionId) => {
   }
 };
 
+export const eliminarDocumento = async (documentoId) => {
+  try {
+    await apiClient.delete(`${import.meta.env.VITE_DOCUMENTO_ENDPOINT}/${documentoId}`);
+  } catch (error) {
+    console.error("Error al eliminar el documento:", error);
+    throw error;
+  }
+};
+
 
 

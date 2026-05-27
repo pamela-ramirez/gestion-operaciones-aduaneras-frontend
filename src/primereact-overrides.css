@@ -1,0 +1,187 @@
+/* ==========================================================================
+   primereact-overrides.css
+   Sobreescribe los estilos de PrimeReact para mantener la temática oscura
+   del sistema. Importar una sola vez en main.jsx o App.jsx.
+   ========================================================================== */
+
+/* ── Calendar panel ─────────────────────────────────────────────────────── */
+.p-datepicker {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+.p-datepicker .p-datepicker-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title {
+  color: #d0d8f0 !important;
+  font-weight: 600 !important;
+}
+
+.p-datepicker .p-datepicker-header button {
+  color: #6b7591 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.p-datepicker .p-datepicker-header button:hover {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+  border-radius: 6px !important;
+}
+
+.p-datepicker table th > span {
+  color: #4a5270 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+}
+
+.p-datepicker table td > span {
+  color: #d0d8f0 !important;
+  border-radius: 6px !important;
+  transition: background 0.15s, color 0.15s !important;
+}
+
+.p-datepicker table td > span:hover {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+}
+
+.p-datepicker table td.p-datepicker-today > span {
+  background: rgba(0, 224, 176, 0.12) !important;
+  color: #00e0b0 !important;
+  font-weight: 700 !important;
+}
+
+.p-datepicker table td > span.p-highlight {
+  background: rgba(0, 224, 176, 0.22) !important;
+  color: #00e0b0 !important;
+  font-weight: 700 !important;
+}
+
+.p-datepicker table td.p-datepicker-other-month > span {
+  color: #2a2f42 !important;
+}
+
+.p-datepicker table td.p-disabled > span,
+.p-datepicker table td > span.p-disabled {
+  color: #2a2f42 !important;
+  cursor: not-allowed !important;
+}
+
+/* ── ConfirmDialog ──────────────────────────────────────────────────────── */
+.p-confirm-dialog {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
+}
+
+.p-confirm-dialog .p-dialog-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 16px 20px !important;
+}
+
+.p-confirm-dialog .p-dialog-header .p-dialog-title {
+  color: #d0d8f0 !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.p-confirm-dialog .p-dialog-header .p-dialog-header-icon {
+  color: #4a5270 !important;
+}
+
+.p-confirm-dialog .p-dialog-header .p-dialog-header-icon:hover {
+  color: #d0d8f0 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 6px !important;
+}
+
+.p-confirm-dialog .p-dialog-content {
+  background: #10131a !important;
+  color: #d0d8f0 !important;
+  padding: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+.p-confirm-dialog .p-confirm-dialog-icon {
+  color: #fbbf24 !important;
+  font-size: 1.4rem !important;
+}
+
+.p-confirm-dialog .p-confirm-dialog-message {
+  color: #d0d8f0 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.p-confirm-dialog .p-dialog-footer {
+  background: #10131a !important;
+  border-top: 1px solid #1c1f2b !important;
+  border-radius: 0 0 12px 12px !important;
+  padding: 14px 20px !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+/* Botón cancelar del ConfirmDialog */
+.p-confirm-dialog .p-dialog-footer .p-button-text,
+.p-confirm-dialog .p-dialog-footer .p-button-outlined {
+  background: transparent !important;
+  border: 1px solid #1c1f2b !important;
+  color: #6b7591 !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+  transition: all 0.2s !important;
+}
+
+.p-confirm-dialog .p-dialog-footer .p-button-text:hover,
+.p-confirm-dialog .p-dialog-footer .p-button-outlined:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: #2a2f42 !important;
+  color: #d0d8f0 !important;
+}
+
+/* Botón aceptar del ConfirmDialog */
+.p-confirm-dialog .p-dialog-footer .p-button:not(.p-button-text):not(.p-button-outlined) {
+  background: rgba(224, 85, 85, 0.12) !important;
+  border: 1px solid rgba(224, 85, 85, 0.25) !important;
+  color: #e05555 !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s !important;
+}
+
+.p-confirm-dialog .p-dialog-footer .p-button:not(.p-button-text):not(.p-button-outlined):hover {
+  background: rgba(224, 85, 85, 0.2) !important;
+  border-color: rgba(224, 85, 85, 0.4) !important;
+}
+
+/* Botón aceptar en amarillo (para marcar definitiva) */
+.p-confirm-dialog .p-dialog-footer .p-button-warning {
+  background: rgba(251, 191, 36, 0.12) !important;
+  border: 1px solid rgba(251, 191, 36, 0.25) !important;
+  color: #fbbf24 !important;
+}
+
+.p-confirm-dialog .p-dialog-footer .p-button-warning:hover {
+  background: rgba(251, 191, 36, 0.2) !important;
+  border-color: rgba(251, 191, 36, 0.4) !important;
+}

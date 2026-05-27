@@ -48,6 +48,7 @@ export default function GestionLiquidacionDialog({
     onHide,
     operacionId,
     nroCarpeta,
+    onLiquidacionDefinitiva,
 }) {
     const toast = useRef(null);
 
@@ -264,6 +265,10 @@ export default function GestionLiquidacionDialog({
                         detail: "La liquidación fue marcada como definitiva. Ya no se puede editar.",
                         life: 4000,
                     });
+                    // Notificar al componente padre que la liquidación está definitiva
+                    if (onLiquidacionDefinitiva) {
+                        onLiquidacionDefinitiva(liquidacionActualizada);
+                    }
                 } catch (error) {
                     toast.current?.show({
                         severity: "error",

@@ -181,6 +181,7 @@ export default function Operations() {
           onClick={() => handleUpdateOperation(row)}
           tooltip="Actualizar Datos"
           tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"}
         />
 
         <Button
@@ -191,6 +192,7 @@ export default function Operations() {
           onClick={() => handleDocumentacion(row)}
           tooltip="Documentación"
           tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"}
         />
         {/* 
         <Button
@@ -221,6 +223,7 @@ export default function Operations() {
           onClick={() => handleGestionLiquidacion(row)}
           tooltip="Liquidación"
           tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"} 
         />
 
         <Button

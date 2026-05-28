@@ -267,3 +267,52 @@
   opacity: 0.5 !important;
   cursor: not-allowed !important;
 }
+
+.p-inputnumber-input {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 8px !important;
+}
+
+.p-inputnumber-input:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.liq-badge-moneda {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 20px;
+  padding: 2px 10px;
+  letter-spacing: 0.05em;
+}
+
+/* Input del Calendar oscuro */
+.p-calendar .p-inputtext {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 8px !important;
+}
+
+.p-calendar .p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+  outline: none !important;
+}
+
+.p-calendar .p-button {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  border-left: none !important;
+  color: #6b7591 !important;
+}
+
+.p-calendar .p-button:hover {
+  background: rgba(0, 224, 176, 0.08) !important;
+  color: #00e0b0 !important;
+}

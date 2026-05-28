@@ -1,0 +1,554 @@
+/* ============================================================
+   ESTADO DE CUENTA — Dark theme
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+.ec-root {
+  padding: 28px 32px;
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.ec-header {
+  margin-bottom: 24px;
+}
+
+.ec-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ec-bc-dim {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #3d4460;
+  font-weight: 600;
+}
+
+.ec-bc-sep {
+  font-size: 11px;
+  color: #3d4460;
+}
+
+.ec-bc-active {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #00e0b0;
+  font-weight: 600;
+}
+
+.ec-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.ec-subtitle {
+  font-size: 13px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+
+.ec-toolbar {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+
+.ec-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ec-filter-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 170px;
+}
+
+.ec-filter-group label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d4460;
+  margin: 0;
+  line-height: 1;
+}
+
+/* ============================================================
+   DROPDOWN
+   ============================================================ */
+
+.ec-root .ec-dropdown.p-dropdown {
+  background: #0a0d13 !important;
+  border: 1px solid #1c1f2b !important;
+  border-radius: 8px !important;
+  color: #d0d8f0 !important;
+  height: 42px;
+  width: 180px;
+}
+
+.ec-root .ec-dropdown.p-dropdown:hover {
+  border-color: #00e0b0 !important;
+}
+
+.ec-root .ec-dropdown.p-dropdown.p-focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}
+
+.ec-root .p-dropdown-label {
+  color: #d0d8f0 !important;
+  font-size: 13px;
+}
+
+.ec-root .p-dropdown-trigger {
+  color: #4a5270 !important;
+}
+
+/* ============================================================
+   BUTTON
+   ============================================================ */
+
+.ec-root .ec-btn-primary.p-button,
+.ec-root .ec-btn-primary {
+  background: #00e0b0 !important;
+  border: none !important;
+  border-radius: 8px !important;
+
+  color: #0a0d13 !important;
+
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+
+  height: 42px !important;
+  padding: 0 20px !important;
+
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.1s !important;
+}
+
+.ec-root .ec-btn-primary:hover {
+  background: #00c9a0 !important;
+  box-shadow: 0 4px 20px rgba(0, 224, 176, 0.28) !important;
+}
+
+.ec-root .ec-btn-primary:active {
+  transform: scale(0.985);
+}
+
+.ec-root .ec-btn-primary .p-button-label,
+.ec-root .ec-btn-primary .p-button-icon {
+  color: #0a0d13 !important;
+}
+
+/* ============================================================
+   SUMMARY INLINE
+   ============================================================ */
+
+.ec-summary-inline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  background: #10131a;
+
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+
+  padding: 14px 20px;
+
+  margin-bottom: 18px;
+}
+
+.ec-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ec-summary-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7591;
+}
+
+.ec-summary-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: #d0d8f0;
+}
+
+.ec-summary-balance {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00e0b0;
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+
+.ec-summary-card.p-card,
+.ec-table-card.p-card {
+  background: #10131a;
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+}
+
+.ec-root .p-card .p-card-body {
+  padding: 0;
+}
+
+/* ============================================================
+   DATATABLE
+   ============================================================ */
+
+.ec-root .ec-datatable.p-datatable {
+  background: #10131a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ec-root .ec-datatable .p-datatable-wrapper {
+  overflow: visible !important;
+}
+
+.ec-root .ec-datatable table {
+  min-width: 100%;
+}
+
+/* ============================================================
+   TABLE HEADER
+   ============================================================ */
+
+.ec-root .ec-datatable .p-datatable-thead > tr > th {
+  background: #10131a !important;
+
+  border-bottom: 1px solid #1c1f2b !important;
+
+  color: #3d4460 !important;
+
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+
+  padding: 12px 16px !important;
+
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   TABLE BODY
+   ============================================================ */
+
+.ec-root .ec-datatable .p-datatable-tbody > tr {
+  background: #10131a !important;
+  border-bottom: 1px solid #141720 !important;
+  transition: background 0.15s;
+}
+
+.ec-root .ec-datatable .p-datatable-tbody > tr:hover {
+  background: #12151e !important;
+}
+
+.ec-root .ec-datatable .p-datatable-tbody > tr > td {
+  border: none !important;
+
+  padding: 12px 16px !important;
+
+  color: #b8c0d8;
+  font-size: 13px;
+
+  vertical-align: middle;
+}
+
+/* ============================================================
+   GROUP HEADER
+   ============================================================ */
+
+.ec-row-group-header td {
+  background: rgba(0, 224, 176, 0.04) !important;
+
+  border-top: 1px solid rgba(0, 224, 176, 0.12) !important;
+
+  border-bottom: 1px solid rgba(0, 224, 176, 0.08) !important;
+}
+
+.ec-group-title-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #00e0b0;
+}
+
+.ec-group-title-inline i {
+  font-size: 15px;
+  color: #00e0b0;
+}
+
+/* ============================================================
+   GROUP FOOTER
+   ============================================================ */
+
+.ec-row-group-footer td {
+  background: #0d1118 !important;
+  border-top: 1px solid #1c1f2b !important;
+}
+
+.ec-saldo-carpeta {
+  color: #00e0b0;
+  font-weight: 700;
+}
+
+/* ============================================================
+   TAGS
+   ============================================================ */
+
+.ec-root .p-tag {
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+/* ============================================================
+   TOTALS
+   ============================================================ */
+
+.ec-summary-card {
+  margin-top: 18px;
+}
+
+.ec-totales-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+
+  padding: 20px;
+}
+
+.ec-total-box {
+  background: #0a0d13;
+
+  border: 1px solid #1c1f2b;
+  border-radius: 10px;
+
+  padding: 16px;
+}
+
+.ec-total-label {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+
+  color: #3d4460;
+
+  margin-bottom: 8px;
+
+  text-transform: uppercase;
+}
+
+.ec-total-value {
+  font-family: 'Montserrat', sans-serif;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  color: #00e0b0;
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+
+.ec-root .p-divider.p-divider-horizontal {
+  margin: 0;
+}
+
+.ec-root .p-divider.p-divider-horizontal::before {
+  border-top: 1px solid #1c1f2b !important;
+}
+
+/* ============================================================
+   SALDO FINAL
+   ============================================================ */
+
+.ec-saldo-final {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(0, 224, 176, 0.06);
+
+  border-top: 1px solid rgba(0, 224, 176, 0.12);
+
+  padding: 18px 20px;
+}
+
+.ec-saldo-final-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d0d8f0;
+}
+
+/* ============================================================
+   MESSAGE
+   ============================================================ */
+
+.ec-root .p-message {
+  background: rgba(224, 85, 85, 0.1) !important;
+
+  border: 1px solid rgba(224, 85, 85, 0.2) !important;
+
+  color: #e05555 !important;
+
+  border-radius: 8px !important;
+
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.ec-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+
+  padding: 60px 20px;
+}
+
+.ec-loading p {
+  color: #6b7591;
+  font-size: 13px;
+}
+
+.ec-root .p-progressspinner-circle {
+  stroke: #00e0b0 !important;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.ec-empty-state {
+  background: #10131a;
+
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+
+  padding: 70px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  margin-top: 18px;
+}
+
+.ec-empty-icon {
+  font-size: 48px;
+  color: #1f2937;
+
+  margin-bottom: 16px;
+}
+
+.ec-empty-state h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #d0d8f0;
+
+  margin: 0 0 8px;
+}
+
+.ec-empty-state p {
+  font-size: 13px;
+  color: #6b7591;
+
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .ec-root {
+    padding: 20px 16px;
+  }
+
+  .ec-toolbar {
+    padding: 16px;
+  }
+
+  .ec-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ec-filter-group {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .ec-root .ec-dropdown.p-dropdown {
+    width: 100%;
+  }
+
+  .ec-summary-inline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ec-saldo-final {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .ec-title {
+    font-size: 18px;
+  }
+}

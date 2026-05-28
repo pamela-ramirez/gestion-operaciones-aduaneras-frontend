@@ -9,6 +9,7 @@ import Clients from "./pages/clients/Clients";
 import OnboardingGate from "./components/auth/OnboardingGate";
 import Operations from "./pages/operations/Operations";
 import OperacionPage from "./modules/cliente/operaciones/pages/OperacionPage";
+import EstadoCuentaPage from "./modules/cliente/estadoCuenta/pages/EstadoCuentaPage";
 
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -75,6 +76,15 @@ export default function App() {
           element={
             <PrivateRoute roles={["cliente"]}>
               <OperacionPage />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/cliente/estado-cuenta"
+          element={
+            <PrivateRoute roles={["cliente"]}>
+              <EstadoCuentaPage />
             </PrivateRoute>
           }
         />

@@ -15,6 +15,7 @@ export default function FinalizarOperacionDialog({
   onHide,
   onRefreshOperations,
   operationData,
+  liquidationData,
 }) {
   const toast = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -33,11 +34,24 @@ export default function FinalizarOperacionDialog({
     }
   }, [visible, operationData]);
 
+  // Actualizar liquidación cuando cambia el prop
+  useEffect(() => {
+    if (operacionCompleta && liquidationData) {
+      setOperacionCompleta((prev) => ({
+        ...prev,
+        liquidacion: liquidationData,
+      }));
+    }
+  }, [liquidationData]);
+
   const cargarDatosCompletos = async () => {
     setLoading(true);
     try {
       const data = await obtenerOperacionPorId(operationData.id);
-      setOperacionCompleta(data);
+      setOperacionCompleta({
+        ...data,
+        liquidacion: liquidationData || null,
+      });
     } catch (error) {
       console.error("Error al cargar operación:", error);
       toast.current?.show({
@@ -65,6 +79,17 @@ export default function FinalizarOperacionDialog({
         summary: "Estado inválido",
         detail: "Solo se pueden finalizar operaciones en estado 'En proceso'",
         life: 4000,
+      });
+      return false;
+    }
+
+    // Verificar que la liquidación esté marcada como definitiva
+    if (!operacionCompleta.liquidacion || !operacionCompleta.liquidacion.esDefinitiva) {
+      toast.current?.show({
+        severity: "error",
+        summary: "Liquidación no definitiva",
+        detail: "La liquidación debe estar marcada como definitiva antes de finalizar la operación",
+        life: 5000,
       });
       return false;
     }
@@ -101,6 +126,11 @@ export default function FinalizarOperacionDialog({
   // =========================
 
   const handleConfirmarFinalizacion = async () => {
+    // Validar antes de intentar finalizar
+    if (!validarOperacionParaFinalizar()) {
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -175,7 +205,7 @@ export default function FinalizarOperacionDialog({
         className="opd-btn-submit"
         onClick={handleConfirmarFinalizacion}
         loading={loading}
-        disabled={!confirmado || loading}
+        disabled={!confirmado || loading || !operacionCompleta?.liquidacion?.esDefinitiva}
       />
     </div>
   );
@@ -233,6 +263,38 @@ export default function FinalizarOperacionDialog({
             </span>
           </div>
 
+          {/* Estado de la liquidación */}
+          <div
+            className="opd-estado-badge"
+            style={{
+              background: operacionCompleta.liquidacion?.esDefinitiva
+                ? "rgba(16, 185, 129, 0.12)"
+                : "rgba(239, 68, 68, 0.12)",
+              border: operacionCompleta.liquidacion?.esDefinitiva
+                ? "1px solid rgba(16, 185, 129, 0.24)"
+                : "1px solid rgba(239, 68, 68, 0.24)",
+              marginTop: "12px",
+            }}
+          >
+            <i
+              className={`pi ${operacionCompleta.liquidacion?.esDefinitiva ? "pi-lock" : "pi-lock-open"}`}
+              style={{
+                color: operacionCompleta.liquidacion?.esDefinitiva
+                  ? "#10b981"
+                  : "#ef4444",
+              }}
+            />
+            <span
+              style={{
+                color: operacionCompleta.liquidacion?.esDefinitiva
+                  ? "#10b981"
+                  : "#ef4444",
+              }}
+            >
+              LIQUIDACIÓN: {operacionCompleta.liquidacion?.esDefinitiva ? "DEFINITIVA" : "PENDIENTE"}
+            </span>
+          </div>
+
           {/* Título de sección */}
           <div
             style={{
@@ -240,7 +302,7 @@ export default function FinalizarOperacionDialog({
               fontWeight: 700,
               letterSpacing: "0.08em",
               color: "#00e0b0",
-              marginTop: "8px",
+              marginTop: "16px",
               marginBottom: "12px",
             }}
           >

@@ -12,8 +12,8 @@ import { obtenerOperaciones } from "../../services/operationService";
 import "./Operations.css";
 import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
 import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
-import RegistrarLiquidacionDialog from "../../components/operations/RegistrarLiquidacionDialog";
-import DetalleLiquidacionDialog from "../../components/operations/DetalleLiquidacionDialog";
+//import DetalleLiquidacionDialog from "../../components/operations/DetalleLiquidacionDialog";
+import GestionLiquidacionDialog from "../../components/operations/GestionLiquidacionDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -24,10 +24,12 @@ export default function Operations() {
   const [finalizarDialogVisible, setFinalizarDialogVisible] = useState(false);
   const [subirDocDialogVisible, setSubirDocDialogVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(null);
+  const [selectedLiquidation, setSelectedLiquidation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
-  const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
-  const [detalleLiqDialogVisible, setDetalleLiqDialogVisible] = useState(false);
+  //const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
+  //const [detalleLiqDialogVisible, setDetalleLiqDialogVisible] = useState(false);
+  const [gestionLiqDialogVisible, setGestionLiqDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -59,8 +61,10 @@ export default function Operations() {
     setCreateDialogVisible(false);
     setUpdateDialogVisible(false);
     setFinalizarDialogVisible(false);
-    setLiquidacionDialogVisible(false);
+    //setLiquidacionDialogVisible(false);
+    setGestionLiqDialogVisible(false);
     setSelectedOperation(null);
+    setSelectedLiquidation(null);
     await cargarOperaciones();
   };
 
@@ -74,7 +78,12 @@ export default function Operations() {
     setSubirDocDialogVisible(true);
   };
 
-  const handleLiquidacion = (operation) => {
+  const handleGestionLiquidacion = (operation) => {
+    setSelectedOperation(operation);
+    setGestionLiqDialogVisible(true);
+  };
+
+  /*const handleLiquidacion = (operation) => {
     setSelectedOperation(operation);
     setLiquidacionDialogVisible(true);
   };
@@ -82,7 +91,7 @@ export default function Operations() {
   const handleDetalleLiquidacion = (operation) => {
     setSelectedOperation(operation);
     setDetalleLiqDialogVisible(true);
-  };
+  };*/
 
   const handleFinalizarOperacion = (operation) => {
     setSelectedOperation(operation);
@@ -174,6 +183,7 @@ export default function Operations() {
           onClick={() => handleUpdateOperation(row)}
           tooltip="Actualizar Datos"
           tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"}
         />
 
         <Button
@@ -184,8 +194,9 @@ export default function Operations() {
           onClick={() => handleDocumentacion(row)}
           tooltip="Documentación"
           tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"}
         />
-
+        {/* 
         <Button
           icon="pi pi-dollar"
           rounded
@@ -205,6 +216,16 @@ export default function Operations() {
           onClick={() => handleDetalleLiquidacion(row)}
           tooltip="Ver liquidación"
           tooltipOptions={{ position: "top" }}
+        /> */}
+        <Button
+          icon="pi pi-dollar"
+          rounded
+          text
+          className="op-btn-liquidacion"
+          onClick={() => handleGestionLiquidacion(row)}
+          tooltip="Liquidación"
+          tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"} 
         />
 
         <Button
@@ -431,9 +452,11 @@ export default function Operations() {
         onHide={() => {
           setFinalizarDialogVisible(false);
           setSelectedOperation(null);
+          setSelectedLiquidation(null);
         }}
         onRefreshOperations={handleOnRefreshOperations}
         operationData={selectedOperation}
+        liquidationData={selectedLiquidation}
       />
 
       <SubirDocumentoDialog
@@ -446,15 +469,15 @@ export default function Operations() {
         nroCarpeta={selectedOperation?.nroCarpeta}
       />
 
-      <RegistrarLiquidacionDialog
+      {/* <RegistrarLiquidacionDialog
         visible={liquidacionDialogVisible}
         onHide={() => setLiquidacionDialogVisible(false)}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
         onSuccess={handleOnRefreshOperations}
-      />
+      /> */}
 
-      <DetalleLiquidacionDialog
+      {/* <DetalleLiquidacionDialog
         visible={detalleLiqDialogVisible}
         onHide={() => {
           setDetalleLiqDialogVisible(false);
@@ -462,6 +485,14 @@ export default function Operations() {
         }}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
+      /> */}
+
+      <GestionLiquidacionDialog
+        visible={gestionLiqDialogVisible}
+        onHide={() => setGestionLiqDialogVisible(false)}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
+        onLiquidacionDefinitiva={setSelectedLiquidation}
       />
     </MainLayout>
   );

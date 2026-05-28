@@ -328,6 +328,22 @@
   transition: all 0.2s !important;
 }
 
+.op-root .op-btn-detalle.p-button {
+  color: #7a8aaa !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.op-root .op-btn-detalle.p-button:hover {
+  color: #d0d8f0 !important;
+  background: rgba(208, 216, 240, 0.08) !important;
+}
+
+.op-root .op-btn-detalle.p-button:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
 .op-root .op-btn-edit.p-button:hover {
   color: #00e0b0 !important;
   background: rgba(0, 224, 176, 0.08) !important;

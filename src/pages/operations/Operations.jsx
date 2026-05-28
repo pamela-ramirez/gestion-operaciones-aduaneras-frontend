@@ -14,6 +14,7 @@ import FinalizarOperacionDialog from "../../components/operations/FinalizarOpera
 import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
 //import DetalleLiquidacionDialog from "../../components/operations/DetalleLiquidacionDialog";
 import GestionLiquidacionDialog from "../../components/operations/GestionLiquidacionDialog";
+import SubirFacturaDialog from "../../components/operations/SubirFacturaDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -30,6 +31,7 @@ export default function Operations() {
   //const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
   //const [detalleLiqDialogVisible, setDetalleLiqDialogVisible] = useState(false);
   const [gestionLiqDialogVisible, setGestionLiqDialogVisible] = useState(false);
+  const [facturaDialogVisible, setFacturaDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -81,6 +83,11 @@ export default function Operations() {
   const handleGestionLiquidacion = (operation) => {
     setSelectedOperation(operation);
     setGestionLiqDialogVisible(true);
+  };
+
+  const handleFacturas = (operation) => {
+    setSelectedOperation(operation);
+    setFacturaDialogVisible(true);
   };
 
   /*const handleLiquidacion = (operation) => {
@@ -225,7 +232,18 @@ export default function Operations() {
           onClick={() => handleGestionLiquidacion(row)}
           tooltip="Liquidación"
           tooltipOptions={{ position: "top" }}
-          disabled={row.estado === "Finalizado"} 
+          disabled={row.estado === "Finalizado"}
+        />
+
+        <Button
+          icon="pi pi-receipt"
+          rounded
+          text
+          className="op-btn-docs"
+          onClick={() => handleFacturas(row)}
+          tooltip="Facturas"
+          tooltipOptions={{ position: "top" }}
+          disabled={row.estado === "Finalizado"}
         />
 
         <Button
@@ -493,6 +511,16 @@ export default function Operations() {
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
         onLiquidacionDefinitiva={setSelectedLiquidation}
+      />
+
+      <SubirFacturaDialog
+        visible={facturaDialogVisible}
+        onHide={() => {
+          setFacturaDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operacionId={selectedOperation?.id}
+        nroCarpeta={selectedOperation?.nroCarpeta}
       />
     </MainLayout>
   );

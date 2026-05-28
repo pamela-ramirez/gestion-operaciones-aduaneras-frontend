@@ -1,0 +1,70 @@
+/* Título de sección destacado */
+.opd-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7b8ab8;
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Mensaje cuando no hay elementos */
+.opd-empty {
+  font-size: 13px;
+  color: #4a5270;
+  font-style: italic;
+  text-align: center;
+  padding: 16px 0;
+  margin: 0;
+}
+
+/* Separación entre secciones */
+.opd-section + .opd-section {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.opd-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.opd-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.opd-header-titulo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #d0d8f0;
+  line-height: 1;
+}
+
+.opd-header-carpeta {
+  font-size: 15px;
+  font-weight: 400;
+  color: #7b8ab8;
+  line-height: 1;
+}
+
+/* Ícono factura — mismo estilo que doc pero en azul */
+.opd-header-icon-factura {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.24);
+}
+
+.opd-header-icon-factura .pi {
+  font-size: 20px;
+  color: #3b82f6;
+}
+
+/* Separación entre el área de archivo y el botón subir */
+.doc-btn-subir {
+  margin-top: 16px !important;
+}

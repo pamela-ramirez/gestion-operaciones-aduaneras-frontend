@@ -1,0 +1,405 @@
+/* ── Tamaño del dialog ────────────────────────────────────────────────────── */
+.det-dialog.p-dialog {
+  max-width: 95vw !important;
+}
+
+/* Icono del header — variante azul-teal */
+.det-header-icon {
+  background: rgba(99, 179, 237, 0.12);
+  border: 1px solid rgba(99, 179, 237, 0.24);
+}
+
+.det-header-icon .pi {
+  color: #63b3ed;
+}
+
+/* ── Contenido principal ──────────────────────────────────────────────────── */
+.det-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Sección genérica (card) ─────────────────────────────────────────────── */
+.det-seccion {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1c1f2b;
+  border-radius: 12px;
+  padding: 20px 22px;
+}
+
+.det-seccion-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.det-seccion-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.det-seccion-icon {
+  font-size: 15px;
+  color: #6b7591;
+}
+
+.det-icon-doc {
+  color: #3b82f6;
+}
+
+.det-icon-liq {
+  color: #00e0b0;
+}
+
+/* ── Badges de estado ─────────────────────────────────────────────────────── */
+.det-estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.det-badge-sm {
+  padding: 3px 10px;
+  font-size: 11px;
+}
+
+.det-badge-finalizado {
+  background: rgba(0, 224, 146, 0.12);
+  color: #00e092;
+  border: 1px solid rgba(0, 224, 146, 0.24);
+}
+
+.det-badge-en-proceso {
+  background: rgba(198, 146, 74, 0.185);
+  color: #f8913d;
+  border: 1px solid rgba(185, 131, 16, 0.24);
+}
+
+.det-badge-iniciado {
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.24);
+}
+
+.det-badge-pendiente {
+  background: rgba(250, 196, 59, 0.12);
+  color: #f0d446;
+  border: 1px solid rgba(251, 191, 36, 0.24);
+}
+
+/* Badge contador de documentos */
+.det-badge-contador {
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  font-size: 11px;
+  font-weight: 700;
+  color: #3b82f6;
+  letter-spacing: 0.04em;
+}
+
+/* ── Grid de datos generales ─────────────────────────────────────────────── */
+.det-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 32px;
+}
+
+@media (max-width: 900px) {
+  .det-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .det-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.det-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.det-campo-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7591;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.det-campo-valor {
+  font-size: 14px;
+  color: #d0d8f0;
+  font-weight: 500;
+}
+
+.det-campo-destacado {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+/* ── Estado cargando / vacío ─────────────────────────────────────────────── */
+.det-cargando {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  font-size: 13px;
+  color: #6b7591;
+}
+
+.det-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.det-vacio-icon {
+  font-size: 28px;
+  color: #2a2f40;
+}
+
+.det-vacio p {
+  font-size: 13px;
+  color: #6b7591;
+  margin: 0;
+}
+
+/* ── Lista de documentos ─────────────────────────────────────────────────── */
+.det-doc-lista {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 700px) {
+  .det-doc-lista {
+    grid-template-columns: 1fr;
+  }
+}
+
+.det-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1c1f2b;
+  transition: background 0.2s;
+}
+
+.det-doc-item:hover {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.det-doc-icono {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.det-doc-icono .pi {
+  font-size: 16px;
+  color: #3b82f6;
+}
+
+.det-doc-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.det-doc-nombre {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d0d8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.det-doc-meta {
+  font-size: 11px;
+  color: #3d4460;
+}
+
+.det-doc-badge {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #3b82f6;
+}
+
+.det-doc-acciones {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.det-btn-doc-ver.p-button {
+  color: #3d4460 !important;
+  transition: color 0.2s !important;
+}
+
+.det-btn-doc-ver.p-button:hover {
+  color: #00e0b0 !important;
+  background: rgba(0, 224, 176, 0.08) !important;
+}
+
+.det-btn-doc-descargar.p-button {
+  color: #3d4460 !important;
+  transition: color 0.2s !important;
+}
+
+.det-btn-doc-descargar.p-button:hover {
+  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+/* ── Liquidación ─────────────────────────────────────────────────────────── */
+.det-liq-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Fila de cards de montos */
+.det-liq-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 600px;
+}
+
+@media (max-width: 600px) {
+  .det-liq-resumen {
+    grid-template-columns: 1fr;
+  }
+}
+
+.det-liq-monto-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1c1f2b;
+}
+
+.det-liq-monto-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #6b7591;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.det-liq-monto-valor {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #00e0b0;
+}
+
+.det-liq-pendiente {
+  color: #fbbf24;
+}
+
+.det-liq-fecha {
+  font-size: 15px;
+  color: #d0d8f0;
+}
+
+/* Lista de ítems del detalle */
+.det-liq-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.det-liq-detalle-titulo {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7591;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0 0 4px;
+}
+
+.det-liq-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1c1f2b;
+}
+
+.det-liq-item-desc {
+  font-size: 13px;
+  color: #d0d8f0;
+}
+
+.det-liq-item-monto {
+  font-size: 13px;
+  font-weight: 700;
+  color: #00e0b0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Meta info al pie */
+.det-liq-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #3d4460;
+  padding-top: 4px;
+}
+
+.det-liq-definitiva {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fbbf24;
+  font-weight: 600;
+}

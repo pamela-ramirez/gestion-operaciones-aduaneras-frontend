@@ -15,6 +15,7 @@ import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDial
 //import DetalleLiquidacionDialog from "../../components/operations/DetalleLiquidacionDialog";
 import GestionLiquidacionDialog from "../../components/operations/GestionLiquidacionDialog";
 import SubirFacturaDialog from "../../components/operations/SubirFacturaDialog";
+import DetalleOperacionDialog from "../../components/operations/DetalleOperacionDialog";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -32,6 +33,7 @@ export default function Operations() {
   //const [detalleLiqDialogVisible, setDetalleLiqDialogVisible] = useState(false);
   const [gestionLiqDialogVisible, setGestionLiqDialogVisible] = useState(false);
   const [facturaDialogVisible, setFacturaDialogVisible] = useState(false);
+  const [detalleDialogVisible, setDetalleDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -112,6 +114,11 @@ export default function Operations() {
 
   const onGlobalFilterChange = (e) => {
     setGlobalFilterValue(e.target.value);
+  };
+
+  const handleVerDetalle = (row) => {
+    setSelectedOperation(row);
+    setDetalleDialogVisible(true);
   };
 
   // =========================
@@ -255,6 +262,16 @@ export default function Operations() {
           tooltip="Finalizar Operación"
           tooltipOptions={{ position: "top" }}
           disabled={row.estado !== "En proceso"}
+        />
+
+        <Button
+          icon="pi pi-eye"
+          rounded
+          text
+          className="op-btn-detalle"
+          onClick={() => handleVerDetalle(row)}
+          tooltip="Ver Detalle"
+          tooltipOptions={{ position: "top" }}
         />
       </div>
     );
@@ -521,6 +538,15 @@ export default function Operations() {
         }}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
+      />
+
+      <DetalleOperacionDialog
+        visible={detalleDialogVisible}
+        onHide={() => {
+          setDetalleDialogVisible(false);
+          setSelectedOperation(null);
+        }}
+        operationData={selectedOperation}
       />
     </MainLayout>
   );

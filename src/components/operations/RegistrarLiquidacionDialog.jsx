@@ -9,7 +9,13 @@ import { crearLiquidacion } from "../../services/liquidacionService";
 import "../../components/operations/OperationDialogs.css";
 import "./RegistrarLiquidacionDialog.css";
 
-// ─── Detalle vacío reutilizable ───────────────────────────────────────────────
+// ─── Ítems que se precargan por defecto al abrir el formulario ────────────────
+const detallesPorDefecto = () => [
+  { descripcion: "Honorarios", monto: 0 },
+  { descripcion: "Gastos operativos", monto: 0 },
+];
+
+// ─── Detalle vacío para cuando el usuario agrega uno nuevo ───────────────────
 const nuevoDetalle = () => ({ descripcion: "", monto: null });
 
 export default function RegistrarLiquidacionDialog({
@@ -22,14 +28,14 @@ export default function RegistrarLiquidacionDialog({
   const toast = useRef(null);
 
   // ── Estado del formulario ──────────────────────────────────────────────────
-  const [detalles, setDetalles] = useState([nuevoDetalle()]);
+  const [detalles, setDetalles] = useState(detallesPorDefecto());
   const [fechaVenc, setFechaVenc] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Resetear el formulario cada vez que se abre el dialog
+  // Resetear el formulario con los ítems por defecto cada vez que se abre
   useEffect(() => {
     if (visible) {
-      setDetalles([nuevoDetalle()]);
+      setDetalles(detallesPorDefecto());
       setFechaVenc(null);
     }
   }, [visible]);
@@ -46,7 +52,16 @@ export default function RegistrarLiquidacionDialog({
   };
 
   const handleEliminarDetalle = (index) => {
-    if (detalles.length === 1) return; // siempre debe haber al menos 1
+    // Siempre debe quedar al menos 1 ítem
+    if (detalles.length === 1) {
+      toast.current?.show({
+        severity: "warn",
+        summary: "Atención",
+        detail: "Debe haber al menos un ítem en la liquidación.",
+        life: 3000,
+      });
+      return;
+    }
     setDetalles(detalles.filter((_, i) => i !== index));
   };
 
@@ -114,7 +129,6 @@ export default function RegistrarLiquidacionDialog({
 
     } catch (error) {
       const mensajeBackend = error.response?.data?.mensaje;
-
       toast.current?.show({
         severity: "error",
         summary: "Error",
@@ -138,9 +152,13 @@ export default function RegistrarLiquidacionDialog({
       </div>
       <div>
         <h2 className="opd-header-title">Registrar Liquidación</h2>
-        <p className="opd-header-subtitle">
-          {nroCarpeta ? `Carpeta Nº ${nroCarpeta}` : "Nueva liquidación para la operación"}
-        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <p className="opd-header-subtitle">
+            {nroCarpeta ? `Carpeta Nº ${nroCarpeta}` : "Nueva liquidación para la operación"}
+          </p>
+          {/* Badge de moneda */}
+          <span className="liq-badge-moneda">🇺🇸 USD</span>
+        </div>
       </div>
     </div>
   );
@@ -152,7 +170,7 @@ export default function RegistrarLiquidacionDialog({
       <div className="liq-total-footer">
         <span className="liq-total-label">TOTAL</span>
         <span className="liq-total-valor">
-          ${totalMonto.toLocaleString("es-UY", { minimumFractionDigits: 2 })}
+          USD {totalMonto.toLocaleString("es-UY", { minimumFractionDigits: 2 })}
         </span>
       </div>
 
@@ -164,11 +182,10 @@ export default function RegistrarLiquidacionDialog({
           disabled={loading}
         />
         <Button
-          label={loading ? "Guardando..." : "Registrar Liquidación"}
-          icon="pi pi-check"
+          label={loading ? "Guardando..." : "Guardar liquidación"}
           className="liq-btn-guardar"
           onClick={handleGuardar}
-          loading={loading}
+          disabled={loading}
         />
       </div>
     </div>
@@ -183,105 +200,81 @@ export default function RegistrarLiquidacionDialog({
         onHide={handleCerrar}
         header={dialogHeader}
         footer={dialogFooter}
-        className="opd-dialog liq-dialog"
         style={{ width: "580px" }}
+        className="opd-dialog"
         modal
-        draggable={false}
-        resizable={false}
+        closable={!loading}
       >
-        <div className="opd-content">
+        <div className="opd-form">
 
-          {/* ── Fecha de vencimiento ─────────────────────────────── */}
+          {/* Fecha de vencimiento (opcional) */}
           <div className="opd-field">
             <label className="opd-label">
-              Fecha de Vencimiento{" "}
-              <span style={{ fontSize: "11px", color: "#4a5270", fontWeight: 400 }}>
-                (opcional — por defecto 30 días)
-              </span>
+              Fecha de vencimiento <span className="opd-optional">(opcional — por defecto 30 días)</span>
             </label>
             <Calendar
               value={fechaVenc}
               onChange={(e) => setFechaVenc(e.value)}
               dateFormat="dd/mm/yy"
-              placeholder="Seleccioná una fecha"
+              placeholder="Seleccionar fecha"
+              className="opd-calendar"
               minDate={new Date()}
               showIcon
-              className="liq-calendar"
-              panelClassName="liq-calendar-panel"
             />
           </div>
 
-          {/* ── Ítems de detalle ─────────────────────────────────── */}
-          <div className="liq-detalle-section">
-            <div className="liq-detalle-header">
-              <span className="opd-label">
-                Ítems de Liquidación <span className="opd-required">*</span>
-              </span>
+          {/* Lista de ítems */}
+          <div className="opd-field" style={{ marginTop: "16px" }}>
+            <div className="liq-detalle-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+              <label className="opd-label">Ítems de la liquidación</label>
               <Button
-                label="Agregar ítem"
-                icon="pi pi-plus"
+                label="+ Agregar ítem"
                 className="liq-btn-agregar"
                 onClick={handleAgregarDetalle}
-                size="small"
+                disabled={loading}
               />
             </div>
 
             <div className="liq-detalle-lista">
               {detalles.map((detalle, index) => (
                 <div key={index} className="liq-detalle-fila">
-                  {/* Número de ítem */}
+                  {/* Número del ítem */}
                   <div className="liq-item-numero">{index + 1}</div>
 
                   {/* Descripción */}
-                  <div className="liq-detalle-descripcion">
-                    <InputText
-                      value={detalle.descripcion}
-                      onChange={(e) =>
-                        handleCambioDetalle(index, "descripcion", e.target.value)
-                      }
-                      placeholder="Descripción del concepto"
-                      className="opd-input liq-input"
-                    />
-                  </div>
+                  <InputText
+                    value={detalle.descripcion}
+                    onChange={(e) => handleCambioDetalle(index, "descripcion", e.target.value)}
+                    placeholder="Descripción"
+                    className="opd-input liq-input-descripcion"
+                    disabled={loading}
+                  />
 
                   {/* Monto */}
-                  <div className="liq-detalle-monto">
-                    <InputNumber
-                      value={detalle.monto}
-                      onValueChange={(e) =>
-                        handleCambioDetalle(index, "monto", e.value)
-                      }
-                      mode="decimal"
-                      minFractionDigits={2}
-                      maxFractionDigits={2}
-                      min={0}
-                      placeholder="0.00"
-                      className="liq-input-number"
-                      inputClassName="opd-input"
-                    />
-                  </div>
+                  <InputNumber
+                    value={detalle.monto === 0 ? null : detalle.monto}
+                    onValueChange={(e) => handleCambioDetalle(index, "monto", e.value)}
+                    placeholder="USD 0,00"
+                    prefix="USD "
+                    minFractionDigits={2}
+                    maxFractionDigits={2}
+                    locale="es-UY"
+                    className="liq-input-monto"
+                    disabled={loading}
+                    min={0}
+                  />
 
-                  {/* Botón eliminar fila */}
+                  {/* Botón eliminar */}
                   <Button
                     icon="pi pi-trash"
-                    rounded
-                    text
-                    className="liq-btn-eliminar-fila"
+                    className="liq-btn-eliminar-item p-button-text p-button-danger"
                     onClick={() => handleEliminarDetalle(index)}
-                    disabled={detalles.length === 1}
+                    disabled={loading}
                     tooltip="Eliminar ítem"
                     tooltipOptions={{ position: "top" }}
                   />
                 </div>
               ))}
-            </div>
-
-            {/* Subtotal dentro del listado */}
-            <div className="liq-subtotal-row">
-              <span className="liq-subtotal-label">Subtotal</span>
-              <span className="liq-subtotal-valor">
-                ${totalMonto.toLocaleString("es-UY", { minimumFractionDigits: 2 })}
-              </span>
             </div>
           </div>
 

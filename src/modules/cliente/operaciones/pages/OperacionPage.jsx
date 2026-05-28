@@ -1,35 +1,30 @@
 import { useState, useEffect } from "react";
-import MainLayout from "../../layouts/MainLayout";
-import CreateOperationDialog from "../../components/operations/CreateOperationDialog";
-import UpdateOperationDialog from "../../components/operations/UpdateOperationDialog";
+import ClientMainLayout from "../../../../layouts/ClientMainLayout";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
-import { obtenerOperaciones } from "../../services/operationService";
-import "./Operations.css";
-import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
-import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
-//import DetalleLiquidacionDialog from "../../components/operations/DetalleLiquidacionDialog";
-import GestionLiquidacionDialog from "../../components/operations/GestionLiquidacionDialog";
+import { obtenerMisOperaciones } from "../services/operacionService";
+import "./operacionPage.css";
+import VerDocumentosDialog from "../components/VerDocumentosDialog";
+import VerLiquidacionDialog from "../components/VerLiquidacionDialog";
+import VerFacturasDialog from "../components/VerFacturasDialog";
 
-export default function Operations() {
+
+export default function OperacionPage() {
   const [operaciones, setOperaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [createDialogVisible, setCreateDialogVisible] = useState(false);
-  const [updateDialogVisible, setUpdateDialogVisible] = useState(false);
-  const [finalizarDialogVisible, setFinalizarDialogVisible] = useState(false);
-  const [subirDocDialogVisible, setSubirDocDialogVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(null);
-  const [selectedLiquidation, setSelectedLiquidation] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   //const [viewDetailDialogVisible, setViewDetailDialogVisible] = useState(false);
-  //const [liquidacionDialogVisible, setLiquidacionDialogVisible] = useState(false);
-  //const [detalleLiqDialogVisible, setDetalleLiqDialogVisible] = useState(false);
-  const [gestionLiqDialogVisible, setGestionLiqDialogVisible] = useState(false);
+  const [verDocumentosDialogVisible, setVerDocumentosDialogVisible] =
+    useState(false);
+  const [verLiquidacionDialogVisible, setVerLiquidacionDialogVisible] =
+    useState(false);
+  const [verFacturasDialogVisible, setVerFacturasDialogVisible] = useState(false);
 
   // =========================
   // LOAD DATA
@@ -40,7 +35,7 @@ export default function Operations() {
     setError(null);
 
     try {
-      const data = await obtenerOperaciones();
+      const data = await obtenerMisOperaciones();
       setOperaciones(Array.isArray(data) ? data : []);
     } catch {
       setError("No se pudieron cargar las operaciones.");
@@ -53,55 +48,25 @@ export default function Operations() {
     cargarOperaciones();
   }, []);
 
-  // =========================
-  // HANDLERS
-  // =========================
-
   const handleOnRefreshOperations = async () => {
-    setCreateDialogVisible(false);
-    setUpdateDialogVisible(false);
-    setFinalizarDialogVisible(false);
-    //setLiquidacionDialogVisible(false);
-    setGestionLiqDialogVisible(false);
     setSelectedOperation(null);
-    setSelectedLiquidation(null);
     await cargarOperaciones();
   };
 
-  const handleUpdateOperation = (operation) => {
-    setSelectedOperation(operation);
-    setUpdateDialogVisible(true);
+  const handleDocumentacion = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerDocumentosDialogVisible(true);
   };
 
-  const handleDocumentacion = (operation) => {
-    setSelectedOperation(operation);
-    setSubirDocDialogVisible(true);
+  const handleLiquidacion = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerLiquidacionDialogVisible(true);
   };
 
-  const handleGestionLiquidacion = (operation) => {
-    setSelectedOperation(operation);
-    setGestionLiqDialogVisible(true);
+  const handleFacturas = (operacion) => {
+    setSelectedOperation(operacion);
+    setVerFacturasDialogVisible(true);
   };
-
-  /*const handleLiquidacion = (operation) => {
-    setSelectedOperation(operation);
-    setLiquidacionDialogVisible(true);
-  };
-
-  const handleDetalleLiquidacion = (operation) => {
-    setSelectedOperation(operation);
-    setDetalleLiqDialogVisible(true);
-  };*/
-
-  const handleFinalizarOperacion = (operation) => {
-    setSelectedOperation(operation);
-    setFinalizarDialogVisible(true);
-  };
-
-  /*   const handleViewDetailOperation = (operation) => {
-    setSelectedOperation(operation);
-    setViewDetailDialogVisible(true);
-  }; */
 
   const onGlobalFilterChange = (e) => {
     setGlobalFilterValue(e.target.value);
@@ -126,10 +91,6 @@ export default function Operations() {
 
   const duaTemplate = (row) => (
     <span className="op-cell-muted">{row.nroDua || "—"}</span>
-  );
-
-  const clienteTemplate = (row) => (
-    <span className="op-cell-text">{row.razonSocialCliente || "—"}</span>
   );
 
   const tipoOperacionTemplate = (row) => (
@@ -175,16 +136,6 @@ export default function Operations() {
           tooltip="Ver Detalle"
           tooltipOptions={{ position: "top" }}
         /> */}
-        <Button
-          icon="pi pi-pencil"
-          rounded
-          text
-          className="op-btn-edit"
-          onClick={() => handleUpdateOperation(row)}
-          tooltip="Actualizar Datos"
-          tooltipOptions={{ position: "top" }}
-          disabled={row.estado === "Finalizado"}
-        />
 
         <Button
           icon="pi pi-file"
@@ -192,51 +143,29 @@ export default function Operations() {
           text
           className="op-btn-docs"
           onClick={() => handleDocumentacion(row)}
-          tooltip="Documentación"
+          tooltip="Ver documentos"
           tooltipOptions={{ position: "top" }}
-          disabled={row.estado === "Finalizado"}
         />
-        {/* 
+
         <Button
           icon="pi pi-dollar"
           rounded
           text
           className="op-btn-liquidacion"
           onClick={() => handleLiquidacion(row)}
-          tooltip={row.tieneLiquidacion ? "Ya tiene liquidación registrada" : "Registrar Liquidación"}
+          tooltip="Ver Liquidación"
           tooltipOptions={{ position: "top" }}
-          disabled={row.tieneLiquidacion}  // ← deshabilitar si ya tiene una liquidación
         />
 
         <Button
-          icon="pi pi-list"
+          //icon="pi pi-book"
+          icon="pi pi-receipt"
           rounded
           text
-          className="op-btn-liquidacion"
-          onClick={() => handleDetalleLiquidacion(row)}
-          tooltip="Ver liquidación"
+          className="op-btn-facturas"
+          onClick={() => handleFacturas(row)}
+          tooltip="Ver Facturación"
           tooltipOptions={{ position: "top" }}
-        /> */}
-        <Button
-          icon="pi pi-dollar"
-          rounded
-          text
-          className="op-btn-liquidacion"
-          onClick={() => handleGestionLiquidacion(row)}
-          tooltip="Liquidación"
-          tooltipOptions={{ position: "top" }}
-          disabled={row.estado === "Finalizado"} 
-        />
-
-        <Button
-          icon="pi pi-check-circle"
-          rounded
-          text
-          className="op-btn-finish"
-          onClick={() => handleFinalizarOperacion(row)}
-          tooltip="Finalizar Operación"
-          tooltipOptions={{ position: "top" }}
-          disabled={row.estado !== "En proceso"}
         />
       </div>
     );
@@ -269,37 +198,24 @@ export default function Operations() {
     <div className="op-empty">
       <i className="pi pi-folder op-empty-icon" />
       <p className="op-empty-title">Sin operaciones registradas</p>
-      <p className="op-empty-sub">
-        Comienza creando tu primera operación aduanera
-      </p>
     </div>
   );
 
   return (
-    <MainLayout>
+    <ClientMainLayout>
       <div className="op-root">
         {/* HEADER */}
         <div className="op-header">
           <div>
             <div className="op-breadcrumb">
-              <span className="op-bc-active">OPERACIONES</span>
+              <span className="op-bc-active">MIS OPERACIONES</span>
               <span className="op-bc-sep">›</span>
             </div>
             <h1 className="op-title">Gestión de Operaciones</h1>
             <p className="op-subtitle">
-              Administra tus operaciones aduaneras de importación y exportación.
+              Visualiza tus operaciones aduaneras de importación y exportación.
             </p>
           </div>
-
-          <Button
-            label="Nueva Operación"
-            icon="pi pi-plus"
-            className="op-btn-primary"
-            onClick={() => {
-              setSelectedOperation(null);
-              setCreateDialogVisible(true);
-            }}
-          />
         </div>
 
         {/* STATS */}
@@ -356,7 +272,7 @@ export default function Operations() {
           paginatorClassName="op-custom-paginator"
           rows={5}
           globalFilter={globalFilterValue}
-          globalFilterFields={["nroCarpeta", "nroDua", "cliente.razonSocial"]}
+          globalFilterFields={["nroCarpeta", "nroDua"]}
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}"
           tableStyle={{ tableLayout: "fixed", width: "100%" }}
           sortField="fechaRegistro"
@@ -376,14 +292,6 @@ export default function Operations() {
             sortable
             field="nroDua"
             style={{ width: "100px" }}
-          />
-
-          <Column
-            header="CLIENTE"
-            body={clienteTemplate}
-            sortable
-            field="cliente.razonSocial"
-            style={{ width: "150px" }}
           />
 
           <Column
@@ -427,73 +335,38 @@ export default function Operations() {
         </DataTable>
       </div>
 
-      {/* DIALOGS */}
-      <CreateOperationDialog
-        visible={createDialogVisible}
+      <VerDocumentosDialog
+        visible={verDocumentosDialogVisible}
         onHide={() => {
-          setCreateDialogVisible(false);
-          setSelectedOperation(null);
-        }}
-        onRefreshOperations={handleOnRefreshOperations}
-      />
-
-      <UpdateOperationDialog
-        visible={updateDialogVisible}
-        onHide={() => {
-          setUpdateDialogVisible(false);
-          setSelectedOperation(null);
-        }}
-        onRefreshOperations={handleOnRefreshOperations}
-        operationData={selectedOperation}
-      />
-
-      <FinalizarOperacionDialog
-        visible={finalizarDialogVisible}
-        onHide={() => {
-          setFinalizarDialogVisible(false);
-          setSelectedOperation(null);
-          setSelectedLiquidation(null);
-        }}
-        onRefreshOperations={handleOnRefreshOperations}
-        operationData={selectedOperation}
-        liquidationData={selectedLiquidation}
-      />
-
-      <SubirDocumentoDialog
-        visible={subirDocDialogVisible}
-        onHide={() => {
-          setSubirDocDialogVisible(false);
+          setVerDocumentosDialogVisible(false);
           setSelectedOperation(null);
         }}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
+        nroDua={selectedOperation?.nroDua}
       />
 
-      {/* <RegistrarLiquidacionDialog
-        visible={liquidacionDialogVisible}
-        onHide={() => setLiquidacionDialogVisible(false)}
-        operacionId={selectedOperation?.id}
-        nroCarpeta={selectedOperation?.nroCarpeta}
-        onSuccess={handleOnRefreshOperations}
-      /> */}
-
-      {/* <DetalleLiquidacionDialog
-        visible={detalleLiqDialogVisible}
+      <VerLiquidacionDialog
+        visible={verLiquidacionDialogVisible}
         onHide={() => {
-          setDetalleLiqDialogVisible(false);
+          setVerLiquidacionDialogVisible(false);
           setSelectedOperation(null);
         }}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
-      /> */}
+        //nroDua={selectedOperation?.nroDua}
+      />
 
-      <GestionLiquidacionDialog
-        visible={gestionLiqDialogVisible}
-        onHide={() => setGestionLiqDialogVisible(false)}
+      <VerFacturasDialog
+        visible={verFacturasDialogVisible}
+        onHide={() => {
+          setVerFacturasDialogVisible(false);
+          setSelectedOperation(null);
+        }}
         operacionId={selectedOperation?.id}
         nroCarpeta={selectedOperation?.nroCarpeta}
-        onLiquidacionDefinitiva={setSelectedLiquidation}
+        //nroDua={selectedOperation?.nroDua}
       />
-    </MainLayout>
+    </ClientMainLayout>
   );
 }

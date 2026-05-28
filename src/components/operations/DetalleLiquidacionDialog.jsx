@@ -3,7 +3,8 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { subirFactura, eliminarFactura } from "../../services/facturaService";
-import { obtenerLiquidacionesPorOperacion } from "../../services/liquidacionService";
+//import { obtenerLiquidacionPorOperacion } from "../../services/operacionService";
+import { obtenerLiquidacionPorOperacion } from "../../services/operationService";
 import "../../components/operations/OperationDialogs.css";
 import "./DetalleLiquidacionDialog.css";
 
@@ -31,10 +32,8 @@ export default function DetalleLiquidacionDialog({
   const cargarLiquidacion = async () => {
     setLoadingLiq(true);
     try {
-      const data = await obtenerLiquidacionesPorOperacion(operacionId);
-      // El backend devuelve una lista; tomamos la primera (1 liquidación por operación)
-      const liq = Array.isArray(data) ? data[0] : data;
-      setLiquidacion(liq ?? null);
+      const data = await obtenerLiquidacionPorOperacion(operacionId);
+      setLiquidacion(data ?? null); 
     } catch (error) {
       toast.current?.show({
         severity: "error",

@@ -1,0 +1,172 @@
+/* ── Estado vacío (sin liquidación) ──────────────────────────────────────── */
+.gliq-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 0;
+  color: #6b7591;
+  font-size: 14px;
+}
+
+.gliq-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 24px;
+  text-align: center;
+  gap: 8px;
+}
+
+.gliq-vacio-icono {
+  font-size: 2.5rem;
+  color: #2a2f42;
+  margin-bottom: 8px;
+}
+
+.gliq-vacio-texto {
+  font-size: 14px;
+  color: #d0d8f0;
+  font-weight: 600;
+  margin: 0;
+}
+
+.gliq-vacio-subtexto {
+  font-size: 12px;
+  color: #4a5270;
+  margin: 0;
+}
+
+/* ── Badge de liquidación definitiva ─────────────────────────────────────── */
+.gliq-badge-definitiva {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  color: #fbbf24;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.gliq-badge-definitiva .pi {
+  font-size: 14px;
+}
+
+/* ── Monto total en datos generales ──────────────────────────────────────── */
+.gliq-monto-total {
+  color: #00e0b0 !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700 !important;
+}
+
+/* ── Fila de ítem en modo LECTURA ────────────────────────────────────────── */
+.gliq-fila-lectura {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid #1c1f2b;
+}
+
+.gliq-item-descripcion {
+  flex: 1;
+  font-size: 13px;
+  color: #d0d8f0;
+}
+
+.gliq-item-monto {
+  width: 130px;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 700;
+  color: #00e0b0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Subtotal al pie de la lista ─────────────────────────────────────────── */
+.gliq-subtotal {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #1c1f2b;
+}
+
+.gliq-subtotal-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7591;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gliq-subtotal-valor {
+  font-size: 16px;
+  font-weight: 700;
+  color: #00e0b0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ── Botón Editar liquidación ────────────────────────────────────────────── */
+.liq-btn-editar.p-button {
+  background: rgba(0, 224, 176, 0.08) !important;
+  border: 1px solid rgba(0, 224, 176, 0.2) !important;
+  border-radius: 8px !important;
+  color: #00e0b0 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  transition: all 0.2s !important;
+}
+
+.liq-btn-editar.p-button:hover {
+  background: rgba(0, 224, 176, 0.14) !important;
+  border-color: rgba(0, 224, 176, 0.35) !important;
+}
+
+/* ── Botón Marcar definitiva ─────────────────────────────────────────────── */
+.liq-btn-definitiva.p-button {
+  background: rgba(251, 191, 36, 0.08) !important;
+  border: 1px solid rgba(251, 191, 36, 0.2) !important;
+  border-radius: 8px !important;
+  color: #fbbf24 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  transition: all 0.2s !important;
+}
+
+.liq-btn-definitiva.p-button:hover {
+  background: rgba(251, 191, 36, 0.14) !important;
+  border-color: rgba(251, 191, 36, 0.35) !important;
+}
+
+/* ── Botón eliminar ítem (dentro de la fila) ─────────────────────────────── */
+.liq-btn-eliminar-item.p-button {
+  color: #3d4460 !important;
+  transition: color 0.2s !important;
+  padding: 6px !important;
+}
+
+.liq-btn-eliminar-item.p-button:hover {
+  color: #e05555 !important;
+  background: transparent !important;
+}
+
+.p-inputnumber-input {
+  background: #10131a !important;
+  border: 1px solid #1c1f2b !important;
+  color: #d0d8f0 !important;
+  border-radius: 8px !important;
+}
+
+.p-inputnumber-input:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 224, 176, 0.2) !important;
+}

@@ -12,14 +12,41 @@ export const crearLiquidacion = async (liquidacionData) => {
   }
 };
 
-export const obtenerLiquidacionesPorOperacion = async (operacionId) => {
+export const actualizarLiquidacion = async (liquidacionId, detalle, fechaVenc = null) => {
   try {
-    const response = await apiClient.get(
-        `${import.meta.env.VITE_LIQUIDACION_ENDPOINT}/operacion/${operacionId}`
+    const payload = { detalle };
+    if (fechaVenc) payload.fechaVenc = fechaVenc;
+    const response = await apiClient.patch(
+        `${import.meta.env.VITE_LIQUIDACION_ENDPOINT}/${liquidacionId}`,
+        payload
     );
     return response.data;
   } catch (error) {
-    console.error("Error al obtener las liquidaciones:", error);
+    console.error("Error al actualizar la liquidación:", error);
+    throw error;
+  }
+};
+
+export const eliminarDetalleLiquidacion = async (liquidacionId, detalleId) => {
+  try {
+    const response = await apiClient.delete(
+        `${import.meta.env.VITE_LIQUIDACION_ENDPOINT}/${liquidacionId}/detalle/${detalleId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar el detalle de la liquidación:", error);
+    throw error;
+  }
+};
+
+export const marcarLiquidacionDefinitiva = async (liquidacionId) => {
+  try {
+    const response = await apiClient.patch(
+        `${import.meta.env.VITE_LIQUIDACION_ENDPOINT}/${liquidacionId}/definitiva`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al marcar la liquidación como definitiva:", error);
     throw error;
   }
 };

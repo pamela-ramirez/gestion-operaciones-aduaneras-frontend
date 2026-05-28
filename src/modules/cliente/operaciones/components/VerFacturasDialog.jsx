@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-//import {obtenerFacturasPorOperacion} from "../../../../services/operationService";
-import { obtenerFacturaPorLiquidacion } from "../../../../services/facturaService";
+import {obtenerFacturasPorOperacion} from "../../../../services/operationService";
 import "./VerDocumentosDialog.css";
 
 const iconoPorFormato = (formato) => {
@@ -32,7 +31,7 @@ export default function VerFacturasDialog({
     setLoading(true);
     try {
       //simulacion de datos
-      const data = [
+     /*  const data = [
         {
           id: 1,
           nombre: "Factura_12345.pdf",
@@ -47,10 +46,11 @@ export default function VerFacturasDialog({
           fechaCarga: "2024-06-16T10:15:00Z",
           rutaArchivo: "uploads/facturas/Factura_67890.jpg",
         },
-      ];
-      //const data = await obtenerFacturasPorOperacion(operacionId);
-      //const data = await obtenerFacturaPorLiquidacion(liquidacionId);
-      setFacturas(Array.isArray(data) ? data : []);
+      ]; */
+    const facturasData = await obtenerFacturasPorOperacion(operacionId);
+
+      setFacturas(Array.isArray(facturasData) ? facturasData : []);
+
     } catch (error) {
       console.error("Error al cargar facturas:", error);
       toast.current.show({
@@ -134,10 +134,6 @@ export default function VerFacturasDialog({
             <div className="opd-estado-badge opd-badge-doc">
               <span>NRO. CARPETA: {nroCarpeta}</span>
             </div>
-
-            {/* <div className="opd-estado-badge opd-badge-doc">
-                <span>NRO. DUA: {nroDua}</span>
-              </div> */}
           </div>
 
           {/* ══════════════════════════════════════
@@ -192,15 +188,17 @@ export default function VerFacturasDialog({
                       className="doc-item-btn-ver"
                       //onClick={() => window.open(`${import.meta.env.VITE_API_BASE_URL}/${doc.rutaArchivo}`, "_blank")}
                       // Cuando estemos en produccion no se utilizara mas /api
-                      onClick={
+                      /* onClick={
                         () =>
                           console.log(
                             `Ver factura: ${factura.nombre} (ruta: ${factura.rutaArchivo})`,
-                          )
-                        /*  window.open(
-                              `${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}/${factura.rutaArchivo}`,
-                              "_blank",
-                            ) */
+                          ) */
+
+                      onClick={() =>
+                        window.open(
+                          `${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}/${factura.rutaArchivo}`,
+                          "_blank",
+                        )
                       }
                       tooltip="Ver"
                       tooltipOptions={{ position: "top" }}

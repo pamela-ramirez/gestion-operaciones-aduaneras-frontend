@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-//import {obtenerFacturasPorOperacion} from "../../../../services/operationService";
-import { obtenerFacturaPorLiquidacion } from "../../../../services/facturaService";
+import {obtenerFacturasPorOperacion} from "../../../../services/operationService";
+//import { obtenerFacturaPorLiquidacion } from "../../../../services/facturaService";
 import "./VerDocumentosDialog.css";
 
 const iconoPorFormato = (formato) => {

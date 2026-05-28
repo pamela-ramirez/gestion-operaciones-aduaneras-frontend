@@ -73,3 +73,15 @@ export const obtenerLiquidacionPorOperacion = async (operacionId) => {
     throw error;
   }
 };
+
+export const obtenerFacturasPorOperacion = async (operacionId) => {
+  try {
+    const response = await apiClient.get( 
+      `${import.meta.env.VITE_OPERACION_ENDPOINT}/${operacionId}/ver-facturas`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener las facturas:", error);
+    throw error;
+  }
+};  

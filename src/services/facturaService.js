@@ -1,10 +1,11 @@
 import apiClient from "../api/apiClient";
 
-export const subirFactura = async (LiquidacionId, Archivo) => {
+export const subirFactura = async (operacionId, nombre, archivo) => {
   try {
     const formData = new FormData();
-    formData.append("LiquidacionId", LiquidacionId);
-    formData.append("Archivo", Archivo);
+    formData.append("OperacionId", operacionId);
+    formData.append("Nombre", nombre);
+    formData.append("Archivo", archivo);
 
     const response = await apiClient.post(
       import.meta.env.VITE_FACTURA_ENDPOINT,
@@ -32,6 +33,7 @@ export const eliminarFactura = async (facturaId) => {
   } 
 };
 
+/*
 export const obtenerFacturaPorLiquidacion = async (liquidacionId) => {
   try {
     const response = await apiClient.get(`${import.meta.env.VITE_FACTURA_ENDPOINT}/liquidacion/${liquidacionId}`);
@@ -40,4 +42,4 @@ export const obtenerFacturaPorLiquidacion = async (liquidacionId) => {
     console.error("Error al obtener la factura por liquidación:", error);
     throw error;
   }
-};
+};*/

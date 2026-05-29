@@ -6,6 +6,7 @@ import { Toast } from "primereact/toast";
 import {
   obtenerDocumentosPorOperacion,
   obtenerLiquidacionPorOperacion,
+  obtenerFacturasPorOperacion,
 } from "../../services/operationService";
 import "./DetalleOperacionDialog.css";
 
@@ -66,17 +67,21 @@ export default function DetalleOperacionDialog({ visible, onHide, operationData 
   const [liquidacion, setLiquidacion] = useState(null);
   const [cargandoDocs, setCargandoDocs] = useState(false);
   const [cargandoLiq, setCargandoLiq] = useState(false);
+  const [facturas, setFacturas] = useState([]);
+  const [cargandoFact, setCargandoFact] = useState(false);
 
   // Cargamos documentos y liquidación cada vez que se abre el dialog
   useEffect(() => {
     if (visible && operationData?.id) {
       cargarDocumentos(operationData.id);
       cargarLiquidacion(operationData.id);
+      cargarFacturas(operationData.id);
     }
     // Limpiamos al cerrar
     if (!visible) {
       setDocumentos([]);
       setLiquidacion(null);
+      setFacturas([]);
     }
   }, [visible, operationData?.id]);
 
@@ -107,6 +112,18 @@ export default function DetalleOperacionDialog({ visible, onHide, operationData 
       setLiquidacion(null);
     } finally {
       setCargandoLiq(false);
+    }
+  };
+
+  const cargarFacturas = async (id) => {
+    setCargandoFact(true);
+    try {
+      const data = await obtenerFacturasPorOperacion(id);
+      setFacturas(Array.isArray(data) ? data : []);
+    } catch {
+      setFacturas([]);
+    } finally {
+      setCargandoFact(false);
     }
   };
 
@@ -315,7 +332,80 @@ export default function DetalleOperacionDialog({ visible, onHide, operationData 
           </div>
 
           {/* ══════════════════════════════════════════════
-              SECCIÓN 3 — LIQUIDACIÓN
+                SECCIÓN 4 — LIQUIDACIÓN   
+          ══════════════════════════════════════════════ */}
+          <div className="det-seccion">
+            <div className="det-seccion-header">
+              <i className="pi pi-receipt det-seccion-icon det-icon-fact" />
+              <span className="det-seccion-titulo">Facturas</span>
+              {!cargandoFact && (
+                <span className="det-badge-contador det-badge-contador-fact">
+                  {facturas.length} factura{facturas.length !== 1 ? "s" : ""}
+                </span>
+              )}
+            </div>
+
+            {cargandoFact && (
+              <div className="det-cargando">
+                <i className="pi pi-spin pi-spinner" style={{ color: "#fbbf24" }} />
+                <span>Cargando facturas...</span>
+              </div>
+            )}
+
+            {!cargandoFact && facturas.length === 0 && (
+              <div className="det-vacio">
+                <i className="pi pi-receipt det-vacio-icon" />
+                <p>No hay facturas registradas para esta operación.</p>
+              </div>
+            )}
+
+            {!cargandoFact && facturas.length > 0 && (
+              <div className="det-doc-lista">
+                {facturas.map((fact) => (
+                  <div key={fact.id} className="det-doc-item det-fact-item">
+                    <div className="det-doc-icono det-fact-icono">
+                      <i className={iconoPorFormato(fact.formato)} />
+                    </div>
+                    <div className="det-doc-info">
+                      <span className="det-doc-nombre">{fact.nombre}</span>
+                      <span className="det-doc-meta">
+                        {fact.formato} · {formatFecha(fact.fechaCarga)}
+                      </span>
+                    </div>
+                    <span className="det-doc-badge det-fact-badge">{fact.formato || "ARCHIVO"}</span>
+                    <div className="det-doc-acciones">
+                      <Button
+                        icon="pi pi-eye"
+                        rounded text
+                        className="det-btn-doc-ver"
+                        tooltip="Ver factura"
+                        tooltipOptions={{ position: "top" }}
+                        onClick={() =>
+                          window.open(
+                            `${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}/${fact.rutaArchivo}`,
+                            "_blank"
+                          )
+                        }
+                        disabled={!fact.rutaArchivo}
+                      />
+                      <Button
+                        icon="pi pi-download"
+                        rounded text
+                        className="det-btn-doc-descargar"
+                        tooltip="Descargar"
+                        tooltipOptions={{ position: "top" }}
+                        onClick={() => handleDescargar(fact)}
+                        disabled={!fact.rutaArchivo}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ══════════════════════════════════════════════
+              SECCIÓN 4 — LIQUIDACIÓN
           ══════════════════════════════════════════════ */}
           <div className="det-seccion">
             <div className="det-seccion-header">
@@ -323,9 +413,8 @@ export default function DetalleOperacionDialog({ visible, onHide, operationData 
               <span className="det-seccion-titulo">Liquidación</span>
               {liquidacion && !cargandoLiq && (
                 <span
-                  className={`det-estado-badge det-badge-sm ${
-                    estadoLiqConfig(liquidacion.estado).clase
-                  }`}
+                  className={`det-estado-badge det-badge-sm ${estadoLiqConfig(liquidacion.estado).clase
+                    }`}
                 >
                   {estadoLiqConfig(liquidacion.estado).label}
                 </span>

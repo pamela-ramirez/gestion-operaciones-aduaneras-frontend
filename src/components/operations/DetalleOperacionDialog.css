@@ -403,3 +403,28 @@
   color: #fbbf24;
   font-weight: 600;
 }
+
+.det-icon-fact {
+  color: #fbbf24;
+}
+
+.det-badge-contador-fact {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.det-fact-icono {
+  background: rgba(251, 191, 36, 0.1) !important;
+  border: 1px solid rgba(251, 191, 36, 0.2) !important;
+}
+
+.det-fact-icono .pi {
+  color: #fbbf24 !important;
+}
+
+.det-fact-badge {
+  background: rgba(251, 191, 36, 0.1) !important;
+  border: 1px solid rgba(251, 191, 36, 0.2) !important;
+  color: #fbbf24 !important;
+}

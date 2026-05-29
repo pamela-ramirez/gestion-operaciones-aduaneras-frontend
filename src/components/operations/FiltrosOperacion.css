@@ -1,0 +1,219 @@
+/* ── Contenedor raíz ── */
+.fil-root {
+  margin-bottom: 16px;
+}
+
+/* ── Botón toggle (expande/colapsa el panel) ── */
+.fil-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  background: #1a1f36;
+  border: 1px solid #2a2f4a;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #a0a8c8;
+  font-size: 13px;
+  font-weight: 500;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.fil-toggle:hover {
+  border-color: #00e0b0;
+  color: #e0e6f0;
+}
+
+/* Cuando el panel está abierto, el borde de abajo desaparece para que se fusione con el panel */
+.fil-toggle--abierto {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+  color: #e0e6f0;
+}
+
+.fil-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fil-toggle-left .pi-filter {
+  color: #00e0b0;
+  font-size: 14px;
+}
+
+/* Badge con la cantidad de filtros activos */
+.fil-badge {
+  background: #00e0b0;
+  color: #0d1117;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.fil-toggle-icon {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+/* ── Panel de filtros ── */
+.fil-panel {
+  background: #1a1f36;
+  border: 1px solid #2a2f4a;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 20px 20px 16px;
+  /* Animación de apertura suave */
+  animation: fil-open 0.2s ease;
+}
+
+@keyframes fil-open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Grilla de campos de filtro ── */
+.fil-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* ── Campo individual ── */
+.fil-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fil-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7591;
+}
+
+/* ── Estilos para los Dropdowns de PrimeReact ── */
+.fil-dropdown {
+  width: 100% !important;
+  background: #0d1117 !important;
+  border: 1px solid #2a2f4a !important;
+  border-radius: 6px !important;
+  color: #e0e6f0 !important;
+  font-size: 13px !important;
+}
+
+.fil-dropdown .p-dropdown-label {
+  color: #e0e6f0 !important;
+  padding: 8px 12px !important;
+}
+
+.fil-dropdown .p-dropdown-label.p-placeholder {
+  color: #4a5070 !important;
+}
+
+.fil-dropdown .p-dropdown-trigger {
+  color: #6b7591 !important;
+}
+
+.fil-dropdown:hover {
+  border-color: #00e0b0 !important;
+}
+
+.fil-dropdown.p-focus,
+.fil-dropdown:focus-within {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 2px rgba(0, 224, 176, 0.12) !important;
+}
+
+/* ── Estilos para los Calendar de PrimeReact ── */
+.fil-calendar {
+  width: 100% !important;
+}
+
+.fil-calendar .p-inputtext {
+  width: 100% !important;
+  background: #0d1117 !important;
+  border: 1px solid #2a2f4a !important;
+  border-radius: 6px !important;
+  color: #e0e6f0 !important;
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+}
+
+.fil-calendar .p-inputtext::placeholder {
+  color: #4a5070 !important;
+}
+
+.fil-calendar .p-inputtext:hover {
+  border-color: #00e0b0 !important;
+}
+
+.fil-calendar .p-inputtext:focus {
+  border-color: #00e0b0 !important;
+  box-shadow: 0 0 0 2px rgba(0, 224, 176, 0.12) !important;
+  outline: none !important;
+}
+
+.fil-calendar .p-datepicker-trigger {
+  background: #0d1117 !important;
+  border: 1px solid #2a2f4a !important;
+  border-left: none !important;
+  color: #6b7591 !important;
+  border-radius: 0 6px 6px 0 !important;
+}
+
+/* ── Mensaje de error de fechas ── */
+.fil-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+/* ── Botones de acción ── */
+.fil-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+  border-top: 1px solid #2a2f4a;
+}
+
+.fil-btn-limpiar {
+  color: #6b7591 !important;
+  font-size: 13px !important;
+  padding: 7px 16px !important;
+}
+
+.fil-btn-limpiar:hover {
+  color: #e0e6f0 !important;
+}
+
+.fil-btn-buscar {
+  background: #00e0b0 !important;
+  border: none !important;
+  color: #0d1117 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 7px 20px !important;
+  border-radius: 6px !important;
+}
+
+.fil-btn-buscar:hover {
+  background: #00c99d !important;
+}

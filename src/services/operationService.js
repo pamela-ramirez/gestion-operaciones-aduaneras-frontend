@@ -85,3 +85,25 @@ export const obtenerFacturasPorOperacion = async (operacionId) => {
   }
 };
 
+export const obtenerOperacionesConFiltros = async (filtros) => {
+  try {
+    // Construimos los query params solo con los filtros que el usuario completó
+    // Si un filtro está vacío o es null, no se manda al backend
+    const params = new URLSearchParams();
+
+    if (filtros.clienteId)       params.append("clienteId", filtros.clienteId);
+    if (filtros.tipoOperacionId) params.append("tipoOperacionId", filtros.tipoOperacionId);
+    if (filtros.estado)          params.append("estado", filtros.estado);
+    if (filtros.fechaDesde)      params.append("fechaDesde", filtros.fechaDesde);
+    if (filtros.fechaHasta)      params.append("fechaHasta", filtros.fechaHasta);
+
+    const response = await apiClient.get(
+      `${import.meta.env.VITE_OPERACION_ENDPOINT}/filtros?${params.toString()}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener operaciones con filtros:", error);
+    throw error;
+  }
+};
+

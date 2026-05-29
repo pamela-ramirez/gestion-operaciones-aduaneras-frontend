@@ -8,7 +8,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
-import { obtenerOperaciones } from "../../services/operationService";
+import { obtenerOperaciones, obtenerOperacionesConFiltros } from "../../services/operationService";
 import "./Operations.css";
 import FinalizarOperacionDialog from "../../components/operations/FinalizarOperacionDialog";
 import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDialog";
@@ -16,6 +16,7 @@ import SubirDocumentoDialog from "../../components/operations/SubirDocumentoDial
 import GestionLiquidacionDialog from "../../components/operations/GestionLiquidacionDialog";
 import SubirFacturaDialog from "../../components/operations/SubirFacturaDialog";
 import DetalleOperacionDialog from "../../components/operations/DetalleOperacionDialog";
+import FiltrosOperacion from "../../components/operations/FiltrosOperacion";
 
 export default function Operations() {
   const [operaciones, setOperaciones] = useState([]);
@@ -34,6 +35,7 @@ export default function Operations() {
   const [gestionLiqDialogVisible, setGestionLiqDialogVisible] = useState(false);
   const [facturaDialogVisible, setFacturaDialogVisible] = useState(false);
   const [detalleDialogVisible, setDetalleDialogVisible] = useState(false);
+  const [filtrosActivos, setFiltrosActivos] = useState(false); // Para saber si la tabla está mostrando resultados filtrados o el listado completo.
 
   // =========================
   // LOAD DATA
@@ -119,6 +121,25 @@ export default function Operations() {
   const handleVerDetalle = (row) => {
     setSelectedOperation(row);
     setDetalleDialogVisible(true);
+  };
+
+  const handleBuscar = async (filtros) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await obtenerOperacionesConFiltros(filtros);
+      setOperaciones(Array.isArray(data) ? data : []);
+      setFiltrosActivos(true);
+    } catch {
+      setError("No se pudieron cargar las operaciones con los filtros seleccionados.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLimpiarFiltros = async () => {
+    setFiltrosActivos(false);
+    await cargarOperaciones(); // vuelve a cargar todas las operaciones
   };
 
   // =========================
@@ -337,10 +358,18 @@ export default function Operations() {
           />
         </div>
 
+        {/* FILTROS AVANZADOS */}
+        <FiltrosOperacion
+          onBuscar={handleBuscar}
+          onLimpiar={handleLimpiarFiltros}
+        />
+
         {/* STATS */}
         <div className="op-stats">
           <div className="op-stat-card">
-            <span className="op-stat-label">TOTAL OPERACIONES</span>
+            <span className="op-stat-label">
+              {filtrosActivos ? "RESULTADOS FILTRADOS" : "TOTAL OPERACIONES"}
+            </span>
             <span className="op-stat-value">{operaciones.length}</span>
           </div>
 

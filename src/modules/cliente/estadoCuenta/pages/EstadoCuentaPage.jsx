@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import ClientMainLayout from "../../../../layouts/ClientMainLayout";
-
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { DataTable } from "primereact/datatable";
@@ -10,12 +9,7 @@ import { Tag } from "primereact/tag";
 import { Message } from "primereact/message";
 import { Divider } from "primereact/divider";
 import { ProgressSpinner } from "primereact/progressspinner";
-
-import {
-  obtenerEstadoCuenta,
-  calcularTotales,
-} from "../services/estadoCuentaService";
-
+import { obtenerEstadoCuenta } from "../services/estadoCuentaService";
 import "./EstadoCuentaPage.css";
 
 const MESES = [
@@ -33,7 +27,7 @@ const MESES = [
   { label: "Diciembre", value: 12 },
 ];
 
-const ANOS = Array.from({ length: 5 }, (_, i) => {
+const ANIOS = Array.from({ length: 5 }, (_, i) => {
   const year = new Date().getFullYear() - 2 + i;
 
   return {
@@ -64,9 +58,9 @@ export default function EstadoCuentaPage() {
     try {
       setLoading(true);
 
-      const data = await obtenerEstadoCuenta(mes, anio);
+      const estadoCuentaData = await obtenerEstadoCuenta(mes, anio);
 
-      setEstadoCuenta(data);
+      setEstadoCuenta(estadoCuentaData);
 
       setBusquedaRealizada(true);
 
@@ -107,8 +101,8 @@ export default function EstadoCuentaPage() {
     return new Date(anio, mes, 0);
   };
 
-  const getSeverityByDocumento = (tipo) => {
-    switch (tipo?.toLowerCase()) {
+  const getSeverityByDocumento = (documento) => {
+    switch (documento?.toLowerCase()) {
       case "factura":
         return "danger";
 
@@ -124,15 +118,27 @@ export default function EstadoCuentaPage() {
   };
 
   const movimientos =
-    estadoCuenta?.carpetas.flatMap((carpeta) => {
+    estadoCuenta?.carpetas?.reduce((acc, carpeta, index) => {
       const filas = [];
+
+      // Agregar fila de saldo anterior solo al inicio (primera carpeta)
+      if (index === 0 //&& estadoCuenta.saldoAnterior
+        ) {
+        filas.push({
+          tipoFila: "saldo-anterior",
+          nroCarpeta: "Saldo Anterior",
+          descripcion: "Saldo del período anterior",
+          debe: 0,//estadoCuenta.saldoAnterior,
+          haber: 0,
+        });
+      }
 
       filas.push({
         tipoFila: "header",
         nroCarpeta: carpeta.nroCarpeta,
       });
 
-      carpeta.movimientos.forEach((mov) => {
+      (carpeta.movimientos || []).forEach((mov) => {
         filas.push({
           ...mov,
           tipoFila: "movimiento",
@@ -143,19 +149,19 @@ export default function EstadoCuentaPage() {
       filas.push({
         tipoFila: "footer",
         nroCarpeta: carpeta.nroCarpeta,
-        saldoCarpeta: carpeta.saldoCarpeta,
+        saldoCarpeta: carpeta.saldoPendiente,
       });
 
-      return filas;
-    }) || [];
+      return acc.concat(filas);
+    }, []) || [];
 
-  const totales = estadoCuenta ? calcularTotales(estadoCuenta) : null;
+ // const totales = estadoCuenta ? calcularTotales(estadoCuenta) : null;
 
   const documentoBodyTemplate = (rowData) => {
     return (
       <Tag
-        value={rowData.tipoDocumento}
-        severity={getSeverityByDocumento(rowData.tipoDocumento)}
+        value={rowData.documento}
+        severity={getSeverityByDocumento(rowData.documento)}
       />
     );
   };
@@ -204,7 +210,7 @@ export default function EstadoCuentaPage() {
 
               <Dropdown
                 value={anio}
-                options={ANOS}
+                options={ANIOS}
                 onChange={(e) => setAnio(e.value)}
                 className="ec-dropdown"
               />
@@ -225,9 +231,9 @@ export default function EstadoCuentaPage() {
           <div className="ec-empty-state">
             <i className="pi pi-wallet ec-empty-icon"></i>
 
-            <h3>Generá un estado de cuenta</h3>
+            <h3>Genera un estado de cuenta</h3>
 
-            <p>Seleccioná un mes y año para consultar los movimientos.</p>
+            <p>Selecciona un mes y año para consultar los movimientos.</p>
           </div>
         )}
 
@@ -256,8 +262,8 @@ export default function EstadoCuentaPage() {
                 <span className="ec-summary-label">Cliente:</span>
 
                 <span className="ec-summary-value">
-                  {estadoCuenta.cliente.rut} -{" "}
-                  {estadoCuenta.cliente.razonSocial}
+                  {estadoCuenta.rut} -{" "}
+                  {estadoCuenta.razonSocial}
                 </span>
               </div>
 
@@ -271,11 +277,11 @@ export default function EstadoCuentaPage() {
               </div>
 
               <div className="ec-summary-item">
-                <span className="ec-summary-label">Saldo anterior:</span>
+                {/* <span className="ec-summary-label">Saldo anterior:</span> */}
 
-                <span className="ec-summary-balance">
+               {/*  <span className="ec-summary-balance">
                   $ {formatCurrency(estadoCuenta.saldoAnterior)}
-                </span>
+                </span> */}
               </div>
             </div>
 
@@ -284,6 +290,7 @@ export default function EstadoCuentaPage() {
             <div className="ec-table-wrapper">
               <DataTable
                 value={movimientos}
+                rowKey={(rowData, index) => `${rowData.tipoFila}-${rowData.nroCarpeta}-${rowData.fecha || rowData.descripcion || index}`}
                 stripedRows
                 size="small"
                 className="ec-datatable"
@@ -294,6 +301,10 @@ export default function EstadoCuentaPage() {
 
                   if (rowData.tipoFila === "footer") {
                     return "ec-row-group-footer";
+                  }
+
+                  if (rowData.tipoFila === "saldo-anterior") {
+                    return "ec-row-saldo-anterior";
                   }
 
                   return "";
@@ -317,6 +328,10 @@ export default function EstadoCuentaPage() {
                       return <strong>Saldo carpeta</strong>;
                     }
 
+                    if (rowData.tipoFila === "saldo-anterior") {
+                      return <strong></strong>;
+                    }
+
                     return rowData.nroCarpeta;
                   }}
                 />
@@ -332,7 +347,7 @@ export default function EstadoCuentaPage() {
                 />
 
                 <Column
-                  field="tipoDocumento"
+                  field="documento"
                   header="Documento"
                   body={(rowData) =>
                     rowData.tipoFila === "movimiento"
@@ -341,28 +356,45 @@ export default function EstadoCuentaPage() {
                   }
                 />
 
-                <Column
+               {/*  <Column
                   field="numero"
                   header="Número"
                   body={(rowData) =>
                     rowData.tipoFila === "movimiento" ? rowData.numero : ""
                   }
-                />
+                /> */}
 
                 <Column
-                  field="detalle"
+                  field="descripcion"
                   header="Detalle"
-                  body={(rowData) =>
-                    rowData.tipoFila === "movimiento" ? rowData.detalle : ""
-                  }
+                  body={(rowData) => {
+                    if (rowData.tipoFila === "movimiento") {
+                      return rowData.descripcion;
+                    }
+
+                    if (rowData.tipoFila === "saldo-anterior") {
+                      return rowData.descripcion;
+                    }
+
+                    return "";
+                  }}
                 />
 
                 <Column
                   field="moneda"
                   header="Mon."
-                  body={(rowData) =>
-                    rowData.tipoFila === "movimiento" ? rowData.moneda : ""
-                  }
+                  body={(rowData) => {
+                    if (rowData.tipoFila === "movimiento") {
+                      return rowData.moneda || "$";
+                    }
+
+                    if (rowData.tipoFila === "footer" || rowData.tipoFila === "saldo-anterior") {
+                      return <strong>{estadoCuenta.moneda || "$"}</strong>;
+                    }
+
+                    return "";
+                  }}
+                  style={{ width: "70px", textAlign: "center" }}
                 />
 
                 <Column
@@ -373,6 +405,14 @@ export default function EstadoCuentaPage() {
                       return (
                         <span className="ec-saldo-carpeta">
                           {formatCurrency(rowData.saldoCarpeta)}
+                        </span>
+                      );
+                    }
+
+                    if (rowData.tipoFila === "saldo-anterior") {
+                      return (
+                        <span className="ec-saldo-anterior">
+                          {formatCurrency(rowData.debe)}
                         </span>
                       );
                     }
@@ -395,16 +435,6 @@ export default function EstadoCuentaPage() {
                   bodyStyle={{ textAlign: "right" }}
                 />
 
-                <Column
-                  field="anticipo"
-                  header="Anticipo"
-                  body={(rowData) =>
-                    rowData.tipoFila === "movimiento"
-                      ? currencyBodyTemplate("anticipo")(rowData)
-                      : ""
-                  }
-                  bodyStyle={{ textAlign: "right" }}
-                />
               </DataTable>
             </div>
 
@@ -415,39 +445,65 @@ export default function EstadoCuentaPage() {
                 <div className="ec-total-box">
                   <span className="ec-total-label">Total Debe</span>
 
-                  <span className="ec-total-value">
-                    {formatCurrency(totales.totalDebe)}
-                  </span>
+                  <div className="ec-total-value-with-moneda">
+                    <span className="ec-total-moneda">{estadoCuenta.moneda || "$"}</span>
+                    <span className="ec-total-value">
+                      {formatCurrency(estadoCuenta.totalDebe)}
+                    </span>
+                  
+                  </div>
                 </div>
 
                 <div className="ec-total-box">
                   <span className="ec-total-label">Total Haber</span>
 
-                  <span className="ec-total-value">
-                    {formatCurrency(totales.totalHaber)}
-                  </span>
+                  <div className="ec-total-value-with-moneda">
+                      <span className="ec-total-moneda">{estadoCuenta.moneda || "$"}</span>
+                    <span className="ec-total-value">
+                      {formatCurrency(estadoCuenta.totalHaber)}
+                    </span>
+                  
+                  </div>
                 </div>
 
-                <div className="ec-total-box">
+                {/* <div className="ec-total-box">
                   <span className="ec-total-label">Total Anticipo</span>
 
                   <span className="ec-total-value">
-                    {formatCurrency(totales.totalAnticipo)}
+                    {formatCurrency(estadoCuenta.totalAnticipo)}
                   </span>
-                </div>
+                </div> */}
+
               </div>
 
               <Divider />
 
-              <div className="ec-saldo-final">
-                <span className="ec-saldo-final-label">
-                  Saldo Actual (Pendiente de Pago)
-                </span>
+              <div className="ec-saldo-final" style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "flex-end" }}>
+                  <span className="ec-saldo-final-label">
+                    SALDO TOTAL A PAGAR :
+                  </span>
 
-                <Tag
-                  value={formatCurrency(totales.saldoActual)}
-                  severity={totales.saldoActual >= 0 ? "danger" : "success"}
-                />
+                  <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
+                    {estadoCuenta.moneda || "$"}
+                  </span>
+
+                  <span
+                    style={{
+                      fontSize: "1.3rem",
+                      fontWeight: "bold",
+                      //color: estadoCuenta.totalSaldoPendiente >= 0 ? "#c14444" : "#237a4b",
+                      //backgroundColor: estadoCuenta.totalSaldoPendiente >= 0 ? "#000000" : "#d4edda",
+                      padding: "0.5rem 0.75rem",
+                      borderRadius: "0.5rem",
+                      minWidth: "10rem",
+                      display: "inline-flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {formatCurrency(estadoCuenta.totalSaldoPendiente)}
+                  </span>
+                </div>
               </div>
             </Card>
           </>

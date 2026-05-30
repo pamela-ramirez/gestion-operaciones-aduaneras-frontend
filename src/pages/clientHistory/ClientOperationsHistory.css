@@ -1,0 +1,108 @@
+/* ============================================================
+   CLIENT OPERATIONS HISTORY
+   Reutiliza los estilos de Operations.css
+   ============================================================ */
+
+@import url('../operations/Operations.css');
+
+/* ── Título más grande ─────────────────────────────────────── */
+.op-root .op-title {
+  font-size: 28px;
+}
+
+/* ── Nombre del cliente más grande y visible ───────────────── */
+.op-cliente-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  color: #d0d8f0;
+  margin-top: 4px;
+}
+
+.op-cliente-info .pi {
+  color: #3d4460;
+  font-size: 15px;
+}
+
+/* ── Botón volver ──────────────────────────────────────────── */
+.op-root .op-btn-back.p-button {
+  color: #6b7591 !important;
+  font-size: 13px !important;
+  padding: 4px 0 !important;
+  margin-bottom: 8px;
+  background: transparent !important;
+  border: none !important;
+}
+
+.op-root .op-btn-back.p-button:hover {
+  color: #d0d8f0 !important;
+  background: transparent !important;
+}
+
+/* ── Fondo del wrapper de la tabla igual al sistema ────────── */
+/* Esto elimina cualquier fondo blanco/claro que PrimeReact pone por defecto */
+.op-root .op-datatable.p-datatable,
+.op-root .op-datatable .p-datatable-wrapper,
+.op-root .op-datatable .p-datatable-table {
+  background: #10131a !important;
+}
+
+.op-root .op-datatable .p-datatable-header {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  padding: 14px 20px !important;
+}
+
+.op-root .op-datatable .p-datatable-thead > tr > th {
+  background: #10131a !important;
+  border-bottom: 1px solid #1c1f2b !important;
+  color: #3d4460 !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  padding: 12px 16px !important;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.op-root .op-datatable .p-datatable-tbody > tr {
+  background: #10131a !important;
+  border-bottom: 1px solid #141720 !important;
+  transition: background 0.15s;
+}
+
+.op-root .op-datatable .p-datatable-tbody > tr:hover {
+  background: #12151e !important;
+}
+
+.op-root .op-datatable .p-datatable-tbody > tr > td {
+  border: none !important;
+  padding: 12px 16px !important;
+  color: #d0d8f0;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+/* ── Paginador igual al de operaciones ─────────────────────── */
+.op-root .op-datatable .p-paginator {
+  background: #10131a !important;
+  border-top: 1px solid #1c1f2b !important;
+  padding: 10px 16px !important;
+}
+
+.op-root .op-datatable .p-paginator .p-paginator-page,
+.op-root .op-datatable .p-paginator .p-paginator-next,
+.op-root .op-datatable .p-paginator .p-paginator-prev,
+.op-root .op-datatable .p-paginator .p-paginator-first,
+.op-root .op-datatable .p-paginator .p-paginator-last {
+  color: #6b7591 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 6px !important;
+}
+
+.op-root .op-datatable .p-paginator .p-paginator-page.p-highlight {
+  background: rgba(0, 224, 176, 0.12) !important;
+  color: #00e0b0 !important;
+}

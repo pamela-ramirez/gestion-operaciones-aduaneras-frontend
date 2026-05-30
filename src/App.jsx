@@ -10,6 +10,7 @@ import OnboardingGate from "./components/auth/OnboardingGate";
 import Operations from "./pages/operations/Operations";
 import OperacionPage from "./modules/cliente/operaciones/pages/OperacionPage";
 import EstadoCuentaPage from "./modules/cliente/estadoCuenta/pages/EstadoCuentaPage";
+import ClientOperationsHistory from "./pages/clientHistory/ClientOperationsHistory";
 
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -38,6 +39,15 @@ export default function App() {
           element={
             <PrivateRoute roles={["admin", "despachante"]}>
               <Clients />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/clientes/:clienteId/operaciones"
+          element={
+            <PrivateRoute roles={["admin", "despachante"]}>
+              <ClientOperationsHistory />
             </PrivateRoute>
           }
         />

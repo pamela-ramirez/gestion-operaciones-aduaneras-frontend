@@ -30,3 +30,13 @@ export const editarCliente = async (id, data) => {
     throw error;
   }
 };
+
+export const obtenerClientePorId = async (id) => {
+  try {
+    const response = await apiClient.get(`${import.meta.env.VITE_CLIENTE_ENDPOINT}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al obtener el cliente con ID ${id}:`, error);
+    throw error;
+  }
+};

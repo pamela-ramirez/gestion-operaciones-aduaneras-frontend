@@ -9,11 +9,13 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { obtenerClientes } from "../../services/clienteService";
 import "./Clients.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Clients() {
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const [dialogVisible, setDialogVisible] = useState(false);
   const [selectedClient, setSelectedClient] = useState(null);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
@@ -107,7 +109,7 @@ export default function Clients() {
     );
   };
 
-   const estadoTemplate = (row) => (
+  const estadoTemplate = (row) => (
     <span className="cl-cell-muted">{row.estado || "—"}</span>
   );
 
@@ -115,6 +117,15 @@ export default function Clients() {
   const accionesTemplate = (row) => {
     return (
       <div className="cl-actions">
+        <Button
+          icon="pi pi-list"
+          rounded
+          text
+          className="cl-btn-edit"
+          onClick={() => navigate(`/clientes/${row.id}/operaciones`)}
+          tooltip="Ver operaciones"
+          tooltipOptions={{ position: "top" }}
+        />
         <Button
           icon="pi pi-pencil"
           rounded
@@ -211,7 +222,7 @@ export default function Clients() {
             </span>
           </div>
 
-             <div className="cl-stat-card">
+          <div className="cl-stat-card">
             <span className="cl-stat-label">PENDIENTES</span>
             <span className="cl-stat-value">
               {clientes.filter((c) => c.estado === "Pendiente").length}

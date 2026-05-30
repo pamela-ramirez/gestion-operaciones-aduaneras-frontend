@@ -107,3 +107,16 @@ export const obtenerOperacionesConFiltros = async (filtros) => {
   }
 };
 
+
+export const obtenerOperacionesPorCliente = async (clienteId) => {
+  try {
+    const response = await apiClient.get(
+      `${import.meta.env.VITE_OPERACION_ENDPOINT}/cliente/${clienteId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(`Error al obtener operaciones del cliente ${clienteId}:`, error);
+    throw error;
+  }
+};
+
